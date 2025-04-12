@@ -10,7 +10,7 @@ import SideBar from "./SideBar";
 const useStyles = makeStyles({
   mainContainer: {
     marginTop: 0,
-    marginLeft: 64,
+    marginLeft: 56,
     left: 0,
     position: "relative",
     transition: "all 0.3s ease-in-out",

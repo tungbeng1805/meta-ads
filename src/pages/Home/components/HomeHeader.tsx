@@ -6,8 +6,11 @@ const HomeHeader = (props: HomeHeaderProps) => {
   return (
     <div className="layout-header">
       <div className="header-left">
-        <div className="header-button">Refresh</div>
-        <div>Untitled rep</div>
+        <div className="header-button">
+          <div className="icon-back" />
+          <span>All reports</span>
+        </div>
+        <div className="title">Untitled report</div>
         <div className="header-button">Share</div>
         <div className="header-button">Export</div>
         <div className="header-button">1 Ad Account</div>
