@@ -60,7 +60,7 @@ const HomePage = (props: HomePageProps) => {
         <Grid size={2}>
           <Paper
             className="right-content"
-            sx={{ height: "100vh", width: "100%", marginTop: 2 }}
+            sx={{ height: "100%", width: "100%", marginTop: 2 }}
           ></Paper>
         </Grid>
       </Grid>

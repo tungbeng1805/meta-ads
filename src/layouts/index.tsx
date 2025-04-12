@@ -1,6 +1,4 @@
 import React from "react";
-// import Header from "../Header";
-import { Box, Paper } from "@mui/material";
 
 import LoadingScreen from "@/components/Loading";
 import useStoreLoading from "@/stores/loadingStore";
@@ -15,12 +13,13 @@ const useStyles = makeStyles({
     position: "relative",
     transition: "all 0.3s ease-in-out",
     padding: 16,
+    background: "transparent",
   },
   paperContainer: {
     height: "100%",
     borderRadius: "unset !important",
     boxShadow: "unset !important",
-    background: "white",
+    background: "transparent",
   },
 });
 
@@ -51,11 +50,8 @@ const MainLayout = ({ children }: MainLayoutProps) => {
         className={classes.mainContainer}
         style={{ minHeight: windowHeight }}
       >
-        <Box className={classes.paperContainer} component={Paper}>
-          {children}
-        </Box>
+        <div className={classes.paperContainer}>{children}</div>
       </div>
-
       {isLoading && <LoadingScreen />}
     </>
   );
