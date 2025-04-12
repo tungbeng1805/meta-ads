@@ -12,7 +12,7 @@ const useStyles = makeStyles({
     left: 0,
     position: "relative",
     transition: "all 0.3s ease-in-out",
-    padding: 16,
+    padding: "8px 24px 16px 24px",
     background: "transparent",
   },
   paperContainer: {
@@ -31,11 +31,11 @@ const MainLayout = ({ children }: MainLayoutProps) => {
   const classes = useStyles();
   const isLoading = useStoreLoading((state) => state.loading);
   const [windowHeight, setWindowHeight] = React.useState(
-    window.innerHeight - 32
+    window.innerHeight - 24
   );
 
   const updateHeight = () => {
-    setWindowHeight(window.innerHeight - 32);
+    setWindowHeight(window.innerHeight - 24);
   };
 
   React.useEffect(() => {
