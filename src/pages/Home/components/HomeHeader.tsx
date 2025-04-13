@@ -1,3 +1,4 @@
+import TooltipCustom from "@/components/TooltipCustom";
 import { Box } from "@mui/material";
 import React from "react";
 
@@ -93,45 +94,54 @@ const HomeHeader = () => {
             />
           </div>
         </Box>
-        <div className="header-button">
-          <Box
-            sx={{
-              width: " 16px",
-              height: "16px",
-              maskImage:
-                "url(https://static.xx.fbcdn.net/rsrc.php/v4/yP/r/uXbrsLQkS8_.png)",
-              maskPosition: "-34px -272px",
-              background: "#1c2b33",
-            }}
-          />
-          Refresh
-        </div>
-        <div className="header-button">
-          <Box
-            sx={{
-              width: " 16px",
-              height: "16px",
-              maskImage:
-                "url(https://static.xx.fbcdn.net/rsrc.php/v4/yc/r/eIvrDJ3tjTX.png)",
-              maskPosition: "-238px -954px",
-              background: "#1c2b33",
-            }}
-          />
-          Share
-        </div>
-        <div className="header-button">
-          <Box
-            sx={{
-              width: " 16px",
-              height: "16px",
-              maskImage:
-                "url(https://static.xx.fbcdn.net/rsrc.php/v4/yP/r/uXbrsLQkS8_.png)",
-              maskPosition: "-102px -272px",
-              background: "#1c2b33",
-            }}
-          />
-          Export
-        </div>
+        <TooltipCustom title="Refresh">
+          <div className="header-button">
+            <Box
+              sx={{
+                width: " 16px",
+                height: "16px",
+                maskImage:
+                  "url(https://static.xx.fbcdn.net/rsrc.php/v4/yP/r/uXbrsLQkS8_.png)",
+                maskPosition: "-34px -272px",
+                background: "#1c2b33",
+              }}
+            />
+            Refresh
+          </div>
+        </TooltipCustom>
+        <TooltipCustom
+          placement="bottom"
+          title="Share a link to your report with people in or outside of your ad account."
+        >
+          <div className="header-button">
+            <Box
+              sx={{
+                width: " 16px",
+                height: "16px",
+                maskImage:
+                  "url(https://static.xx.fbcdn.net/rsrc.php/v4/yc/r/eIvrDJ3tjTX.png)",
+                maskPosition: "-238px -954px",
+                background: "#1c2b33",
+              }}
+            />
+            Share
+          </div>
+        </TooltipCustom>
+        <TooltipCustom title="Export">
+          <div className="header-button">
+            <Box
+              sx={{
+                width: " 16px",
+                height: "16px",
+                maskImage:
+                  "url(https://static.xx.fbcdn.net/rsrc.php/v4/yP/r/uXbrsLQkS8_.png)",
+                maskPosition: "-102px -272px",
+                background: "#1c2b33",
+              }}
+            />
+            Export
+          </div>
+        </TooltipCustom>
         <div className="header-button btn-icon">
           <Box
             sx={{

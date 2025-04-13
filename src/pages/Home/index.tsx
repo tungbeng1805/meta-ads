@@ -2,7 +2,9 @@ import React from "react";
 import HomeHeader from "./components/HomeHeader";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Paper from "@mui/material/Paper";
-import { Grid } from "@mui/system";
+import { Box, Grid } from "@mui/system";
+import { TextField, Tooltip } from "@mui/material";
+import TooltipCustom from "@/components/TooltipCustom";
 
 interface HomePageProps {}
 
@@ -95,13 +97,209 @@ const rows = [
 const paginationModel = { page: 0, pageSize: 5 };
 
 const HomePage = (props: HomePageProps) => {
+  const [rightContentType, setRightContentType] = React.useState<string | null>(
+    "customise"
+  );
+
   return (
     <div className="home-page">
       <HomeHeader />
       <Grid container spacing={2} sx={{ marginTop: 2 }}>
-        <Grid size={10}>
-          <Paper sx={{ boxShadow: "none", height: 44 }}></Paper>
+        <Grid size={rightContentType ? 10 : 12}>
+          <Paper
+            sx={{
+              boxShadow: "none",
+              height: 44,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              padding: "0px 12px 0px 6px",
+            }}
+          >
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+              <TooltipCustom title="This filter is applied by default and is not removable to improve loading time.">
+                <Box
+                  sx={{
+                    bgcolor: "rgba(0, 0, 0, 0.05)",
+                    padding: "3px 12px 3px 8px",
+                    border: "1px solid #DADDE1",
+                    fontSize: "14px",
+                    fontWeight: "400",
+                    color: "#1c2b33",
+                    lineHeight: "20px",
+                    borderRadius: "0px 4px 4px 0px",
+                    "&:hover": {
+                      bgcolor: "rgba(0, 0, 0, 0.1)",
+                    },
+                  }}
+                >
+                  Had delivery
+                </Box>
+              </TooltipCustom>
+              <TextField
+                label=""
+                variant="outlined"
+                size="small"
+                placeholder="Search by name, ID or metrics"
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: "transparent",
+                    },
+                    "&:hover fieldset": {
+                      borderColor: "transparent",
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderWidth: "1px",
+                      borderColor: "#002aa5",
+                      borderRadius: 4,
+                    },
+                  },
+                }}
+                slotProps={{
+                  input: {
+                    sx: {
+                      input: {
+                        padding: "4.5px 10px",
+                        fontSize: "14px",
+                        width: "258px",
+                        "&::placeholder": {
+                          color: "rgba(28, 43, 51, 0.6)",
+                          opacity: 1,
+                        },
+                      },
+                    },
+                  },
+                }}
+              />
+            </Box>
+          </Paper>
           <Paper sx={{ boxShadow: "none", marginTop: 1 }}>
+            <Paper
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                boxShadow: "none",
+                padding: "8px 12px",
+                borderBottom: "1px solid rgb(201, 204, 209)",
+                borderBottomRightRadius: 0,
+                borderBottomLeftRadius: 0,
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "8px",
+                }}
+              >
+                <div className="table-action">
+                  <Box
+                    sx={{
+                      width: " 16px",
+                      height: "16px",
+                      maskImage:
+                        "url(https://static.xx.fbcdn.net/rsrc.php/v4/yc/r/eIvrDJ3tjTX.png)",
+                      maskPosition: "-374px -937px",
+                      background: "#1c2b33",
+                      paddingRight: "3px",
+                    }}
+                  />
+                  Pivot Table
+                  <Box
+                    sx={{
+                      width: " 16px",
+                      height: "16px",
+                      maskImage:
+                        "url(https://static.xx.fbcdn.net/rsrc.php/v4/y-/r/pqHpzOoq1-k.png)",
+                      maskPosition: "-170px -1094px",
+                      background: "#1c2b33",
+                    }}
+                  />
+                </div>
+                <TooltipCustom
+                  title="Select at least two breakdowns to group."
+                  placement="top-start"
+                >
+                  <div className="header-button disable-btn ">
+                    Group Breakdowns
+                  </div>
+                </TooltipCustom>
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "8px",
+                }}
+              >
+                <TooltipCustom
+                  title="All column widths have been reset to the default size."
+                  placement="top-start"
+                >
+                  <div className="header-button disable-btn">
+                    <Box
+                      sx={{
+                        width: " 16px",
+                        height: "16px",
+                        maskImage:
+                          "url(https://static.xx.fbcdn.net/rsrc.php/v4/yc/r/eIvrDJ3tjTX.png)",
+                        maskPosition: "0px -937px",
+                        background: "#1c2b33",
+                      }}
+                    />
+                    Reset Column Width
+                  </div>
+                </TooltipCustom>
+                <Box sx={{ display: "flex", alignItems: "center" }}>
+                  <div
+                    className="header-button format-btn"
+                    style={{
+                      background:
+                        rightContentType === "format"
+                          ? "rgba(167, 179, 191, 0.4)"
+                          : undefined,
+                    }}
+                    onClick={() => setRightContentType("format")}
+                  >
+                    <Box
+                      sx={{
+                        width: " 16px",
+                        height: "16px",
+                        maskImage:
+                          "url(https://static.xx.fbcdn.net/rsrc.php/v4/yc/r/eIvrDJ3tjTX.png)",
+                        maskPosition: "-357px -954px",
+                        background: "#1c2b33",
+                      }}
+                    />
+                    Format
+                  </div>
+                  <div
+                    className="header-button customise-btn"
+                    style={{
+                      background:
+                        rightContentType === "customise"
+                          ? "rgba(167, 179, 191, 0.4)"
+                          : undefined,
+                    }}
+                    onClick={() => setRightContentType("customise")}
+                  >
+                    <Box
+                      sx={{
+                        width: " 16px",
+                        height: "16px",
+                        maskImage:
+                          "url(https://static.xx.fbcdn.net/rsrc.php/v4/yc/r/eIvrDJ3tjTX.png)",
+                        maskPosition: "-357px -954px",
+                        background: "#1c2b33",
+                      }}
+                    />
+                    Customise
+                  </div>
+                </Box>
+              </Box>
+            </Paper>
             <DataGrid
               rows={rows}
               columns={columns}
@@ -111,11 +309,13 @@ const HomePage = (props: HomePageProps) => {
             />
           </Paper>
         </Grid>
-        <Grid size={2}>
-          <Paper
-            sx={{ height: "100%", width: "100%", boxShadow: "none" }}
-          ></Paper>
-        </Grid>
+        {rightContentType && (
+          <Grid size={2}>
+            <Paper
+              sx={{ height: "100%", width: "100%", boxShadow: "none" }}
+            ></Paper>
+          </Grid>
+        )}
       </Grid>
     </div>
   );

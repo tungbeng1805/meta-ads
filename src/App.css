@@ -284,12 +284,42 @@ body {
   line-height: 18px;
 }
 
+.home-page .table-action {
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  padding: 8px 16px 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 400;
+  color: #1c2b33;
+  box-sizing: border-box;
+  line-height: 18px;
+}
+
 .home-page .btn-icon {
   padding: 9px 12px;
 }
 
 .home-page .header-button:hover {
   background: rgba(167, 179, 191, 0.2);
+}
+
+.home-page .disable-btn {
+  color: #1c2b3399;
+  cursor: no-drop;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.home-page .format-btn {
+  border-radius: 4px 0px 0px 4px;
+  border-right-width: 0;
+}
+
+.home-page .customise-btn {
+  border-radius: 0px 4px 4px 0px;
 }
 
 .home-page .title {
