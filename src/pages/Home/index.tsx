@@ -1,10 +1,11 @@
+import TooltipCustom from "@/components/TooltipCustom";
+import { TextField } from "@mui/material";
+import Paper from "@mui/material/Paper";
+import { Box } from "@mui/system";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import React from "react";
 import HomeHeader from "./components/HomeHeader";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import Paper from "@mui/material/Paper";
-import { Box, Grid } from "@mui/system";
-import { Button, InputAdornment, TextField, Tooltip } from "@mui/material";
-import TooltipCustom from "@/components/TooltipCustom";
+import RightContent from "./components/RightContent";
 
 interface HomePageProps {}
 
@@ -104,8 +105,8 @@ const HomePage = (props: HomePageProps) => {
   return (
     <div className="home-page">
       <HomeHeader />
-      <Grid container spacing={2} sx={{ marginTop: 2 }}>
-        <Grid size={rightContentType ? 10 : 12}>
+      <Box gap={2} marginTop={2} display="flex">
+        <div className="left-content">
           <Paper
             sx={{
               boxShadow: "none",
@@ -302,166 +303,11 @@ const HomePage = (props: HomePageProps) => {
               sx={{ border: 0 }}
             />
           </Paper>
-        </Grid>
+        </div>
         {rightContentType && (
-          <Grid size={2}>
-            <Paper sx={{ height: "100%", width: "100%", boxShadow: "none" }}>
-              <Box
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
-                padding="16px"
-                gap="8px"
-              >
-                <Box color="#1c2b33" fontSize="16px" fontWeight="bold">
-                  Customise pivot table
-                </Box>
-                <Button
-                  sx={{
-                    padding: "10px 12px",
-                    minWidth: "unset",
-                    "&:hover": {
-                      backgroundColor: "rgba(0, 0, 0, .05)",
-                    },
-                  }}
-                  onClick={() => setRightContentType(null)}
-                >
-                  <Box
-                    sx={{
-                      width: " 16px",
-                      height: "16px",
-                      maskImage:
-                        "url(https://static.xx.fbcdn.net/rsrc.php/v4/yh/r/-mpd5-YMO3O.png)",
-                      maskPosition: "0px -135px",
-                      background: "#1c2b33",
-                    }}
-                  />
-                </Button>
-              </Box>
-              <Box
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
-                padding="0px 16px"
-                gap="8px"
-              >
-                <TextField
-                  label=""
-                  variant="outlined"
-                  size="small"
-                  placeholder="Search"
-                  sx={{
-                    width: "100%",
-                    "& .MuiOutlinedInput-input": {
-                      padding: "8px 10px 8px 0px",
-                      fontSize: "14px",
-                      "&::placeholder": {
-                        color: "rgba(28, 43, 51, 0.6)",
-                        opacity: 1,
-                      },
-                    },
-                  }}
-                  slotProps={{
-                    input: {
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <Box
-                            sx={{
-                              width: "12px",
-                              height: "12px",
-                              maskImage:
-                                "url(https://static.xx.fbcdn.net/rsrc.php/v4/yG/r/sG3ZUjuDhT5.png)",
-                              maskPosition: "-195px -251px",
-                              background: "#1c2b33",
-                            }}
-                          />
-                        </InputAdornment>
-                      ),
-                    },
-                  }}
-                />
-                <div className="header-button btn-icon">
-                  <Box
-                    sx={{
-                      width: "16px",
-                      height: "16px",
-                      maskImage:
-                        "url(https://static.xx.fbcdn.net/rsrc.php/v4/yh/r/-mpd5-YMO3O.png)",
-                      maskPosition: "0px -169px",
-                      background: "#1c2b33",
-                    }}
-                  />
-                </div>
-              </Box>
-              <Box
-                display="flex"
-                alignItems="center"
-                padding="0px 16px"
-                gap="8px"
-                marginTop={1}
-              >
-                <Grid container flex={1} spacing={1}>
-                  <Grid size={6}>
-                    <Button
-                      sx={{
-                        width: "100%",
-                        padding: "6px",
-                        minWidth: "unset",
-                        textTransform: "none",
-                        color: "#1c2b33",
-                        "&:hover": {
-                          backgroundColor: "rgba(0, 0, 0, .05)",
-                        },
-                      }}
-                    >
-                      Breakedowns
-                    </Button>
-                  </Grid>
-                  <Grid size={6}>
-                    <Button
-                      sx={{
-                        width: "100%",
-                        padding: "6px",
-                        minWidth: "unset",
-                        textTransform: "none",
-                        background: "#e1edf7",
-                        color: "#0a78be",
-                        fontWeight: "bold",
-                        "&:hover": {
-                          backgroundColor: "rgba(0, 0, 0, .05)",
-                        },
-                      }}
-                    >
-                      Metrics
-                    </Button>
-                  </Grid>
-                </Grid>
-                <Button
-                  sx={{
-                    padding: "10px 12px",
-                    minWidth: "unset",
-                    "&:hover": {
-                      backgroundColor: "rgba(0, 0, 0, .05)",
-                    },
-                    border: "unset",
-                  }}
-                >
-                  <Box
-                    sx={{
-                      width: "16px",
-                      height: "16px",
-                      maskImage:
-                        "url(https://static.xx.fbcdn.net/rsrc.php/v4/yc/r/eIvrDJ3tjTX.png)",
-                      maskPosition: "-204px -937px",
-                      background: "#1c2b33",
-                    }}
-                  />
-                </Button>
-              </Box>
-            </Paper>
-          </Grid>
+          <RightContent setRightContentType={setRightContentType} />
         )}
-      </Grid>
+      </Box>
     </div>
   );
 };
