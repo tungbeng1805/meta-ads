@@ -301,6 +301,7 @@ const HomePage = (props: HomePageProps) => {
               initialState={{ pagination: { paginationModel } }}
               pageSizeOptions={[5, 10]}
               sx={{ border: 0 }}
+              className="table-custom"
             />
           </Paper>
         </div>
