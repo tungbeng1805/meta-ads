@@ -303,8 +303,20 @@ const HomePage = (props: HomePageProps) => {
               columns={columns}
               initialState={{ pagination: { paginationModel } }}
               pageSizeOptions={[5, 10]}
-              sx={{ border: 0 }}
-              slots={{}}
+              sx={{ border: 0}}
+              slots={{
+                columnMenuIcon: () => <Box
+                sx={{
+                  width: " 12px",
+                  height: "12px",
+                  maskImage:
+                    "url(https://static.xx.fbcdn.net/rsrc.php/v4/yc/r/eIvrDJ3tjTX.png)",
+                  maskPosition: "-181px -971px",
+                  background: "#1c2b33",
+                }}
+              />,
+              }}
+              className="table-custom"
             />
           </Paper>
         </div>

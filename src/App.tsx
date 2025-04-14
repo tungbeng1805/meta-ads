@@ -1,5 +1,6 @@
 import "./App.css";
 import "./style/table.css"
+import "./style/pivot-table.css"
 import { BrowserRouter as Router } from "react-router-dom";
 import routes, { renderRoutes } from "./routes";
 

@@ -1,0 +1,19 @@
+.pivot-table .MuiAccordionSummary-root {
+    padding: 5px 16px;
+}
+.pivot-table .MuiPaper-elevation1.MuiAccordion-root.MuiAccordion-rounded::before {
+    display: none;
+}
+.pivot-table .MuiTypography-root {
+    font-size: 14px;
+    color: #1c2b33;
+}
+
+.pivot-table .MuiAccordionDetails-root span {
+    font-size: 14px;
+    color: #1c2b33;
+}
+
+.pivot-table .MuiAccordionDetails-root .MuiBox-root {
+    padding: 3px 0;
+}

@@ -393,7 +393,7 @@ body {
 }
 
 .home-page .left-content {
-  max-width: calc(100%-270px);
+  max-width: calc(100% - 270px);
   flex: 1;
 }
 
