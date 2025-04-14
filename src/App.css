@@ -393,8 +393,13 @@ body {
 }
 
 .home-page .left-content {
-  max-width: calc(100%-270px);
+  max-width: calc(100% - 270px);
   flex: 1;
+}
+
+.home-page .summary-row {
+  font-weight: bold;
+  background-color: #f5f5f5;
 }
 
 /*END HOME-PAGE */
