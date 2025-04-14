@@ -31,8 +31,7 @@ const successHandler = (response: any, isHandlerEnabled: boolean) => {
   if (isHandlerEnabled) {
     //TODO: Do Success Handler
   }
-
-  return response;
+  return response?.data;
 };
 
 const refreshAccessToken = async () => {

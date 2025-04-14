@@ -1,0 +1,6 @@
+const MESSAGE_API = {
+  errorApi: "System error please try again later!",
+  createSuccessBusiness: "Create successful business"
+};
+
+export default MESSAGE_API;
