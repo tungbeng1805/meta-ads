@@ -2,7 +2,7 @@ import TooltipCustom from "@/components/TooltipCustom";
 import { TextField } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import { Box } from "@mui/system";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridPagination } from "@mui/x-data-grid";
 import React from "react";
 import HomeHeader from "./components/HomeHeader";
 import RightContent from "./components/RightContent";
@@ -10,22 +10,43 @@ import RightContent from "./components/RightContent";
 interface HomePageProps {}
 
 const columns: GridColDef[] = [
-  { field: "accountName", headerName: "Account Name", width: 125 },
-  { field: "firstName", headerName: "First name", width: 130 },
-  { field: "lastName", headerName: "Last name", width: 130 },
   {
-    field: "age",
-    headerName: "Age",
-    type: "number",
-    width: 90,
+    field: "accountName",
+    headerName: "Account Name",
+    width: 125,
+    renderCell: (params) => {
+      if (params.id === "summary") {
+        return <div>Total results</div>;
+      }
+      return <div>{params.value}</div>;
+    },
+  },
+  { field: "reach", headerName: "Reach", width: 172 },
+  { field: "impressions", headerName: "Impressions", width: 130 },
+  {
+    field: "frequency",
+    headerName: "Frequency",
+    width: 188,
   },
   {
-    field: "fullName",
-    headerName: "Full name",
-    description: "This column has a value getter and is not sortable.",
-    sortable: false,
-    width: 160,
-    valueGetter: (value, row) => `${row.firstName || ""} ${row.lastName || ""}`,
+    field: "amountSpent",
+    headerName: "Amount spent",
+    width: 120,
+  },
+  {
+    field: "attributionSetting",
+    headerName: "Attribution setting",
+    width: 200,
+  },
+  {
+    field: "messagingConversationsStarted",
+    headerName: "Messaging conversations started",
+    width: 158,
+  },
+  {
+    field: "costPerMessagingConversationStarted",
+    headerName: "Cost per messaging conversation started",
+    width: 196,
   },
 ];
 
@@ -33,65 +54,46 @@ const rows = [
   {
     id: 1,
     accountName: "Trần Nhật Minh",
-    lastName: "Snow",
-    firstName: "Jon",
-    age: 35,
+    reach: 12345,
+    impressions: 23456,
+    frequency: 1.9,
+    amountSpent: "120.50",
+    attributionSetting: "7-day click",
+    messagingConversationsStarted: 56,
+    costPerMessagingConversationStarted: "2.15",
   },
   {
     id: 2,
-    accountName: "Trần Nhật Minh",
-    lastName: "Lannister",
-    firstName: "Cersei",
-    age: 42,
+    accountName: "Nguyễn Thị Hoa",
+    reach: 56789,
+    impressions: 67890,
+    frequency: 2.3,
+    amountSpent: "300.00",
+    attributionSetting: "1-day view",
+    messagingConversationsStarted: 34,
+    costPerMessagingConversationStarted: "3.45",
   },
   {
     id: 3,
-    accountName: "Trần Nhật Minh",
-    lastName: "Lannister",
-    firstName: "Jaime",
-    age: 45,
+    accountName: "Lê Văn An",
+    reach: 23456,
+    impressions: 34567,
+    frequency: 1.5,
+    amountSpent: 80.75,
+    attributionSetting: "Default",
+    messagingConversationsStarted: 23,
+    costPerMessagingConversationStarted: "3.51",
   },
   {
     id: 4,
-    accountName: "Trần Nhật Minh",
-    lastName: "Stark",
-    firstName: "Arya",
-    age: 16,
-  },
-  {
-    id: 5,
-    accountName: "Trần Nhật Minh",
-    lastName: "Targaryen",
-    firstName: "Daenerys",
-    age: null,
-  },
-  {
-    id: 6,
-    accountName: "Trần Nhật Minh",
-    lastName: "Melisandre",
-    firstName: null,
-    age: 150,
-  },
-  {
-    id: 7,
-    accountName: "Trần Nhật Minh",
-    lastName: "Clifford",
-    firstName: "Ferrara",
-    age: 44,
-  },
-  {
-    id: 8,
-    accountName: "Trần Nhật Minh",
-    lastName: "Frances",
-    firstName: "Rossini",
-    age: 36,
-  },
-  {
-    id: 9,
-    accountName: "Trần Nhật Minh",
-    lastName: "Roxie",
-    firstName: "Harvey",
-    age: 65,
+    accountName: "Phạm Hồng Phúc",
+    reach: 9876,
+    impressions: 10500,
+    frequency: 1.06,
+    amountSpent: "45.00",
+    attributionSetting: "7-day click",
+    messagingConversationsStarted: 12,
+    costPerMessagingConversationStarted: "3.75",
   },
 ];
 
@@ -101,6 +103,34 @@ const HomePage = (props: HomePageProps) => {
   const [rightContentType, setRightContentType] = React.useState<string | null>(
     "customise"
   );
+
+  const totalReach = rows.reduce((sum, row) => sum + row.reach, 0);
+  const totalImpressions = rows.reduce((sum, row) => sum + row.impressions, 0);
+  const totalFrequency =
+    rows.reduce((sum, row) => sum + row.frequency, 0) / rows.length;
+  const totalAmountSpent = rows.reduce(
+    (sum, row) => sum + parseFloat(String(row.amountSpent)),
+    0
+  );
+  const totalMessages = rows.reduce(
+    (sum, row) => sum + row.messagingConversationsStarted,
+    0
+  );
+  const avgCostPerMessage = totalAmountSpent / totalMessages || 0;
+
+  const summaryRow = {
+    id: "summary",
+    accountName: "Total results",
+    reach: totalReach,
+    impressions: totalImpressions,
+    frequency: Number(totalFrequency.toFixed(2)),
+    amountSpent: totalAmountSpent.toFixed(2),
+    attributionSetting: "Multiple attribution settinng",
+    messagingConversationsStarted: totalMessages,
+    costPerMessagingConversationStarted: avgCostPerMessage.toFixed(2),
+  };
+
+  const displayRows = [...rows, summaryRow];
 
   return (
     <div className="home-page">
@@ -296,11 +326,27 @@ const HomePage = (props: HomePageProps) => {
               </Box>
             </Paper>
             <DataGrid
-              rows={rows}
+              rows={displayRows}
               columns={columns}
               initialState={{ pagination: { paginationModel } }}
               pageSizeOptions={[5, 10]}
-              sx={{ border: 0 }}
+              sx={{ border: 0}}
+              slots={{
+                columnMenuIcon: () => <Box
+                sx={{
+                  width: " 12px",
+                  height: "12px",
+                  maskImage:
+                    "url(https://static.xx.fbcdn.net/rsrc.php/v4/yc/r/eIvrDJ3tjTX.png)",
+                  maskPosition: "-181px -971px",
+                  background: "#1c2b33",
+                }}
+              />,
+              }}
+              className="table-custom"
+              getRowClassName={(params) =>
+                params.id === "summary" ? "summary-row" : ""
+              }
             />
           </Paper>
         </div>
