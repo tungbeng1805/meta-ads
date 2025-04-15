@@ -27,7 +27,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 
 const ModalAdminBusiness = (props: any) => {
   const { handleSubmit, control } = useForm<any>({
-    defaultValues: {
+    defaultValues: props?.defaultValues ?? {
       accountName: "",
       reach: "",
       impressions: "",
@@ -43,10 +43,12 @@ const ModalAdminBusiness = (props: any) => {
 
   const onSubmit = async (data: any) => {
     try {
-      const item: any = await axiosInstance.post(URL_PATHS.CREATE_BUSINESS, data);
+      const item: any = props?.defaultValues
+        ? await axiosInstance.put(URL_PATHS.UPDATE_BUSINESS.replace(":id", props?.defaultValues?.id), data)
+        : await axiosInstance.post(URL_PATHS.CREATE_BUSINESS, data);
       if (item?.status === 200) {
         props.getList();
-        toast.success(MESSAGE_API.createSuccessBusiness, {
+        toast.success(props?.defaultValues ? MESSAGE_API.updateSuccessBusiness : MESSAGE_API.createSuccessBusiness, {
           position: "top-right",
           autoClose: 1000,
           hideProgressBar: false,
@@ -95,7 +97,7 @@ const ModalAdminBusiness = (props: any) => {
     >
       <form onSubmit={handleSubmit(onSubmit)}>
         <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-          Add New
+          {props?.isView ? "View" : props?.defaultValues ? "Edit" : "Add New"}
         </DialogTitle>
         <IconButton
           aria-label="close"
@@ -121,7 +123,14 @@ const ModalAdminBusiness = (props: any) => {
                 control={control}
                 name="accountName"
                 render={({ field: { onChange, onBlur, value } }) => (
-                  <TextField label="Account Name" onChange={onChange} onBlur={onBlur} value={value} fullWidth />
+                  <TextField
+                    disabled={props?.isView}
+                    label="Account Name"
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    value={value}
+                    fullWidth
+                  />
                 )}
               />
             </Grid>
@@ -131,7 +140,14 @@ const ModalAdminBusiness = (props: any) => {
                 control={control}
                 name="reach"
                 render={({ field: { onChange, onBlur, value } }) => (
-                  <TextField label="Reach" onChange={onChange} onBlur={onBlur} value={value} fullWidth />
+                  <TextField
+                    disabled={props?.isView}
+                    label="Reach"
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    value={value}
+                    fullWidth
+                  />
                 )}
               />
             </Grid>
@@ -142,7 +158,14 @@ const ModalAdminBusiness = (props: any) => {
                 control={control}
                 name="impressions"
                 render={({ field: { onChange, onBlur, value } }) => (
-                  <TextField label="Impressions" onChange={onChange} onBlur={onBlur} value={value} fullWidth />
+                  <TextField
+                    disabled={props?.isView}
+                    label="Impressions"
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    value={value}
+                    fullWidth
+                  />
                 )}
               />
             </Grid>
@@ -152,7 +175,14 @@ const ModalAdminBusiness = (props: any) => {
                 control={control}
                 name="frequency"
                 render={({ field: { onChange, onBlur, value } }) => (
-                  <TextField label="Frequency" onChange={onChange} onBlur={onBlur} value={value} fullWidth />
+                  <TextField
+                    disabled={props?.isView}
+                    label="Frequency"
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    value={value}
+                    fullWidth
+                  />
                 )}
               />
             </Grid>
@@ -163,7 +193,14 @@ const ModalAdminBusiness = (props: any) => {
                 control={control}
                 name="amountSpent"
                 render={({ field: { onChange, onBlur, value } }) => (
-                  <TextField label="Amount Spent" onChange={onChange} onBlur={onBlur} value={value} fullWidth />
+                  <TextField
+                    disabled={props?.isView}
+                    label="Amount Spent"
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    value={value}
+                    fullWidth
+                  />
                 )}
               />
             </Grid>
@@ -173,7 +210,14 @@ const ModalAdminBusiness = (props: any) => {
                 control={control}
                 name="attributionSetting"
                 render={({ field: { onChange, onBlur, value } }) => (
-                  <TextField label="Attribution Setting" onChange={onChange} onBlur={onBlur} value={value} fullWidth />
+                  <TextField
+                    disabled={props?.isView}
+                    label="Attribution Setting"
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    value={value}
+                    fullWidth
+                  />
                 )}
               />
             </Grid>
@@ -185,6 +229,7 @@ const ModalAdminBusiness = (props: any) => {
                 name="messaginConversationStarted"
                 render={({ field: { onChange, onBlur, value } }) => (
                   <TextField
+                    disabled={props?.isView}
                     label="Messagin Conversation Started"
                     onChange={onChange}
                     onBlur={onBlur}
@@ -201,6 +246,7 @@ const ModalAdminBusiness = (props: any) => {
                 name="costPerMessagingConversationStarted"
                 render={({ field: { onChange, onBlur, value } }) => (
                   <TextField
+                    disabled={props?.isView}
                     label="Cost Per Messaging Conversation Started"
                     onChange={onChange}
                     onBlur={onBlur}
@@ -213,7 +259,7 @@ const ModalAdminBusiness = (props: any) => {
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Button variant="contained" color="success" autoFocus type="submit">
+          <Button disabled={props?.isView} variant="contained" color="success" autoFocus type="submit">
             Save changes
           </Button>
         </DialogActions>
