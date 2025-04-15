@@ -7,132 +7,10 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import React from "react";
 import HomeHeader from "./components/HomeHeader";
 import RightContent from "./components/RightContent";
+import { useNavigate } from "react-router-dom";
+import ROUTERS_PATHS from "@/constants/router-paths";
 
 interface HomePageProps {}
-
-const columns: GridColDef[] = [
-  {
-    field: "accountName",
-    headerName: "Account Name",
-    width: 125,
-    renderCell: (params) => {
-      if (params.id === "summary") {
-        return (
-          <div className="last-row">
-            <p>Total results</p>
-            <span>1/1 row displayed</span>
-          </div>
-        );
-      }
-      return <div>{params.value}</div>;
-    },
-  },
-  { field: "reach", headerName: "Reach", width: 172,
-    renderCell: (params) => {
-      if (params.id === "summary") {
-        return (
-          <div className="last-row row-number">
-            <p className="number">35,334</p>
-            <span>Accounts Centre accounts</span>
-          </div>
-        );
-      }
-      return <div>{params.value}</div>;
-    },
-   },
-  { field: "impressions", headerName: "Impressions", width: 130,
-    renderCell: (params) => {
-      if (params.id === "summary") {
-        return (
-          <div className="last-row row-number">
-            <p className="number">46,165</p>
-            <span>Total</span>
-          </div>
-        );
-      }
-      return <div>{params.value}</div>;
-    }
-   },
-  {
-    field: "frequency",
-    headerName: "Frequency",
-    width: 188,
-    renderCell: (params) => {
-      if (params.id === "summary") {
-        return (
-          <div className="last-row row-number">
-            <p className="number">1.31</p>
-            <span>Per Accounts Centre account</span>
-          </div>
-        );
-      }
-      return <div>{params.value}</div>;
-    }
-  },
-  {
-    field: "amountSpent",
-    headerName: "Amount spent",
-    width: 120,
-    renderCell: (params) => {
-      if (params.id === "summary") {
-        return (
-          <div className="last-row row-number">
-            <p className="number">₫1,553,981</p>
-            <span>Total Spent</span>
-          </div>
-        );
-      }
-      return <div>{params.value}</div>;
-    }
-  },
-  {
-    field: "attributionSetting",
-    headerName: "Attribution setting",
-    width: 200,
-    renderCell: (params) => {
-      if (params.id === "summary") {
-        return (
-          <div className="last-row">
-            <p >Multiple attribution settings</p>
-          </div>
-        );
-      }
-      return <div>{params.value}</div>;
-    }
-  },
-  {
-    field: "messagingConversationsStarted",
-    headerName: "Messaging conversations started",
-    width: 158,
-    renderCell: (params) => {
-      if (params.id === "summary") {
-        return (
-          <div className="last-row row-number">
-            <p className="number">95</p>
-            <span>Total</span>
-          </div>
-        );
-      }
-      return <div>{params.value}</div>;
-    }
-  },
-  {
-    field: "costPerMessagingConversationStarted",
-    headerName: "Cost per messaging conversation started",
-    width: 196,
-    renderCell: (params) => {
-      if (params.id === "summary") {
-        return (
-          <div className="last-row row-number">
-            <p className="number">₫16,358</p>
-            <span>Per Action</span>
-          </div>
-        );
-      }
-      return <div>{params.value}</div>;
-    }
-  },
-];
 
 const rows = [
   {
@@ -187,6 +65,8 @@ const HomePage = (props: HomePageProps) => {
   const [rightContentType, setRightContentType] = React.useState<string | null>(
     "customise"
   );
+  const navigate = useNavigate();
+
   const columns: GridColDef[] = [
     {
       field: "accountName",
@@ -201,7 +81,7 @@ const HomePage = (props: HomePageProps) => {
             </div>
           );
         }
-        return <div>{params.value}</div>;
+        return <div onClick={() => handleClickName()}>{params.value}</div>;
       },
     },
     { field: "reach", headerName: "Reach", width: 172 },
@@ -232,6 +112,10 @@ const HomePage = (props: HomePageProps) => {
       width: 196,
     },
   ];
+
+  const handleClickName = () => {
+    navigate(ROUTERS_PATHS.CAMPAIGN);
+  };
 
   const totalReach = rows.reduce((sum, row) => sum + row.reach, 0);
   const totalImpressions = rows.reduce((sum, row) => sum + row.impressions, 0);
