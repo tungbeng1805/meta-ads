@@ -18,41 +18,119 @@ const columns: GridColDef[] = [
     renderCell: (params) => {
       if (params.id === "summary") {
         return (
-          <div>
+          <div className="last-row">
             <p>Total results</p>
-            <p>Total results</p>
+            <span>1/1 row displayed</span>
           </div>
         );
       }
       return <div>{params.value}</div>;
     },
   },
-  { field: "reach", headerName: "Reach", width: 172 },
-  { field: "impressions", headerName: "Impressions", width: 130 },
+  { field: "reach", headerName: "Reach", width: 172,
+    renderCell: (params) => {
+      if (params.id === "summary") {
+        return (
+          <div className="last-row row-number">
+            <p className="number">35,334</p>
+            <span>Accounts Centre accounts</span>
+          </div>
+        );
+      }
+      return <div>{params.value}</div>;
+    },
+   },
+  { field: "impressions", headerName: "Impressions", width: 130,
+    renderCell: (params) => {
+      if (params.id === "summary") {
+        return (
+          <div className="last-row row-number">
+            <p className="number">46,165</p>
+            <span>Total</span>
+          </div>
+        );
+      }
+      return <div>{params.value}</div>;
+    }
+   },
   {
     field: "frequency",
     headerName: "Frequency",
     width: 188,
+    renderCell: (params) => {
+      if (params.id === "summary") {
+        return (
+          <div className="last-row row-number">
+            <p className="number">1.31</p>
+            <span>Per Accounts Centre account</span>
+          </div>
+        );
+      }
+      return <div>{params.value}</div>;
+    }
   },
   {
     field: "amountSpent",
     headerName: "Amount spent",
     width: 120,
+    renderCell: (params) => {
+      if (params.id === "summary") {
+        return (
+          <div className="last-row row-number">
+            <p className="number">₫1,553,981</p>
+            <span>Total Spent</span>
+          </div>
+        );
+      }
+      return <div>{params.value}</div>;
+    }
   },
   {
     field: "attributionSetting",
     headerName: "Attribution setting",
     width: 200,
+    renderCell: (params) => {
+      if (params.id === "summary") {
+        return (
+          <div className="last-row">
+            <p >Multiple attribution settings</p>
+          </div>
+        );
+      }
+      return <div>{params.value}</div>;
+    }
   },
   {
     field: "messagingConversationsStarted",
     headerName: "Messaging conversations started",
     width: 158,
+    renderCell: (params) => {
+      if (params.id === "summary") {
+        return (
+          <div className="last-row row-number">
+            <p className="number">95</p>
+            <span>Total</span>
+          </div>
+        );
+      }
+      return <div>{params.value}</div>;
+    }
   },
   {
     field: "costPerMessagingConversationStarted",
     headerName: "Cost per messaging conversation started",
     width: 196,
+    renderCell: (params) => {
+      if (params.id === "summary") {
+        return (
+          <div className="last-row row-number">
+            <p className="number">₫16,358</p>
+            <span>Per Action</span>
+          </div>
+        );
+      }
+      return <div>{params.value}</div>;
+    }
   },
 ];
 
@@ -345,7 +423,7 @@ const HomePage = (props: HomePageProps) => {
               sx={{
                 border: 0,
                 "& .MuiDataGrid-row[data-id='summary']": {
-                  backgroundColor: "#f5f6f7",
+                  backgroundColor: "#fff",
                   fontWeight: 500,
                   borderTop: "1px solid #ccc",
                   color: "#333",
