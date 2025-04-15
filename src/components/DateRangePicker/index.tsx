@@ -65,7 +65,7 @@ export const ReactDateRangePickerCustom = (
   const { initialDateRange, onChange } = props;
   const classes = useStyles();
 
-  let convertInitialDateRange =
+  const convertInitialDateRange =
     initialDateRange.startDate || initialDateRange.endDate
       ? {
           startDate: initialDateRange.startDate
@@ -108,13 +108,13 @@ export const ReactDateRangePickerCustom = (
     setDateRange(dataRange[KEY_NAME] as Range);
   };
 
-  let displayValue = useMemo(() => {
+  const displayValue = useMemo(() => {
     let result = "";
     if (initialDateRange?.startDate || initialDateRange?.endDate) {
-      let _startDate = initialDateRange?.startDate
+      const _startDate = initialDateRange?.startDate
         ? moment(initialDateRange?.startDate).format(DATE_FORMAT.dmy)
         : "";
-      let _endDate = initialDateRange?.endDate
+      const _endDate = initialDateRange?.endDate
         ? moment(initialDateRange?.endDate).format(DATE_FORMAT.dmy)
         : "";
       result = `${_startDate} - ${_endDate}`;
@@ -273,6 +273,7 @@ export const ReactDateRangePickerCustom = (
       display="flex"
       alignItems="center"
       gap="8px"
+      fontFamily="Optimistic Display, system-ui, sans-serif !important"
       onClick={() => {
         setTimeout(() => {
           setSelectedStaticRange(staticRange.label as string);
@@ -345,7 +346,7 @@ export const ReactDateRangePickerCustom = (
           <DateRangePicker
             months={2}
             direction="horizontal"
-            onChange={(item: any) => handleChangeModifiedDateRange(item)}
+            onChange={(item) => handleChangeModifiedDateRange(item)}
             ranges={[dateRange]}
             staticRanges={defaultStaticRanges}
             inputRanges={[]}

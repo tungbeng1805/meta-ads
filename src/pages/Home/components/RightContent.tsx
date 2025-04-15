@@ -200,6 +200,7 @@ const RightContent = (props: RightContentProps) => {
       <Box marginTop={3} maxHeight="73vh" sx={{ overflowY: "auto" }}>
         {listAccordion?.map((ac, index) => (
           <Accordion
+            key={String(index)}
             slotProps={{
               root: {
                 sx: {
@@ -235,8 +236,13 @@ const RightContent = (props: RightContentProps) => {
             >
               {!ac?.listChild
                 ? null
-                : ac?.listChild?.map((c) => (
-                    <Box display="flex" alignItems="center" gap={1}>
+                : ac?.listChild?.map((c, index) => (
+                    <Box
+                      key={String(index)}
+                      display="flex"
+                      alignItems="center"
+                      gap={1}
+                    >
                       <Checkbox
                         defaultChecked={c.isShow}
                         sx={{ padding: 0 }}
