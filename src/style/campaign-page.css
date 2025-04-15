@@ -61,3 +61,32 @@
   width: 24px;
   height: 24px;
 }
+
+.campain-page .btn-action {
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 400;
+  color: #1c2b33;
+  line-height: 18px;
+}
+
+.campain-page .btn-ghost {
+  font-weight: 500;
+  border: none;
+}
+
+.campain-page .btn-action:hover {
+  background: rgba(167, 179, 191, 0.2);
+}
+
+.campain-page .divider-campaign {
+  background: rgb(218, 221, 225);
+  width: 1px;
+  height: 20px;
+}
