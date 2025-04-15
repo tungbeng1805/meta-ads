@@ -8,6 +8,7 @@ import ReactDateRangePickerCustom from "@/components/DateRangePicker";
 import CampaignIcon from "@/components/SvgIcons/CampainIcon";
 import AdSetIcon from "@/components/SvgIcons/AdSetIcon";
 import AdsIcon from "@/components/SvgIcons/AdsIcon";
+import CampaignAction from "./components/CampaignAction";
 
 interface CampaignProps {}
 
@@ -52,14 +53,7 @@ const Campaign = (props: CampaignProps) => {
     <div className="campain-page">
       <CampaignHeader />
       <div className="content-wrapper">
-        <Box
-          display="flex"
-          alignItems="center"
-          justifyContent="space-between"
-          height="38px"
-          bgcolor="white"
-          padding="0px 8px"
-        ></Box>
+        <CampaignAction />
         <Box height="38px" bgcolor="white" padding="0px 8px"></Box>
         <Box marginTop="8px">
           <Box
