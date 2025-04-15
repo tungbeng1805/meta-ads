@@ -20,6 +20,7 @@ const columns: GridColDef[] = [
         return (
           <div>
             <p>Total results</p>
+            <p>Total results</p>
           </div>
         );
       }
@@ -341,7 +342,23 @@ const HomePage = (props: HomePageProps) => {
             <DataGrid
               rows={displayRows}
               columns={columns}
-              sx={{ border: 0 }}
+              sx={{
+                border: 0,
+                "& .MuiDataGrid-row[data-id='summary']": {
+                  backgroundColor: "#f5f6f7", 
+                  fontWeight: 500,
+                  borderTop: "1px solid #ccc",
+                  color: "#333",
+                  "& .MuiDataGrid-cell": {
+                    paddingTop: "8px",
+                    paddingBottom: "8px",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    lineHeight: "1.2",
+                  },
+                },
+              }}
               slots={{
                 columnMenuIcon: () => (
                   <Box
