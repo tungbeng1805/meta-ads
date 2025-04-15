@@ -1,3 +1,4 @@
+import ReactDateRangePickerCustom from "@/components/DateRangePicker";
 import TooltipCustom from "@/components/TooltipCustom";
 import { TextField } from "@mui/material";
 import Paper from "@mui/material/Paper";
@@ -208,6 +209,13 @@ const HomePage = (props: HomePageProps) => {
                 }}
               />
             </Box>
+            <ReactDateRangePickerCustom
+              onChange={(dateRange) => {}}
+              initialDateRange={{
+                startDate: new Date(),
+                endDate: new Date(),
+              }}
+            />
           </Paper>
           <Paper sx={{ boxShadow: "none", marginTop: 1 }}>
             <Paper
@@ -294,11 +302,12 @@ const HomePage = (props: HomePageProps) => {
                   >
                     <Box
                       sx={{
-                        width: " 16px",
+                        width: "16px",
                         height: "16px",
                         maskImage:
-                          "url(https://static.xx.fbcdn.net/rsrc.php/v4/yc/r/eIvrDJ3tjTX.png)",
-                        maskPosition: "-357px -954px",
+                          "url(https://static.xx.fbcdn.net/rsrc.php/v4/yP/r/VCr_oK4U3bG.png)",
+                        maskPosition: "-17px -954px",
+                        maskSize: "401px 988px",
                         background: "#1c2b33",
                       }}
                     />
@@ -316,7 +325,7 @@ const HomePage = (props: HomePageProps) => {
                   >
                     <Box
                       sx={{
-                        width: " 16px",
+                        width: "16px",
                         height: "16px",
                         maskImage:
                           "url(https://static.xx.fbcdn.net/rsrc.php/v4/yc/r/eIvrDJ3tjTX.png)",

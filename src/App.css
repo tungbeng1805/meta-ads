@@ -402,4 +402,19 @@ body {
   background-color: #f5f5f5;
 }
 
+.date-range-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+}
+
+.date-range-field:hover {
+  background: rgba(167, 179, 191, 0.2);
+}
 /*END HOME-PAGE */
