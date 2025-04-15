@@ -10,52 +10,6 @@ import RightContent from "./components/RightContent";
 
 interface HomePageProps {}
 
-const columns: GridColDef[] = [
-  {
-    field: "accountName",
-    headerName: "Account Name",
-    width: 125,
-    renderCell: (params) => {
-      if (params.id === "summary") {
-        return (
-          <div>
-            <p>Total results</p>
-            <p>Total results</p>
-          </div>
-        );
-      }
-      return <div>{params.value}</div>;
-    },
-  },
-  { field: "reach", headerName: "Reach", width: 172 },
-  { field: "impressions", headerName: "Impressions", width: 130 },
-  {
-    field: "frequency",
-    headerName: "Frequency",
-    width: 188,
-  },
-  {
-    field: "amountSpent",
-    headerName: "Amount spent",
-    width: 120,
-  },
-  {
-    field: "attributionSetting",
-    headerName: "Attribution setting",
-    width: 200,
-  },
-  {
-    field: "messagingConversationsStarted",
-    headerName: "Messaging conversations started",
-    width: 158,
-  },
-  {
-    field: "costPerMessagingConversationStarted",
-    headerName: "Cost per messaging conversation started",
-    width: 196,
-  },
-];
-
 const rows = [
   {
     id: 1,
@@ -109,6 +63,51 @@ const HomePage = (props: HomePageProps) => {
   const [rightContentType, setRightContentType] = React.useState<string | null>(
     "customise"
   );
+  const columns: GridColDef[] = [
+    {
+      field: "accountName",
+      headerName: "Account Name",
+      width: 153,
+      renderCell: (params) => {
+        if (params.id === "summary") {
+          return (
+            <div>
+              <p className="total">Total results</p>
+              <p className="row-display">{`${rows?.length}/${rows?.length} rows displayed`}</p>
+            </div>
+          );
+        }
+        return <div>{params.value}</div>;
+      },
+    },
+    { field: "reach", headerName: "Reach", width: 172 },
+    { field: "impressions", headerName: "Impressions", width: 130 },
+    {
+      field: "frequency",
+      headerName: "Frequency",
+      width: 188,
+    },
+    {
+      field: "amountSpent",
+      headerName: "Amount spent",
+      width: 120,
+    },
+    {
+      field: "attributionSetting",
+      headerName: "Attribution setting",
+      width: 200,
+    },
+    {
+      field: "messagingConversationsStarted",
+      headerName: "Messaging conversations started",
+      width: 158,
+    },
+    {
+      field: "costPerMessagingConversationStarted",
+      headerName: "Cost per messaging conversation started",
+      width: 196,
+    },
+  ];
 
   const totalReach = rows.reduce((sum, row) => sum + row.reach, 0);
   const totalImpressions = rows.reduce((sum, row) => sum + row.impressions, 0);
@@ -345,10 +344,7 @@ const HomePage = (props: HomePageProps) => {
               sx={{
                 border: 0,
                 "& .MuiDataGrid-row[data-id='summary']": {
-                  backgroundColor: "#f5f6f7",
-                  fontWeight: 500,
                   borderTop: "1px solid #ccc",
-                  color: "#333",
                   position: "fixed",
                   bottom: "-52px",
                   "& .MuiDataGrid-cell": {
@@ -376,10 +372,8 @@ const HomePage = (props: HomePageProps) => {
                 ),
                 footer: () => null,
               }}
+              rowSelection={false}
               className="table-custom"
-              getRowClassName={(params) =>
-                params.id === "summary" ? "summary-row" : ""
-              }
             />
           </Paper>
         </div>
