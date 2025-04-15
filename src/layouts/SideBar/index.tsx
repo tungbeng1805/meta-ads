@@ -1,8 +1,12 @@
+import ROUTERS_PATHS from "@/constants/router-paths";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 interface SideBarProps {}
 
 const SideBar = (props: SideBarProps) => {
+  const navigate = useNavigate();
+
   return (
     <div className="side-bar">
       <div className="menu-wrapper">
@@ -11,6 +15,9 @@ const SideBar = (props: SideBarProps) => {
             alt="logo"
             className="logo-image"
             src="https://static.xx.fbcdn.net/rsrc.php/yb/r/CnOoIyhtLSO.svg"
+            onClick={() => {
+              navigate(ROUTERS_PATHS.HOME);
+            }}
           />
           <div className="menu-btn media-btn">
             <img

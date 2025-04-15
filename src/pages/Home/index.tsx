@@ -2,7 +2,7 @@ import TooltipCustom from "@/components/TooltipCustom";
 import { TextField } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import { Box } from "@mui/system";
-import { DataGrid, GridColDef, GridPagination } from "@mui/x-data-grid";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import React from "react";
 import HomeHeader from "./components/HomeHeader";
 import RightContent from "./components/RightContent";
@@ -16,7 +16,11 @@ const columns: GridColDef[] = [
     width: 125,
     renderCell: (params) => {
       if (params.id === "summary") {
-        return <div>Total results</div>;
+        return (
+          <div>
+            <p>Total results</p>
+          </div>
+        );
       }
       return <div>{params.value}</div>;
     },
@@ -328,20 +332,21 @@ const HomePage = (props: HomePageProps) => {
             <DataGrid
               rows={displayRows}
               columns={columns}
-              initialState={{ pagination: { paginationModel } }}
-              pageSizeOptions={[5, 10]}
-              sx={{ border: 0}}
+              sx={{ border: 0 }}
               slots={{
-                columnMenuIcon: () => <Box
-                sx={{
-                  width: " 12px",
-                  height: "12px",
-                  maskImage:
-                    "url(https://static.xx.fbcdn.net/rsrc.php/v4/yc/r/eIvrDJ3tjTX.png)",
-                  maskPosition: "-181px -971px",
-                  background: "#1c2b33",
-                }}
-              />,
+                columnMenuIcon: () => (
+                  <Box
+                    sx={{
+                      width: " 12px",
+                      height: "12px",
+                      maskImage:
+                        "url(https://static.xx.fbcdn.net/rsrc.php/v4/yc/r/eIvrDJ3tjTX.png)",
+                      maskPosition: "-181px -971px",
+                      background: "#1c2b33",
+                    }}
+                  />
+                ),
+                footer: () => null,
               }}
               className="table-custom"
               getRowClassName={(params) =>
