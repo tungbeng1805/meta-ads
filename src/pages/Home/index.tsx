@@ -195,7 +195,7 @@ const HomePage = (props: HomePageProps) => {
       renderCell: (params) => {
         if (params.id === "summary") {
           return (
-            <div>
+            <div className="row-number">
               <p className="total">Total results</p>
               <p className="row-display">{`${rows?.length}/${rows?.length} rows displayed`}</p>
             </div>
@@ -204,32 +204,110 @@ const HomePage = (props: HomePageProps) => {
         return <div>{params.value}</div>;
       },
     },
-    { field: "reach", headerName: "Reach", width: 172 },
-    { field: "impressions", headerName: "Impressions", width: 130 },
+    { field: "reach", headerName: "Reach", width: 172,
+      renderCell: (params) => {
+        if (params.id === "summary") {
+          return (
+            <div className="row-number">
+              <p>{params.value}</p>
+              <span>Accounts Centre accounts</span>
+            </div>
+          );
+        }
+        return <div>{params.value}</div>;
+      }
+     },
+    { field: "impressions", headerName: "Impressions", width: 130,
+      renderCell: (params) => {
+        if (params.id === "summary") {
+          return (
+            <div className="row-number">
+              <p>{params.value}</p>
+              <span>Total</span>
+            </div>
+          );
+        }
+        return <div>{params.value}</div>;
+      }
+     },
     {
       field: "frequency",
       headerName: "Frequency",
       width: 188,
+      renderCell: (params) => {
+        if (params.id === "summary") {
+          return (
+            <div className="row-number">
+              <p>{params.value}</p>
+              <span>Per Accounts Centre account</span>
+            </div>
+          );
+        }
+        return <div>{params.value}</div>;
+      }
     },
     {
       field: "amountSpent",
       headerName: "Amount spent",
       width: 120,
+      renderCell: (params) => {
+        if (params.id === "summary") {
+          return (
+            <div className="row-number">
+              <p>₫{params.value}</p>
+              <span>Total Spent</span>
+            </div>
+          );
+        }
+        return <div>{params.value}</div>;
+      }
     },
     {
       field: "attributionSetting",
       headerName: "Attribution setting",
       width: 200,
+      renderCell: (params) => {
+        if (params.id === "summary") {
+          return (
+            <div className="row-number">
+              <span style={{ fontWeight: 700, color: '#000'}}>Multiple attribution settings</span>
+            </div>
+          );
+        }
+        return <div>{params.value}</div>;
+      }
     },
     {
       field: "messagingConversationsStarted",
       headerName: "Messaging conversations started",
       width: 158,
+      renderCell: (params) => {
+        if (params.id === "summary") {
+          return (
+            <div className="row-number">
+              <p>{params.value}</p>
+              <span>Total</span>
+            </div>
+          );
+        }
+        return <div>{params.value}</div>;
+      }
     },
     {
       field: "costPerMessagingConversationStarted",
       headerName: "Cost per messaging conversation started",
       width: 196,
+      renderCell: (params) => {
+        if (params.id === "summary") {
+          return (
+            <div className="row-number">
+              <p>₫{params.value}</p>
+              <span>Per Action</span>
+            </div>
+          );
+        }
+        return <div>{params.value}</div>;
+      }
     },
   ];
 
