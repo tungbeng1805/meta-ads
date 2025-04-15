@@ -336,10 +336,12 @@ const HomePage = (props: HomePageProps) => {
               sx={{
                 border: 0,
                 "& .MuiDataGrid-row[data-id='summary']": {
-                  backgroundColor: "#f5f6f7", 
+                  backgroundColor: "#f5f6f7",
                   fontWeight: 500,
                   borderTop: "1px solid #ccc",
                   color: "#333",
+                  position: "fixed",
+                  bottom: "-52px",
                   "& .MuiDataGrid-cell": {
                     paddingTop: "8px",
                     paddingBottom: "8px",
