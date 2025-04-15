@@ -195,7 +195,7 @@ const HomePage = (props: HomePageProps) => {
       renderCell: (params) => {
         if (params.id === "summary") {
           return (
-            <div className="row-number">
+            <div>
               <p className="total">Total results</p>
               <p className="row-display">{`${rows?.length}/${rows?.length} rows displayed`}</p>
             </div>
