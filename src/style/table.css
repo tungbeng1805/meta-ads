@@ -47,7 +47,7 @@
     text-align: right
 }
 
-.table-custom .last-row span {
+.table-custom .row-number span {
     font-size: 12px;
     color: #1c2b33a6;
 }
