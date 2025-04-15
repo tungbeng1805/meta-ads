@@ -41,6 +41,11 @@ const routes: IRoutesState[] = [
   },
   {
     layout: MainLayout,
+    path: ROUTERS_PATHS.CAMPAIGN,
+    component: lazy(() => import("@/pages/Campaign")),
+  },
+  {
+    layout: MainLayout,
     path: ROUTERS_PATHS.ADMIN_BUSINESS,
     component: lazy(() => import("@/pages/AdminBusiness")),
   },
