@@ -44,6 +44,11 @@ const routes: IRoutesState[] = [
     path: ROUTERS_PATHS.ADMIN_BUSINESS,
     component: lazy(() => import("@/pages/AdminBusiness")),
   },
+  {
+    layout: MainLayout,
+    path: ROUTERS_PATHS.CHART,
+    component: lazy(() => import("@/pages/Chart"))
+  }
 ];
 
 export default routes;
