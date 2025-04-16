@@ -1,21 +1,27 @@
-import React from "react";
-import CampaignHeader from "./components/CampaignHeader";
-import { Box, TextField } from "@mui/material";
-import CampaignTable from "./components/CampaignTable";
-import AdsetTable from "./components/AdSetTable";
-import AdsTable from "./components/AdsTable";
 import ReactDateRangePickerCustom from "@/components/DateRangePicker";
-import CampaignIcon from "@/components/SvgIcons/CampainIcon";
 import AdSetIcon from "@/components/SvgIcons/AdSetIcon";
 import AdsIcon from "@/components/SvgIcons/AdsIcon";
-import CampaignAction from "./components/CampaignAction";
-import TableHeaderAction from "./components/TableHeaderAction";
+import CampaignIcon from "@/components/SvgIcons/CampainIcon";
 import RightSideBar from "@/layouts/RightSidBar";
+import { Box, TextField } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import AdsetTable from "./components/AdSetTable";
+import AdsTable from "./components/AdsTable";
+import CampaignAction from "./components/CampaignAction";
+import CampaignHeader from "./components/CampaignHeader";
+import CampaignTable from "./components/CampaignTable";
+import TableHeaderAction from "./components/TableHeaderAction";
+import { getParamsId } from "@/util";
+import axiosInstance from "@/services/api-services";
+import URL_PATHS from "@/services/url-path";
 
 interface CampaignProps {}
 
 const Campaign = (props: CampaignProps) => {
   const [tabActive, setTabActive] = React.useState<string>("campaign");
+  const [data, setData] = useState<Array<any>>([])
+
   const tabList = [
     {
       code: "campaign",
@@ -37,7 +43,7 @@ const Campaign = (props: CampaignProps) => {
   const renderTable = (type: string) => {
     switch (type) {
       case "campaign":
-        return <CampaignTable />;
+        return <CampaignTable data={data} />;
       case "adSet":
         return <AdsetTable />;
       case "ads":
@@ -50,6 +56,29 @@ const Campaign = (props: CampaignProps) => {
   const handleClickTab = (tab: string) => {
     setTabActive(tab);
   };
+
+  const id = getParamsId()
+  console.log('id', id);
+
+  const getData = async () => {
+    try {
+      // const response = await axiosInstance.get(URL_PATHS.GET_DETAIL_CAMPAIGS.replace(':id', id))
+      const response = await axiosInstance.get(URL_PATHS.GET_CAMPAIGS)
+      console.log('GET_CAMPAIGS', response);
+      
+      if(!!response) {
+        const data = response.data
+        setData(data)
+      }
+      console.log('response', response);
+      
+    } catch (error) {
+      
+    }
+  }
+  useEffect(() => {
+    getData()
+  }, [id])
 
   return (
     <Box position="relative">

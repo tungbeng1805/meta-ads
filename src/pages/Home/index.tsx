@@ -10,6 +10,7 @@ import RightContent from "./components/RightContent";
 import { useNavigate } from "react-router-dom";
 import ROUTERS_PATHS from "@/constants/router-paths";
 import axiosInstance from "@/services/api-services";
+import URL_PATHS from "@/services/url-path";
 
 interface HomePageProps {}
 
@@ -36,7 +37,7 @@ const HomePage = (props: HomePageProps) => {
             </div>
           );
         }
-        return <div onClick={() => handleClickName()}>{params.value}</div>;
+        return <div onClick={() => handleClickName(params.id)}>{params.value}</div>;
       },
     },
     { field: "reach", headerName: "Reach", width: 172,
@@ -147,14 +148,14 @@ const HomePage = (props: HomePageProps) => {
     },
   ];
 
-  const handleClickName = () => {
-    navigate(ROUTERS_PATHS.CAMPAIGN);
+  const handleClickName = (id: any) => {
+    navigate({pathname: ROUTERS_PATHS.CAMPAIGN, search: `?id=${id}`,});
   };
 
   useEffect( () => {
     const fetchData = async () => {
       try {
-        const response = await axiosInstance.get('/api/business/get-list');
+        const response = await axiosInstance.get(URL_PATHS.GET_BUSINESS);
         if(response) {
           const data: any = response.data
           const totalReach = data.reduce((sum: any, row: any) => sum + Number(row.reach), 0);
