@@ -11,6 +11,8 @@ const URL_PATHS = {
   CREATE_CAMPAIGNS: "/campaigns/create",
   UPDATE_CAMPAIGNS: "/campaigns/update/:id",
   DELETE_CAMPAIGNS: "/campaigns/delete/:id",
+  GET_CAMPAIGS: '/campaigns/get-list',
+  GET_DETAIL_CAMPAIGS: '/campaigns/get/:id'
 };
 
 export default URL_PATHS;
