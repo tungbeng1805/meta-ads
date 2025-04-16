@@ -4,67 +4,22 @@ import { TextField } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import { Box } from "@mui/system";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import React from "react";
+import React, { useEffect } from "react";
 import HomeHeader from "./components/HomeHeader";
 import RightContent from "./components/RightContent";
 import { useNavigate } from "react-router-dom";
 import ROUTERS_PATHS from "@/constants/router-paths";
+import axiosInstance from "@/services/api-services";
 
 interface HomePageProps {}
-
-const rows = [
-  {
-    id: 1,
-    accountName: "Trần Nhật Minh",
-    reach: 12345,
-    impressions: 23456,
-    frequency: 1.9,
-    amountSpent: "120.50",
-    attributionSetting: "7-day click",
-    messagingConversationsStarted: 56,
-    costPerMessagingConversationStarted: "2.15",
-  },
-  {
-    id: 2,
-    accountName: "Nguyễn Thị Hoa",
-    reach: 56789,
-    impressions: 67890,
-    frequency: 2.3,
-    amountSpent: "300.00",
-    attributionSetting: "1-day view",
-    messagingConversationsStarted: 34,
-    costPerMessagingConversationStarted: "3.45",
-  },
-  {
-    id: 3,
-    accountName: "Lê Văn An",
-    reach: 23456,
-    impressions: 34567,
-    frequency: 1.5,
-    amountSpent: 80.75,
-    attributionSetting: "Default",
-    messagingConversationsStarted: 23,
-    costPerMessagingConversationStarted: "3.51",
-  },
-  {
-    id: 4,
-    accountName: "Phạm Hồng Phúc",
-    reach: 9876,
-    impressions: 10500,
-    frequency: 1.06,
-    amountSpent: "45.00",
-    attributionSetting: "7-day click",
-    messagingConversationsStarted: 12,
-    costPerMessagingConversationStarted: "3.75",
-  },
-];
-
-const paginationModel = { page: 0, pageSize: 5 };
 
 const HomePage = (props: HomePageProps) => {
   const [rightContentType, setRightContentType] = React.useState<string | null>(
     "customise"
   );
+  const [rows, setRows] = React.useState<Array<any>>([])
+  const [displayRows, setDisplayRows] = React.useState<Array<any>>([])
+  console.log("🚀 ~ HomePage ~ displayRows:", displayRows)
   const navigate = useNavigate();
 
   const columns: GridColDef[] = [
@@ -86,6 +41,7 @@ const HomePage = (props: HomePageProps) => {
     },
     { field: "reach", headerName: "Reach", width: 172,
       renderCell: (params) => {
+        console.log("🚀 ~ HomePage ~ params:", params)
         if (params.id === "summary") {
           return (
             <div className="row-number">
@@ -195,33 +151,48 @@ const HomePage = (props: HomePageProps) => {
     navigate(ROUTERS_PATHS.CAMPAIGN);
   };
 
-  const totalReach = rows.reduce((sum, row) => sum + row.reach, 0);
-  const totalImpressions = rows.reduce((sum, row) => sum + row.impressions, 0);
-  const totalFrequency =
-    rows.reduce((sum, row) => sum + row.frequency, 0) / rows.length;
-  const totalAmountSpent = rows.reduce(
-    (sum, row) => sum + parseFloat(String(row.amountSpent)),
-    0
-  );
-  const totalMessages = rows.reduce(
-    (sum, row) => sum + row.messagingConversationsStarted,
-    0
-  );
-  const avgCostPerMessage = totalAmountSpent / totalMessages || 0;
+  useEffect( () => {
+    const fetchData = async () => {
+      try {
+        const response = await axiosInstance.get('/api/business/get-list');
+        if(response) {
+          const data: any = response.data
+          const totalReach = data.reduce((sum: any, row: any) => sum + Number(row.reach), 0);
+          const totalImpressions = data.reduce((sum: any, row: any) => sum + Number(row.impressions), 0);
+          const totalFrequency =
+            data.reduce((sum: any, row: any) => sum + row.frequency, 0) / data.length;
+          const totalAmountSpent = data.reduce(
+            (sum: any, row: any) => sum + parseFloat(String(row.amountSpent)),
+            0
+          );
+          const totalMessages = rows.reduce(
+            (sum, row) => sum + Number(row.messaginConversationStarted),
+            0
+          );
+          const avgCostPerMessage = totalAmountSpent / totalMessages || 0;
+          const summaryRow = {
+            id: "summary",
+            accountName: "Total results",
+            reach: totalReach,
+            impressions: totalImpressions,
+            frequency: Number(totalFrequency.toFixed(2)),
+            amountSpent: totalAmountSpent.toFixed(2),
+            attributionSetting: "Multiple attribution settinng",
+            messagingConversationsStarted: totalMessages,
+            costPerMessagingConversationStarted: avgCostPerMessage.toFixed(2),
+          };
+          const _data = [...data, summaryRow];
+          setRows(data)
+          setDisplayRows(_data)
+        }
+        console.log(response.data);
+      } catch (error) {
+        console.error('Lỗi khi gọi API:', error);
+      }
+    };
 
-  const summaryRow = {
-    id: "summary",
-    accountName: "Total results",
-    reach: totalReach,
-    impressions: totalImpressions,
-    frequency: Number(totalFrequency.toFixed(2)),
-    amountSpent: totalAmountSpent.toFixed(2),
-    attributionSetting: "Multiple attribution settinng",
-    messagingConversationsStarted: totalMessages,
-    costPerMessagingConversationStarted: avgCostPerMessage.toFixed(2),
-  };
-
-  const displayRows = [...rows, summaryRow];
+  fetchData();
+  }, [])
 
   return (
     <div className="home-page">
