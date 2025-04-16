@@ -10,6 +10,7 @@ import AdSetIcon from "@/components/SvgIcons/AdSetIcon";
 import AdsIcon from "@/components/SvgIcons/AdsIcon";
 import CampaignAction from "./components/CampaignAction";
 import TableHeaderAction from "./components/TableHeaderAction";
+import RightSideBar from "@/layouts/RightSidBar";
 
 interface CampaignProps {}
 
@@ -51,92 +52,95 @@ const Campaign = (props: CampaignProps) => {
   };
 
   return (
-    <div className="campaign-page">
-      <CampaignHeader />
-      <div className="content-wrapper">
-        <CampaignAction />
-        <Box
-          height="38px"
-          bgcolor="white"
-          padding="0px 8px 0px 16px"
-          margin="0 8px"
-          borderRadius={1}
-          display="flex"
-          alignItems="center"
-        >
-          <TextField
-            label=""
-            variant="outlined"
-            size="small"
-            placeholder="Search by name, ID or metrics"
-            sx={{
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  borderColor: "transparent",
+    <Box position="relative">
+      <div className="campaign-page">
+        <CampaignHeader />
+        <div className="content-wrapper">
+          <CampaignAction />
+          <Box
+            height="38px"
+            bgcolor="white"
+            padding="0px 8px 0px 16px"
+            margin="0 8px"
+            borderRadius={1}
+            display="flex"
+            alignItems="center"
+          >
+            <TextField
+              label=""
+              variant="outlined"
+              size="small"
+              placeholder="Search by name, ID or metrics"
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderColor: "transparent",
+                  },
+                  "&:hover fieldset": {
+                    borderColor: "transparent",
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderWidth: "1px",
+                    borderColor: "#002aa5",
+                    borderRadius: 4,
+                  },
                 },
-                "&:hover fieldset": {
-                  borderColor: "transparent",
-                },
-                "&.Mui-focused fieldset": {
-                  borderWidth: "1px",
-                  borderColor: "#002aa5",
-                  borderRadius: 4,
-                },
-              },
-            }}
-            slotProps={{
-              input: {
-                sx: {
-                  input: {
-                    padding: "4.5px 10px",
-                    fontSize: "14px",
-                    width: "258px",
-                    "&::placeholder": {
-                      color: "rgba(28, 43, 51, 0.6)",
-                      opacity: 1,
+              }}
+              slotProps={{
+                input: {
+                  sx: {
+                    input: {
+                      padding: "4.5px 10px",
+                      fontSize: "14px",
+                      width: "258px",
+                      "&::placeholder": {
+                        color: "rgba(28, 43, 51, 0.6)",
+                        opacity: 1,
+                      },
                     },
                   },
                 },
-              },
-            }}
-          />
-        </Box>
-        <Box>
-          <Box
-            display="flex"
-            alignItems="flex-start"
-            justifyContent="space-between"
-            padding="0px 8px"
-          >
-            <Box display="flex" alignItems="flex-end" gap="8px">
-              {tabList?.map((tab) => {
-                const active = tab?.code === tabActive;
-
-                return (
-                  <div
-                    key={tab?.code}
-                    className={`tab ${active ? "tabActive" : ""}`}
-                    onClick={() => handleClickTab(tab?.code)}
-                  >
-                    {tab?.icon}
-                    {tab?.label}
-                  </div>
-                );
-              })}
-            </Box>
-            <ReactDateRangePickerCustom
-              onChange={(dateRange) => {}}
-              initialDateRange={{
-                startDate: new Date(),
-                endDate: new Date(),
               }}
             />
           </Box>
-          <TableHeaderAction />
-          {renderTable(tabActive)}
-        </Box>
+          <Box>
+            <Box
+              display="flex"
+              alignItems="flex-start"
+              justifyContent="space-between"
+              padding="0px 8px"
+            >
+              <Box display="flex" alignItems="flex-end" gap="8px">
+                {tabList?.map((tab) => {
+                  const active = tab?.code === tabActive;
+
+                  return (
+                    <div
+                      key={tab?.code}
+                      className={`tab ${active ? "tabActive" : ""}`}
+                      onClick={() => handleClickTab(tab?.code)}
+                    >
+                      {tab?.icon}
+                      {tab?.label}
+                    </div>
+                  );
+                })}
+              </Box>
+              <ReactDateRangePickerCustom
+                onChange={(dateRange) => {}}
+                initialDateRange={{
+                  startDate: new Date(),
+                  endDate: new Date(),
+                }}
+              />
+            </Box>
+            <TableHeaderAction />
+            {renderTable(tabActive)}
+          </Box>
+        </div>
       </div>
-    </div>
+      <RightSideBar />
+    </Box>
   );
 };
 
