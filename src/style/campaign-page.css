@@ -1,13 +1,13 @@
-.campain-page .campaign-title {
+.campaign-page .campaign-title {
   font-size: 18px;
   font-weight: bold;
 }
 
-.campain-page .media-btn {
+.campaign-page .media-btn {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 7px 12px;
+  padding: 6px 12px;
   background-color: white;
   cursor: pointer;
   border-radius: 4px;
@@ -15,14 +15,25 @@
   font-size: 14px;
   font-weight: 400;
   line-height: 20px;
+  gap: 8px;
 }
 
-.campain-page .update-ago {
+.campaign-page .campaign-code {
+  max-width: 180px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  vertical-align: middle;
+  color: #1c2b33;
+}
+
+.campaign-page .update-ago {
   font-size: 14px;
   color: #1c2b33;
 }
 
-.campain-page .content-wrapper {
+.campaign-page .content-wrapper {
   position: relative;
   width: 100%;
   height: 100%;
@@ -36,7 +47,7 @@
   gap: 8px;
 }
 
-.campain-page .tab {
+.campaign-page .tab {
   display: flex;
   align-items: center;
   height: 40px;
@@ -47,22 +58,22 @@
   color: #1c2b33;
   border-radius: 8px 8px 0px 0px;
   gap: 8px;
-  box-shadow: rgba(0, 0, 0, 0.1) 0 5px 5px 0;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 0 5px 0;
   cursor: pointer;
 }
 
-.campain-page .tabActive {
+.campaign-page .tabActive {
   height: 45px;
   background: white;
   color: #0a78be;
 }
 
-.campain-page .tabActive svg {
+.campaign-page .tabActive svg {
   width: 24px;
   height: 24px;
 }
 
-.campain-page .btn-action {
+.campaign-page .btn-action {
   border: 1px solid rgba(0, 0, 0, 0.4);
   padding: 8px 12px;
   border-radius: 4px;
@@ -76,17 +87,54 @@
   line-height: 18px;
 }
 
-.campain-page .btn-ghost {
+.campaign-page .btn-hight-light {
+  border: 1px solid #0a78be;
+}
+
+.campaign-page .btn-ghost {
   font-weight: 500;
   border: none;
 }
 
-.campain-page .btn-action:hover {
+.campaign-page .btn-action:hover {
   background: rgba(167, 179, 191, 0.2);
 }
 
-.campain-page .divider-campaign {
+.campaign-page .divider-campaign {
   background: rgb(218, 221, 225);
   width: 1px;
   height: 20px;
+}
+
+.campaign-page .tv-wrapper {
+  padding: 3px;
+  border-radius: 100%;
+  background: #f1f4f7;
+  border: 1px solid rgb(218, 221, 225);
+}
+
+.campaign-page .btn-create {
+  background: #007e59;
+  color: white;
+  border-color: #007e59;
+}
+
+.campaign-page .btn-create:hover {
+  background: #006b4e;
+  border-color: #006b4e;
+}
+
+.campaign-page .divider-button-action {
+  background: rgb(218, 221, 225);
+  width: 1px;
+  height: 36px;
+}
+
+.campaign-page .export-btn {
+  border-radius: 4px 0px 0px 4px;
+}
+
+.campaign-page .export-more-btn {
+  border-radius: 0px 4px 4px 0px;
+  border-left: none;
 }
