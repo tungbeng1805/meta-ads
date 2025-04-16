@@ -6,6 +6,11 @@ const URL_PATHS = {
   CREATE_BUSINESS: "/business/create",
   UPDATE_BUSINESS: "/business/update/:id",
   DELETE_BUSINESS: "/business/delete/:id",
+  GET_CAMPAIGNS: "/campaigns/get-list",
+  GET_DETAIL_CAMPAIGNS: "/campaigns/get/:id",
+  CREATE_CAMPAIGNS: "/campaigns/create",
+  UPDATE_CAMPAIGNS: "/campaigns/update/:id",
+  DELETE_CAMPAIGNS: "/campaigns/delete/:id",
 };
 
 export default URL_PATHS;
