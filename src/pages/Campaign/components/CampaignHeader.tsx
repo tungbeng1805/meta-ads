@@ -22,6 +22,7 @@ const CampaignHeader = () => {
                 borderRadius: 1,
                 border: "1px solid lightgray;",
                 opacity: 0.5,
+                overflow: "hidden",
               }}
             >
               <img
@@ -29,11 +30,25 @@ const CampaignHeader = () => {
                 src="https://scontent.fhan3-5.fna.fbcdn.net/v/t39.30808-1/433773926_122095156838255660_844091820876077575_n.jpg?stp=cp0_dst-jpg_s32x32_tt6&_nc_cat=108&ccb=1-7&_nc_sid=473152&_nc_ohc=rXIqLFFtD3MQ7kNvwEIUCaA&_nc_oc=Adkd2xt9wGNPQqm2HuOr5n5yDN2FSkVkJ7voyhah1BvC8iH5g59cyRBFRa4cgFlE8T6_UNbLj18zlVKlKdtS_5PC&_nc_zt=24&_nc_ht=scontent.fhan3-5.fna&_nc_gid=xLHUoh92ktEl4K3MrCmGGg&oh=00_AfHJBv6a-v7cBRoJI-BKdWFIcZTfyxfUaVCKO5DwouINoA&oe=68002377"
               />
             </Box>
-            1109426426526335(170119342521371)
+            <div className="divider-campaign" />
+            <div className="tv-wrapper">
+              <Box
+                sx={{
+                  width: "16px",
+                  height: "16px",
+                  maskImage:
+                    "url(https://static.xx.fbcdn.net/rsrc.php/v4/yl/r/_tluDGOtAlV.png?_nc_eui2=AeFWQe1bHi04-awbDGavvrLYjXcSO7ekFu2NdxI7t6QW7RbiaBOA0xM5n7Af6QrZZmVqRWlC35ipB2hgp3IC3Tyb)",
+                  maskPosition: "0 -365px",
+                  background: "#1c2b33",
+                  maskSize: "25px 1271px",
+                }}
+              />
+            </div>
+            <p className="campaign-code">1109426426526335(170119342521371)</p>
           </Box>
           <Box
             sx={{
-              width: " 16px",
+              width: "16px",
               height: "16px",
               maskImage:
                 "url(https://static.xx.fbcdn.net/rsrc.php/v4/y-/r/pqHpzOoq1-k.png)",

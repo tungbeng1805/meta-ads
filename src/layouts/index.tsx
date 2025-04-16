@@ -12,7 +12,7 @@ const useStyles = makeStyles({
     left: 0,
     position: "relative",
     transition: "all 0.3s ease-in-out",
-    padding: "8px 24px 16px 24px",
+    // padding: "8px 24px 16px 24px",
     background: "transparent",
   },
   paperContainer: {
