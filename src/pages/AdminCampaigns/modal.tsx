@@ -16,6 +16,7 @@ import {
   styled,
 } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers";
+import moment from "moment";
 import { Controller, useForm } from "react-hook-form";
 import { Bounce, toast } from "react-toastify";
 
@@ -55,8 +56,12 @@ const ModalAdminBusiness = (props: any) => {
 
   const onSubmit = async (data: any) => {
     try {
+      const endsDate = data?.endsDate ? moment(new Date(data?.endsDate)).format("YYYY/MM/DD") : null;
       const item: any = props?.defaultValues
-        ? await axiosInstance.put(URL_PATHS.UPDATE_CAMPAIGNS.replace(":id", props?.defaultValues?.id), data)
+        ? await axiosInstance.put(URL_PATHS.UPDATE_CAMPAIGNS.replace(":id", props?.defaultValues?.id), {
+            ...data,
+            endsDate,
+          })
         : await axiosInstance.post(URL_PATHS.CREATE_CAMPAIGNS, data);
       if (item?.status === 200) {
         props.getList();
@@ -421,6 +426,7 @@ const ModalAdminBusiness = (props: any) => {
                     onChange={onChange}
                     slots={{ textField: TextFieldCustom }}
                     disabled={!!watch("endsOngoing")}
+                    format="DD/MM/YYYY"
                   />
                 )}
               />
