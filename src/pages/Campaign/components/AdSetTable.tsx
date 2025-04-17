@@ -1,139 +1,284 @@
 import ROUTERS_PATHS from "@/constants/router-paths";
-import { Box } from "@mui/system";
+import axiosInstance from "@/services/api-services";
+import URL_PATHS from "@/services/url-path";
+import { getParamsId } from "@/util";
+import { Switch } from "@mui/material";
+import { Box, styled } from "@mui/system";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-interface AdsetTableProps {}
+interface AdsetTableProps { }
 
-const rows = [
-  {
-    id: 1,
-    accountName: "Trần Nhật Minh",
-    reach: 12345,
-    impressions: 23456,
-    frequency: 1.9,
-    amountSpent: "120.50",
-    attributionSetting: "7-day click",
-    messagingConversationsStarted: 56,
-    costPerMessagingConversationStarted: "2.15",
+const IOSSwitch = styled((props: any) => (
+  <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
+))(({ theme }) => ({
+  width: 42,
+  height: 26,
+  padding: 0,
+  '& .MuiSwitch-switchBase': {
+    padding: 0,
+    margin: 2,
+    transitionDuration: '300ms',
+    '&.Mui-checked': {
+      transform: 'translateX(16px)',
+      color: '#fff',
+      '& + .MuiSwitch-track': {
+        backgroundColor: '#0a78be',
+        opacity: 1,
+        border: 0,
+        ...theme.applyStyles('dark', {
+          backgroundColor: '#0a78be',
+        }),
+      },
+      '&.Mui-disabled + .MuiSwitch-track': {
+        opacity: 0.5,
+      },
+    },
+    '&.Mui-focusVisible .MuiSwitch-thumb': {
+      color: '#0a78be',
+      border: '6px solid #fff',
+    },
+    '&.Mui-disabled + .MuiSwitch-track': {
+      opacity: 0.7,
+      ...theme.applyStyles('dark', {
+        opacity: 0.3,
+      }),
+    },
   },
-  {
-    id: 2,
-    accountName: "Nguyễn Thị Hoa",
-    reach: 56789,
-    impressions: 67890,
-    frequency: 2.3,
-    amountSpent: "300.00",
-    attributionSetting: "1-day view",
-    messagingConversationsStarted: 34,
-    costPerMessagingConversationStarted: "3.45",
+  '& .MuiSwitch-thumb': {
+    boxSizing: 'border-box',
+    width: 22,
+    height: 22,
   },
-  {
-    id: 3,
-    accountName: "Lê Văn An",
-    reach: 23456,
-    impressions: 34567,
-    frequency: 1.5,
-    amountSpent: 80.75,
-    attributionSetting: "Default",
-    messagingConversationsStarted: 23,
-    costPerMessagingConversationStarted: "3.51",
+  '& .MuiSwitch-track': {
+    borderRadius: 26 / 2,
+    backgroundColor: '#E9E9EA',
+    opacity: 1,
+    transition: theme?.transitions?.create(['background-color'], {
+      duration: 500,
+    }),
+    ...theme.applyStyles('dark', {
+      backgroundColor: '#39393D',
+    }),
   },
-  {
-    id: 4,
-    accountName: "Phạm Hồng Phúc",
-    reach: 9876,
-    impressions: 10500,
-    frequency: 1.06,
-    amountSpent: "45.00",
-    attributionSetting: "7-day click",
-    messagingConversationsStarted: 12,
-    costPerMessagingConversationStarted: "3.75",
-  },
-];
-
-const paginationModel = { page: 0, pageSize: 5 };
+}));
 
 const AdsetTable = (props: AdsetTableProps) => {
+  const [rows, setRows] = useState<Array<any>>([])
+  const [displayRows, setDisplayRows] = useState<Array<any>>([])
   const navigate = useNavigate();
+
+  const hanldeSelectRow = (id: any) => {
+
+  }
+
   const columns: GridColDef[] = [
     {
-      field: "accountName",
-      headerName: "Account Name",
+      field: "onoff",
+      headerName: "Off/On",
+      width: 100,
+      renderCell: (params) => {
+        if (params.id !== "summary") {
+          return (
+            <IOSSwitch sx={{ m: 1 }} onClick={() => hanldeSelectRow(String(params.id))} />
+          );
+        }
+      },
+    },
+    {
+      field: "adSet",
+      headerName: "Ad set",
       width: 153,
       renderCell: (params) => {
         if (params.id === "summary") {
           return (
             <div>
-              <p className="total">Total results</p>
-              <p className="row-display">{`${rows?.length}/${rows?.length} rows displayed`}</p>
+              <p >{`Results from ${rows?.length}/${rows?.length} campaigns`}</p>
             </div>
           );
         }
         return <div onClick={() => handleClickName()}>{params.value}</div>;
       },
     },
-    { field: "reach", headerName: "Reach", width: 172 },
-    { field: "impressions", headerName: "Impressions", width: 130 },
     {
-      field: "frequency",
-      headerName: "Frequency",
+      field: "deliveryStatus", headerName: "Delivery", width: 172
+    },
+    { field: "bidStrategyCost", headerName: "Bid strategy", width: 130 },
+    {
+      field: "budgetDescription",
+      headerName: "Budget",
       width: 188,
+      renderCell: (params) => {
+        if (params.id !== 'summary') {
+          return (
+            <div>
+              <div>{`đ ${params.row.budgetCost}`}</div>
+              <div>{params.row.budgetDescription}</div>
+            </div>
+          );
+        }
+        return <div></div>
+      }
     },
     {
-      field: "amountSpent",
-      headerName: "Amount spent",
-      width: 120,
+      field: 'lastSignificantEdit',
+      headerName: 'Last significant edit',
+      width: 188,
     },
     {
       field: "attributionSetting",
       headerName: "Attribution setting",
+      width: 120,
+      renderCell: (params) => {
+        if (params.id === 'summary') {
+          return (
+            <div>
+              <div>Multiple attribution settings</div>
+            </div>
+          );
+        }
+      }
+    },
+    {
+      field: "resultsCost",
+      headerName: "Results",
       width: 200,
+      renderCell: (params) => {
+        if (params.id !== 'summary') {
+          return (
+            <div>
+              <div>{`đ ${params.row.resultsCost}`}</div>
+              <div>{params.row.resultsDescription}</div>
+            </div>
+          );
+        }
+        return (
+          <div>
+            <p>{`đ ${params.row.resultsCost}`}</p>
+            <p>Multiple conversions</p>
+          </div>
+        )
+      }
     },
     {
-      field: "messagingConversationsStarted",
-      headerName: "Messaging conversations started",
+      field: "reach",
+      headerName: "Reach",
       width: 158,
+      renderCell: (params) => {
+        if (params.id == 'summary') {
+          return (
+            <div>
+              <div>{params.row.reach}</div>
+              <div>Accounts Centre accounts</div>
+            </div>
+          );
+        }
+      }
     },
     {
-      field: "costPerMessagingConversationStarted",
-      headerName: "Cost per messaging conversation started",
+      field: "impressions",
+      headerName: "Impressions",
       width: 196,
+      renderCell: (params) => {
+        if (params.id == 'summary') {
+          return (
+            <div>
+              <div>{params.row.impressions}</div>
+              <div>Total</div>
+            </div>
+          );
+        }
+      }
     },
+    {
+      field: "costPerResultCost",
+      headerName: "Cost per result",
+      width: 196,
+      renderCell: (params) => {
+        if (params.id == 'summary') {
+          return (
+            <div>
+              <div>{params.row.costPerResultCost}</div>
+              <div>Multiple conversions</div>
+            </div>
+          );
+        }
+      }
+    },
+    {
+      field: "amountSpent",
+      headerName: "Amount spent",
+      width: 196,
+      renderCell: (params) => {
+        if (params.id == 'summary') {
+          return (
+            <div>
+              <div>{`đ ${params.row.amountSpent}`}</div>
+              <div>Total Spent</div>
+            </div>
+          );
+        }
+      }
+    },
+    {
+      field: "endsOngoing",
+      headerName: "Ends",
+      width: 196,
+    }
   ];
 
   const handleClickName = () => {
-    navigate(ROUTERS_PATHS.CAMPAIGN);
+    // navigate(ROUTERS_PATHS.CAMPAIGN);
   };
 
-  const totalReach = rows.reduce((sum, row) => sum + row.reach, 0);
-  const totalImpressions = rows.reduce((sum, row) => sum + row.impressions, 0);
-  const totalFrequency =
-    rows.reduce((sum, row) => sum + row.frequency, 0) / rows.length;
-  const totalAmountSpent = rows.reduce(
-    (sum, row) => sum + parseFloat(String(row.amountSpent)),
-    0
-  );
-  const totalMessages = rows.reduce(
-    (sum, row) => sum + row.messagingConversationsStarted,
-    0
-  );
-  const avgCostPerMessage = totalAmountSpent / totalMessages || 0;
 
-  const summaryRow = {
-    id: "summary",
-    accountName: "Total results",
-    reach: totalReach,
-    impressions: totalImpressions,
-    frequency: Number(totalFrequency.toFixed(2)),
-    amountSpent: totalAmountSpent.toFixed(2),
-    attributionSetting: "Multiple attribution settinng",
-    messagingConversationsStarted: totalMessages,
-    costPerMessagingConversationStarted: avgCostPerMessage.toFixed(2),
-  };
 
-  const displayRows = [...rows, summaryRow];
+  const objParam = getParamsId()
 
+  const getData = async () => {
+    const business_id = objParam?.business_id
+    const selected_campaign_ids = objParam?.selected_campaign_ids
+
+    try {
+      const params = {
+        business_id: business_id && !selected_campaign_ids ? business_id : '',
+        campaign_id: !!selected_campaign_ids ? selected_campaign_ids.replaceAll('and', ',') : []
+      }
+      const response = await axiosInstance.get(URL_PATHS.GET_AD_SET, { params })
+      if (response && response.data) {
+        const data = response.data
+        const totalReach = data.reduce((sum: any, row: any) => sum + row.reach, 0);
+        const totalResultsCost = data.reduce((sum: any, row: any) => sum + row.resultsCost, 0);
+        const totalCostPerResultCost = data.reduce((sum: any, row: any) => sum + row.costPerResultCost, 0);
+        const totalImpressions = data.reduce((sum: any, row: any) => sum + row.impressions, 0);
+        const totalAmountSpent = data.reduce(
+          (sum: any, row: any) => sum + parseFloat(String(row.amountSpent)),
+          0
+        );
+
+        const summaryRow = {
+          id: "summary",
+          accountName: "Total results",
+          reach: totalReach,
+          impressions: totalImpressions,
+          resultsCost: totalResultsCost,
+          costPerResultCost: totalCostPerResultCost,
+          amountSpent: totalAmountSpent.toFixed(2),
+          attributionSetting: "Multiple attribution settinng",
+        };
+        const displayRows = [...data, summaryRow];
+        setDisplayRows(displayRows)
+      }
+      console.log("🚀 ~ getData ~ response:", response)
+    } catch (error) {
+
+    }
+  }
+
+  useEffect(() => {
+    getData()
+  }, [JSON.stringify(objParam)])
   return (
     <DataGrid
       rows={displayRows}

@@ -1,4 +1,5 @@
 import ROUTERS_PATHS from "@/constants/router-paths";
+import { getParamsId } from "@/util";
 import { Switch } from "@mui/material";
 import { Box, styled } from "@mui/system";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
@@ -11,7 +12,7 @@ interface CampaignTableProps {
 
 const paginationModel = { page: 0, pageSize: 5 };
 
-const IOSSwitch = styled((props) => (
+const IOSSwitch = styled((props: any) => (
   <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
 ))(({ theme }) => ({
   width: 42,
@@ -75,10 +76,29 @@ const CampaignTable = (props: CampaignTableProps) => {
   const { data } = props
   const [rows, setRows] = useState<Array<any>>([])
   const [displayRows, setDisplayRows] = useState<Array<any>>([])
+  const [arrSelectedRow, setArrSelectedRow] = useState<Array<any>>([])
 
-  console.log('data', data);
-  
   const navigate = useNavigate();
+
+  const hanldeSelectRow = (id: any) => {
+    let arr = [...arrSelectedRow]
+    if(arrSelectedRow.includes(id)) {
+      arr = arr.filter((i) => i !== id)
+    } else {
+      arr.push(id)
+    }
+
+    const stringId = arr.reduce((acc:any, cur: any) => { return acc += String(cur) }, '')
+    const params = new URLSearchParams(window.location.search);
+     if (stringId !== '') {
+      params.set('selected_campaign_ids', stringId);
+    } else {
+      params.delete('selected_campaign_ids');
+    }
+    const newUrl = `${window.location.pathname}?${params.toString()}`;
+    window.history.pushState({}, '', newUrl)
+    setArrSelectedRow(arr)
+  }
   const columns: GridColDef[] = [
     {
       field: "onoff",
@@ -87,7 +107,7 @@ const CampaignTable = (props: CampaignTableProps) => {
       renderCell: (params) => {
         if (params.id !== "summary") {
           return (
-            <IOSSwitch sx={{ m: 1 }} />
+            <IOSSwitch sx={{ m: 1 }} onClick={() => hanldeSelectRow(String(params.id))} checked={arrSelectedRow.includes(String(params.id))} />
           );
         }
       },
@@ -108,13 +128,25 @@ const CampaignTable = (props: CampaignTableProps) => {
         return <div onClick={() => handleClickName()}>{params.value}</div>;
       },
     },
-    { field: "deliveryDescription", headerName: "Delivery", width: 172
-     },
+    {
+      field: "deliveryDescription", headerName: "Delivery", width: 172
+    },
     { field: "bidStrategy", headerName: "Bid strategy", width: 130 },
     {
       field: "budgetDescription",
       headerName: "Budget",
       width: 188,
+      renderCell: (params) => {
+          if(params.id !== 'summary') {
+            return (
+              <div>
+                <div>{`đ ${params.row.budgetCost}`}</div>
+                <div>{params.row.budgetDescription}</div>
+              </div>
+            );
+          }
+          return <div></div>
+      }
     },
     {
       field: "attributionSetting",
@@ -122,29 +154,80 @@ const CampaignTable = (props: CampaignTableProps) => {
       width: 120,
     },
     {
-      field: "resultsDescription",
+      field: "resultsCost",
       headerName: "Results",
       width: 200,
+      renderCell: (params) => {
+          if(params.id !== 'summary') {
+            return (
+              <div>
+                <div>{`đ ${params.row.resultsCost}`}</div>
+                <div>{params.row.resultsDescription}</div>
+              </div>
+            );
+          }
+          return <div>{`đ ${params.row.resultsCost}`}</div>
+      }
     },
     {
       field: "reach",
       headerName: "Reach",
       width: 158,
+      renderCell: (params) => {
+          if(params.id == 'summary') {
+            return (
+              <div>
+                <div>{params.row.reach}</div>
+                <div>Accounts Centre accounts</div>
+              </div>
+            );
+          }
+      }
     },
     {
       field: "impressions",
       headerName: "Impressions",
       width: 196,
+      renderCell: (params) => {
+          if(params.id == 'summary') {
+            return (
+              <div>
+                <div>{params.row.impressions}</div>
+                <div>Total</div>
+              </div>
+            );
+          }
+      }
     },
     {
       field: "costPerResultCost",
       headerName: "Cost per result",
       width: 196,
+      renderCell: (params) => {
+          if(params.id == 'summary') {
+            return (
+              <div>
+                <div>{params.row.costPerResultCost}</div>
+                <div>Multiple conversions</div>
+              </div>
+            );
+          }
+      }
     },
     {
       field: "amountSpent",
       headerName: "Amount spent",
       width: 196,
+      renderCell: (params) => {
+          if(params.id == 'summary') {
+            return (
+              <div>
+                <div>{`đ ${params.row.amountSpent}`}</div>
+                <div>Total Spent</div>
+              </div>
+            );
+          }
+      }
     },
     {
       field: "endsOngoing",
@@ -158,40 +241,62 @@ const CampaignTable = (props: CampaignTableProps) => {
   };
 
   useEffect(() => {
-    if(!!data) {
+    if (!!data) {
       setRows(data)
       const totalReach = data.reduce((sum: any, row: any) => sum + Number(row.reach), 0);
-  const totalImpressions = data.reduce((sum: any, row: any) => sum + Number(row.impressions), 0);
-  const totalFrequency =
-    data.reduce((sum: any, row: any) => sum + row.frequency, 0) / data.length;
-  const totalAmountSpent = data.reduce(
-    (sum: any, row: any) => sum + parseFloat(String(row.amountSpent)),
-    0
-  );
-  const totalCostPerResultCost= data.reduce(
-    (sum: any, row: any) => sum + Number(row.costPerResultCost),
-    0
-  );
+      const totalImpressions = data.reduce((sum: any, row: any) => sum + Number(row.impressions), 0);
+      const totalresultsCost =
+        data.reduce((sum: any, row: any) => sum + Number(row.resultsCost), 0)
+      const totalAmountSpent = data.reduce(
+        (sum: any, row: any) => sum + parseFloat(String(row.amountSpent)),
+        0
+      );
+      const totalCostPerResultCost = data.reduce(
+        (sum: any, row: any) => sum + Number(row.costPerResultCost),
+        0
+      );
 
-  const summaryRow = {
-    id: "summary",
-    accountName: "Total results",
-    reach: totalReach,
-    impressions: totalImpressions,
-    costPerResultCost: totalCostPerResultCost,
-    amountSpent: totalAmountSpent.toFixed(2),
-    attributionSetting: "Multiple attribution settinng",
-  };
-  const displayRows = [...data, summaryRow];
-  setDisplayRows(displayRows)
+      const summaryRow = {
+        id: "summary",
+        accountName: "Total results",
+        reach: totalReach,
+        impressions: totalImpressions,
+        costPerResultCost: totalCostPerResultCost,
+        amountSpent: totalAmountSpent.toFixed(2),
+        attributionSetting: "Multiple attribution settinng",
+        resultsCost: totalresultsCost
+      };
+      const displayRows = [...data, summaryRow];
+      setDisplayRows(displayRows)
     }
   }, [JSON.stringify(data)])
+
+  useEffect(() => {
+    const objParam = getParamsId()
+    const selected_campaign_ids = objParam?.selected_campaign_ids
+    const arrId = !!selected_campaign_ids ? selected_campaign_ids.split('and') : []
+    setArrSelectedRow(arrId) 
+  }, [])
 
   return (
     <DataGrid
       rows={displayRows}
       columns={columns}
       checkboxSelection={true}
+      onRowSelectionModelChange={(newSelection: any) => {
+        console.log("🚀 ~ CampaignTable ~ newSelection:", newSelection)
+        const _arr = newSelection.map((i: any) => String(i))
+        const stringId = _arr.reduce((acc:any, cur: any) => { return acc += String(cur) + 'and' }, '')
+        const params = new URLSearchParams(window.location.search);
+        if (stringId !== '') {
+          params.set('selected_campaign_ids', stringId);
+        } else {
+          params.delete('selected_campaign_ids');
+        }
+        const newUrl = `${window.location.pathname}?${params.toString()}`;
+        window.history.pushState({}, '', newUrl)
+        setArrSelectedRow(_arr) 
+      }}
       sx={{
         border: 0,
         "& .MuiDataGrid-row[data-id='summary']": {
@@ -208,6 +313,18 @@ const CampaignTable = (props: CampaignTableProps) => {
             justifyContent: "center",
             lineHeight: "1.2",
           },
+        },
+        "& .MuiDataGrid-cell[data-field='resultsCost']": {
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            lineHeight: "1.2",
+        },
+        "& .MuiDataGrid-cell[data-field='budgetDescription']": {
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            lineHeight: "1.2",
         },
       }}
       slots={{

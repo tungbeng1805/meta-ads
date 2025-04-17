@@ -149,7 +149,7 @@ const HomePage = (props: HomePageProps) => {
   ];
 
   const handleClickName = (id: any) => {
-    navigate({pathname: ROUTERS_PATHS.CAMPAIGN, search: `?id=${id}`,});
+    navigate({pathname: ROUTERS_PATHS.CAMPAIGN, search: `?business_id=${id}`,});
   };
 
   useEffect( () => {

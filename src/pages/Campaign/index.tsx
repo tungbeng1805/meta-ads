@@ -57,20 +57,20 @@ const Campaign = (props: CampaignProps) => {
     setTabActive(tab);
   };
 
-  const id = getParamsId()
-  console.log('id', id);
+  const paramObj = getParamsId()
 
   const getData = async () => {
     try {
-      // const response = await axiosInstance.get(URL_PATHS.GET_DETAIL_CAMPAIGS.replace(':id', id))
-      const response = await axiosInstance.get(URL_PATHS.GET_CAMPAIGS)
+      const params = {
+        business_id: paramObj.business_id
+      }
+      const response = await axiosInstance.get(URL_PATHS.GET_CAMPAIGS, {params})
       console.log('GET_CAMPAIGS', response);
       
       if(!!response) {
         const data = response.data
         setData(data)
       }
-      console.log('response', response);
       
     } catch (error) {
       
@@ -78,7 +78,7 @@ const Campaign = (props: CampaignProps) => {
   }
   useEffect(() => {
     getData()
-  }, [id])
+  }, [JSON.stringify(paramObj)])
 
   return (
     <Box position="relative">
