@@ -3,24 +3,25 @@ import AdSetIcon from "@/components/SvgIcons/AdSetIcon";
 import AdsIcon from "@/components/SvgIcons/AdsIcon";
 import CampaignIcon from "@/components/SvgIcons/CampainIcon";
 import RightSideBar from "@/layouts/RightSidBar";
+import axiosInstance from "@/services/api-services";
+import URL_PATHS from "@/services/url-path";
+import { getParamsId } from "@/util";
 import { Box, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import AdsetTable from "./components/AdSetTable";
 import AdsTable from "./components/AdsTable";
 import CampaignAction from "./components/CampaignAction";
 import CampaignHeader from "./components/CampaignHeader";
 import CampaignTable from "./components/CampaignTable";
 import TableHeaderAction from "./components/TableHeaderAction";
-import { getParamsId } from "@/util";
-import axiosInstance from "@/services/api-services";
-import URL_PATHS from "@/services/url-path";
+import ViewChart from "./components/ViewChart";
 
 interface CampaignProps {}
 
 const Campaign = (props: CampaignProps) => {
   const [tabActive, setTabActive] = React.useState<string>("campaign");
-  const [data, setData] = useState<Array<any>>([])
+  const [data, setData] = useState<Array<any>>([]);
+  const [isOpenChart, setIsOpenChart] = useState<boolean>(false);
 
   const tabList = [
     {
@@ -57,28 +58,30 @@ const Campaign = (props: CampaignProps) => {
     setTabActive(tab);
   };
 
-  const id = getParamsId()
-  console.log('id', id);
+  const id = getParamsId();
+  console.log("id", id);
 
   const getData = async () => {
     try {
       // const response = await axiosInstance.get(URL_PATHS.GET_DETAIL_CAMPAIGS.replace(':id', id))
-      const response = await axiosInstance.get(URL_PATHS.GET_CAMPAIGS)
-      console.log('GET_CAMPAIGS', response);
-      
-      if(!!response) {
-        const data = response.data
-        setData(data)
+      const response = await axiosInstance.get(URL_PATHS.GET_CAMPAIGS);
+      console.log("GET_CAMPAIGS", response);
+
+      if (!!response) {
+        const data = response.data;
+        setData(data);
       }
-      console.log('response', response);
-      
-    } catch (error) {
-      
-    }
-  }
+      console.log("response", response);
+    } catch (error) {}
+  };
+
   useEffect(() => {
-    getData()
-  }, [id])
+    getData();
+  }, [id]);
+
+  const handleToggleChart = (show: boolean) => {
+    setIsOpenChart(show);
+  };
 
   return (
     <Box position="relative">
@@ -168,7 +171,10 @@ const Campaign = (props: CampaignProps) => {
           </Box>
         </div>
       </div>
-      <RightSideBar />
+      <RightSideBar side="right" />
+      {isOpenChart && (
+        <ViewChart open={isOpenChart} onToggleChart={handleToggleChart} />
+      )}
     </Box>
   );
 };

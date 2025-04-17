@@ -18,9 +18,9 @@ const HomePage = (props: HomePageProps) => {
   const [rightContentType, setRightContentType] = React.useState<string | null>(
     "customise"
   );
-  const [rows, setRows] = React.useState<Array<any>>([])
-  const [displayRows, setDisplayRows] = React.useState<Array<any>>([])
-  console.log("🚀 ~ HomePage ~ displayRows:", displayRows)
+  const [rows, setRows] = React.useState<Array<any>>([]);
+  const [displayRows, setDisplayRows] = React.useState<Array<any>>([]);
+  console.log("🚀 ~ HomePage ~ displayRows:", displayRows);
   const navigate = useNavigate();
 
   const columns: GridColDef[] = [
@@ -37,12 +37,17 @@ const HomePage = (props: HomePageProps) => {
             </div>
           );
         }
-        return <div onClick={() => handleClickName(params.id)}>{params.value}</div>;
+        return (
+          <div onClick={() => handleClickName(params.id)}>{params.value}</div>
+        );
       },
     },
-    { field: "reach", headerName: "Reach", width: 172,
+    {
+      field: "reach",
+      headerName: "Reach",
+      width: 172,
       renderCell: (params) => {
-        console.log("🚀 ~ HomePage ~ params:", params)
+        console.log("🚀 ~ HomePage ~ params:", params);
         if (params.id === "summary") {
           return (
             <div className="row-number">
@@ -52,9 +57,12 @@ const HomePage = (props: HomePageProps) => {
           );
         }
         return <div>{params.value}</div>;
-      }
-     },
-    { field: "impressions", headerName: "Impressions", width: 130,
+      },
+    },
+    {
+      field: "impressions",
+      headerName: "Impressions",
+      width: 130,
       renderCell: (params) => {
         if (params.id === "summary") {
           return (
@@ -65,8 +73,8 @@ const HomePage = (props: HomePageProps) => {
           );
         }
         return <div>{params.value}</div>;
-      }
-     },
+      },
+    },
     {
       field: "frequency",
       headerName: "Frequency",
@@ -81,7 +89,7 @@ const HomePage = (props: HomePageProps) => {
           );
         }
         return <div>{params.value}</div>;
-      }
+      },
     },
     {
       field: "amountSpent",
@@ -97,7 +105,7 @@ const HomePage = (props: HomePageProps) => {
           );
         }
         return <div>{params.value}</div>;
-      }
+      },
     },
     {
       field: "attributionSetting",
@@ -107,12 +115,14 @@ const HomePage = (props: HomePageProps) => {
         if (params.id === "summary") {
           return (
             <div className="row-number">
-              <span style={{ fontWeight: 700, color: '#000'}}>Multiple attribution settings</span>
+              <span style={{ fontWeight: 700, color: "#000" }}>
+                Multiple attribution settings
+              </span>
             </div>
           );
         }
         return <div>{params.value}</div>;
-      }
+      },
     },
     {
       field: "messagingConversationsStarted",
@@ -128,7 +138,7 @@ const HomePage = (props: HomePageProps) => {
           );
         }
         return <div>{params.value}</div>;
-      }
+      },
     },
     {
       field: "costPerMessagingConversationStarted",
@@ -144,24 +154,35 @@ const HomePage = (props: HomePageProps) => {
           );
         }
         return <div>{params.value}</div>;
-      }
+      },
     },
   ];
 
   const handleClickName = (id: any) => {
-    navigate({pathname: ROUTERS_PATHS.CAMPAIGN, search: `?id=${id}`,});
+    const newTabUrl = `${import.meta.env.VITE_WEB_URL}${
+      ROUTERS_PATHS.CAMPAIGN
+    }?id=${id}`;
+    window.open(newTabUrl, "_blank");
+    // navigate({ pathname: ROUTERS_PATHS.CAMPAIGN, search: `?id=${id}` });
   };
 
-  useEffect( () => {
+  useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axiosInstance.get(URL_PATHS.GET_BUSINESS);
-        if(response) {
-          const data: any = response.data
-          const totalReach = data.reduce((sum: any, row: any) => sum + Number(row.reach), 0);
-          const totalImpressions = data.reduce((sum: any, row: any) => sum + Number(row.impressions), 0);
+        if (response) {
+          const data: any = response.data;
+          const totalReach = data.reduce(
+            (sum: any, row: any) => sum + Number(row.reach),
+            0
+          );
+          const totalImpressions = data.reduce(
+            (sum: any, row: any) => sum + Number(row.impressions),
+            0
+          );
           const totalFrequency =
-            data.reduce((sum: any, row: any) => sum + row.frequency, 0) / data.length;
+            data.reduce((sum: any, row: any) => sum + row.frequency, 0) /
+            data.length;
           const totalAmountSpent = data.reduce(
             (sum: any, row: any) => sum + parseFloat(String(row.amountSpent)),
             0
@@ -183,17 +204,17 @@ const HomePage = (props: HomePageProps) => {
             costPerMessagingConversationStarted: avgCostPerMessage.toFixed(2),
           };
           const _data = [...data, summaryRow];
-          setRows(data)
-          setDisplayRows(_data)
+          setRows(data);
+          setDisplayRows(_data);
         }
         console.log(response.data);
       } catch (error) {
-        console.error('Lỗi khi gọi API:', error);
+        console.error("Lỗi khi gọi API:", error);
       }
     };
 
-  fetchData();
-  }, [])
+    fetchData();
+  }, []);
 
   return (
     <div className="home-page">

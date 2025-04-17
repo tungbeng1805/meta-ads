@@ -18,7 +18,7 @@ const AdsIcon = (props: AdsIconProps) => {
           ></rect>
           <circle cx="4.5" cy="4.5" r="1"></circle>
           <path
-            stroke-linecap="round"
+            strokeLinecap="round"
             stroke="currentColor"
             fill="none"
             d="M7.5 4.5 12.5 4.5"

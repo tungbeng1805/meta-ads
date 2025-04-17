@@ -1,0 +1,44 @@
+<svg
+    viewBox="0 0 16 16"
+    width="1em"
+    height="1em"
+    fill="#0a78be"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g data-name="Layer 2">
+      <g>
+        <g data-name="16">
+          <rect
+            x="9.5"
+            y="0.5"
+            width="6"
+            height="6"
+            rx="1"
+          ></rect>
+          <rect
+            x="0.5"
+            y="0.5"
+            width="6"
+            height="6"
+            rx="1"
+          ></rect>
+          <rect
+            x="9.5"
+            y="9.5"
+            width="6"
+            height="6"
+            rx="1"
+            transform="rotate(90 12.5 12.5)"
+          ></rect>
+          <rect
+            x="0.5"
+            y="9.5"
+            width="6"
+            height="6"
+            rx="1"
+            transform="rotate(90 3.5 12.5)"
+          ></rect>
+        </g>
+      </g>
+    </g>
+  </svg>
