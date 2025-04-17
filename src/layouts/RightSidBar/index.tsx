@@ -2,15 +2,41 @@ import { Box } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-interface RightSideBarProps {}
+interface RightSideBarProps {
+  side: "left" | "right";
+  onCloseChart?: () => void;
+}
 
 const RightSideBar = (props: RightSideBarProps) => {
   const navigate = useNavigate();
+  const { side, onCloseChart } = props;
 
   return (
-    <div className="right-side-bar">
+    <div
+      className={`right-side-bar ${
+        side === "right" ? "side-position-right" : ""
+      }`}
+    >
       <div className="right-sidebar-wrapper">
-        <div className="menu-right-btn">
+        {side === "left" && (
+          <div
+            className="menu-right-btn active-btn"
+            onClick={onCloseChart && onCloseChart}
+          >
+            <Box
+              sx={{
+                width: "16px",
+                height: "16px",
+                maskImage:
+                  "url(https://static.xx.fbcdn.net/rsrc.php/v4/yY/r/pt0Lj1ecKyx.png?_nc_eui2=AeHwLCkNWNzZw2myX1Ar3-UtTSDsP7I53qBNIOw_sjneoK62_kNzbQZn0RM3q25Yj0-I_NzTEoKD2z5ntzVlZ4Ed)",
+                maskPosition: "-289px -346px",
+                maskSize: "441px 397px",
+                background: "white",
+              }}
+            />
+          </div>
+        )}
+        <div className={`menu-right-btn ${side === "left" && "active-btn"}`}>
           <Box
             sx={{
               width: "16px",

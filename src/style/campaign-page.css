@@ -143,3 +143,54 @@
   border-radius: 0px 4px 4px 0px;
   border-left: none;
 }
+
+/*VIEW CHART*/
+.view-chart-container {
+  width: calc(100vw - 56px);
+}
+
+.view-chart-wrapper {
+  display: flex;
+  margin-left: 44px;
+}
+
+.view-chart-menu {
+  min-width: 360px;
+  height: 100vh;
+  border-right: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.list-menu {
+  margin-top: 8px;
+}
+
+.list-menu .menu-btn {
+  padding: 0px 8px 0px 12px;
+  background: white;
+  cursor: pointer;
+  height: 48px;
+  display: flex;
+  align-items: center;
+}
+
+.list-menu .menu-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* .menu-btn .menu-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  min-width: 0;
+  width: 100%;
+  color: #1c2b33;
+} */
+
+.list-menu .active-menu {
+  background: #e1edf7;
+}
+
+/*END VIEW CHART*/
