@@ -80,25 +80,6 @@ const CampaignTable = (props: CampaignTableProps) => {
 
   const navigate = useNavigate();
 
-  const hanldeSelectRow = (id: any) => {
-    let arr = [...arrSelectedRow]
-    if(arrSelectedRow.includes(id)) {
-      arr = arr.filter((i) => i !== id)
-    } else {
-      arr.push(id)
-    }
-
-    const stringId = arr.reduce((acc:any, cur: any) => { return acc += String(cur) }, '')
-    const params = new URLSearchParams(window.location.search);
-     if (stringId !== '') {
-      params.set('selected_campaign_ids', stringId);
-    } else {
-      params.delete('selected_campaign_ids');
-    }
-    const newUrl = `${window.location.pathname}?${params.toString()}`;
-    window.history.pushState({}, '', newUrl)
-    setArrSelectedRow(arr)
-  }
   const columns: GridColDef[] = [
     {
       field: "onoff",
@@ -107,7 +88,7 @@ const CampaignTable = (props: CampaignTableProps) => {
       renderCell: (params) => {
         if (params.id !== "summary") {
           return (
-            <IOSSwitch sx={{ m: 1 }} onClick={() => hanldeSelectRow(String(params.id))} checked={arrSelectedRow.includes(String(params.id))} />
+            <IOSSwitch sx={{ m: 1 }} checked={arrSelectedRow.includes(String(params.id))} />
           );
         }
       },

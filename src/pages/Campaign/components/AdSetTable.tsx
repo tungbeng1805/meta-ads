@@ -5,6 +5,7 @@ import { getParamsId } from "@/util";
 import { Switch } from "@mui/material";
 import { Box, styled } from "@mui/system";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import moment from "moment";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -67,11 +68,9 @@ const IOSSwitch = styled((props: any) => (
 const AdsetTable = (props: AdsetTableProps) => {
   const [rows, setRows] = useState<Array<any>>([])
   const [displayRows, setDisplayRows] = useState<Array<any>>([])
-  const navigate = useNavigate();
+  const [arrSelectedRow, setArrSelectedRow] = useState<Array<any>>([])
 
-  const hanldeSelectRow = (id: any) => {
-
-  }
+  const objParam = getParamsId()
 
   const columns: GridColDef[] = [
     {
@@ -81,7 +80,7 @@ const AdsetTable = (props: AdsetTableProps) => {
       renderCell: (params) => {
         if (params.id !== "summary") {
           return (
-            <IOSSwitch sx={{ m: 1 }} onClick={() => hanldeSelectRow(String(params.id))} />
+            <IOSSwitch sx={{ m: 1 }} checked={arrSelectedRow.includes(String(params.id))}  />
           );
         }
       },
@@ -102,9 +101,37 @@ const AdsetTable = (props: AdsetTableProps) => {
       },
     },
     {
-      field: "deliveryStatus", headerName: "Delivery", width: 172
+      field: "deliveryStatus", 
+      headerName: "Delivery", 
+      width: 172,
+      renderCell: (params) => {
+        if (params.id !== 'summary') {
+          return (
+            <div>
+              <div>{params.row.deliveryStatus}</div>
+              <div>{params.row.deliveryDescription}</div>
+            </div>
+          );
+        }
+        return <div></div>
+      }
     },
-    { field: "bidStrategyCost", headerName: "Bid strategy", width: 130 },
+    { 
+      field: "bidStrategyCost", 
+      headerName: "Bid strategy", 
+      width: 130,
+      renderCell: (params) => {
+        if (params.id !== 'summary') {
+          return (
+            <div>
+              <div>{params.row.bidStrategyCost}</div>
+              <div>{params.row.bidStrategyDescription}</div>
+            </div>
+          );
+        }
+        return <div></div>
+      }
+    },
     {
       field: "budgetDescription",
       headerName: "Budget",
@@ -125,6 +152,16 @@ const AdsetTable = (props: AdsetTableProps) => {
       field: 'lastSignificantEdit',
       headerName: 'Last significant edit',
       width: 188,
+      renderCell: (params) => {
+        if (params.id !== 'summary') {
+          return (
+            <div>
+              {moment(params.row.lastSignificantEdit).format("D MMM YYYY")}
+            </div>
+          );
+        }
+        return <div></div>
+      }
     },
     {
       field: "attributionSetting",
@@ -148,14 +185,14 @@ const AdsetTable = (props: AdsetTableProps) => {
         if (params.id !== 'summary') {
           return (
             <div>
-              <div>{`đ ${params.row.resultsCost}`}</div>
+              <div>{params.row.resultsCost}</div>
               <div>{params.row.resultsDescription}</div>
             </div>
           );
         }
         return (
           <div>
-            <p>{`đ ${params.row.resultsCost}`}</p>
+            <p>{params.row.resultsCost}</p>
             <p>Multiple conversions</p>
           </div>
         )
@@ -199,10 +236,17 @@ const AdsetTable = (props: AdsetTableProps) => {
         if (params.id == 'summary') {
           return (
             <div>
-              <div>{params.row.costPerResultCost}</div>
+              <div>{`đ ${params.row.costPerResultCost}`}</div>
               <div>Multiple conversions</div>
             </div>
           );
+        } else {
+          return (
+            <div>
+              <div>{`đ ${params.row.costPerResultCost}`}</div>
+              <div>{params.row.costPerResultDescription}</div>
+            </div>
+          )
         }
       }
     },
@@ -218,6 +262,10 @@ const AdsetTable = (props: AdsetTableProps) => {
               <div>Total Spent</div>
             </div>
           );
+        } else {
+          return (
+            <div>{`đ ${params.row.amountSpent}`}</div>
+          )
         }
       }
     },
@@ -225,16 +273,27 @@ const AdsetTable = (props: AdsetTableProps) => {
       field: "endsOngoing",
       headerName: "Ends",
       width: 196,
+    },
+    {
+      field: "scheduleFrom",
+      headerName: "Schedule",
+      width: 196,
+      renderCell: (params) => {
+        if (params.id !== 'summary') {
+          return (
+            <div>
+              {moment(params.row.scheduleFrom).format("D MMM YYYY")}
+            </div>
+          );
+        }
+        return <div></div>
+      }
     }
   ];
 
   const handleClickName = () => {
     // navigate(ROUTERS_PATHS.CAMPAIGN);
   };
-
-
-
-  const objParam = getParamsId()
 
   const getData = async () => {
     const business_id = objParam?.business_id
@@ -248,10 +307,10 @@ const AdsetTable = (props: AdsetTableProps) => {
       const response = await axiosInstance.get(URL_PATHS.GET_AD_SET, { params })
       if (response && response.data) {
         const data = response.data
-        const totalReach = data.reduce((sum: any, row: any) => sum + row.reach, 0);
-        const totalResultsCost = data.reduce((sum: any, row: any) => sum + row.resultsCost, 0);
-        const totalCostPerResultCost = data.reduce((sum: any, row: any) => sum + row.costPerResultCost, 0);
-        const totalImpressions = data.reduce((sum: any, row: any) => sum + row.impressions, 0);
+        const totalReach = data.reduce((sum: any, row: any) => sum + Number(row.reach), 0);
+        const totalResultsCost = data.reduce((sum: any, row: any) => sum + Number(row.resultsCost), 0);
+        const totalCostPerResultCost = data.reduce((sum: any, row: any) => sum + Number(row.costPerResultCost), 0);
+        const totalImpressions = data.reduce((sum: any, row: any) => sum + Number(row.impressions), 0);
         const totalAmountSpent = data.reduce(
           (sum: any, row: any) => sum + parseFloat(String(row.amountSpent)),
           0
@@ -268,9 +327,9 @@ const AdsetTable = (props: AdsetTableProps) => {
           attributionSetting: "Multiple attribution settinng",
         };
         const displayRows = [...data, summaryRow];
+        setRows(data)
         setDisplayRows(displayRows)
       }
-      console.log("🚀 ~ getData ~ response:", response)
     } catch (error) {
 
     }
@@ -279,10 +338,33 @@ const AdsetTable = (props: AdsetTableProps) => {
   useEffect(() => {
     getData()
   }, [JSON.stringify(objParam)])
+
+  useEffect(() => {
+    const objParam = getParamsId()
+    const selected_adset_ids = objParam?.selected_adset_ids
+    const arrId = !!selected_adset_ids ? selected_adset_ids.split('and') : []
+    setArrSelectedRow(arrId) 
+  }, [])
+
   return (
     <DataGrid
       rows={displayRows}
       columns={columns}
+      checkboxSelection={true}
+      onRowSelectionModelChange={(newSelection: any) => {
+        console.log("🚀 ~ CampaignTable ~ newSelection:", newSelection)
+        const _arr = newSelection.map((i: any) => String(i))
+        const stringId = _arr.reduce((acc:any, cur: any) => { return acc += String(cur) + 'and' }, '')
+        const params = new URLSearchParams(window.location.search);
+        if (stringId !== '') {
+          params.set('selected_adset_ids', stringId);
+        } else {
+          params.delete('selected_adset_ids');
+        }
+        const newUrl = `${window.location.pathname}?${params.toString()}`;
+        window.history.pushState({}, '', newUrl)
+        setArrSelectedRow(_arr) 
+      }}
       sx={{
         border: 0,
         "& .MuiDataGrid-row[data-id='summary']": {

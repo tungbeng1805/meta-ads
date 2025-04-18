@@ -13,7 +13,8 @@ const URL_PATHS = {
   DELETE_CAMPAIGNS: "/campaigns/delete/:id",
   GET_CAMPAIGS: '/campaigns/get-list',
   GET_DETAIL_CAMPAIGS: '/campaigns/get/:id',
-  GET_AD_SET: '/ad_sets/get-list'
+  GET_AD_SET: '/ad_sets/get-list',
+  GET_AD: '/ads/get-list'
 };
 
 export default URL_PATHS;

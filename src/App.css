@@ -475,4 +475,11 @@ body {
   background: #465a69;
 }
 
+.MuiDataGrid-cell {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  line-height: 1.2 !important;
+}
+
 /*RIGHT SIDE BAR PICKER */
