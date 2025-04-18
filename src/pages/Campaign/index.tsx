@@ -58,28 +58,27 @@ const Campaign = (props: CampaignProps) => {
     setTabActive(tab);
   };
 
-  const paramObj = getParamsId()
+  const paramObj: any = getParamsId();
 
   const getData = async () => {
     try {
       const params = {
-        business_id: paramObj.business_id
+        business_id: paramObj?.business_id,
+      };
+      const response = await axiosInstance.get(URL_PATHS.GET_CAMPAIGS, {
+        params,
+      });
+      console.log("GET_CAMPAIGS", response);
+
+      if (!!response) {
+        const data = response.data;
+        setData(data);
       }
-      const response = await axiosInstance.get(URL_PATHS.GET_CAMPAIGS, {params})
-      console.log('GET_CAMPAIGS', response);
-      
-      if(!!response) {
-        const data = response.data
-        setData(data)
-      }
-      
-    } catch (error) {
-      
-    }
-  }
+    } catch (error) {}
+  };
   useEffect(() => {
-    getData()
-  }, [JSON.stringify(paramObj)])
+    getData();
+  }, [JSON.stringify(paramObj)]);
 
   const handleToggleChart = (show: boolean) => {
     setIsOpenChart(show);
@@ -174,9 +173,7 @@ const Campaign = (props: CampaignProps) => {
         </div>
       </div>
       <RightSideBar side="right" />
-      {isOpenChart && (
-        <ViewChart open={isOpenChart} onToggleChart={handleToggleChart} />
-      )}
+      {true && <ViewChart open={true} onToggleChart={handleToggleChart} />}
     </Box>
   );
 };

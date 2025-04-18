@@ -42,9 +42,9 @@ const RightSideBar = (props: RightSideBarProps) => {
               width: "16px",
               height: "16px",
               maskImage:
-                "url(https://static.xx.fbcdn.net/rsrc.php/v4/yl/r/_tluDGOtAlV.png?_nc_eui2=AeFWQe1bHi04-awbDGavvrLYjXcSO7ekFu2NdxI7t6QW7RbiaBOA0xM5n7Af6QrZZmVqRWlC35ipB2hgp3IC3Tyb)",
-              maskPosition: "0px -416px",
-              maskSize: "25px 1271px",
+                "url(https://static.xx.fbcdn.net/rsrc.php/v4/yX/r/g5YqKLnlk1k.png?_nc_eui2=AeEwdYSi3g4KRA4ui8bBmD07hTGvHeFfVfyFMa8d4V9V_P6AOHlufRpsSsd_y-uRX7KJP33NUCFXlHSS61xHi-uc)",
+              maskPosition: "-411px -325px",
+              maskSize: "441px 397px",
               background: "white",
             }}
           />

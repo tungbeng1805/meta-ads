@@ -16,7 +16,6 @@ const BotChart = () => {
       <Paper
         sx={{
           boxShadow: "none",
-          padding: "12px",
         }}
       >
         <div className={styles.chartHeader}>

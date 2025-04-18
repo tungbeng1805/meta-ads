@@ -57,6 +57,7 @@ interface IDateRange {
 interface IReactDateRangePickerCustom {
   initialDateRange: IDateRange;
   onChange: (dateRange: IDateRange) => void;
+  bgColor?: string;
 }
 
 export const ReactDateRangePickerCustom = (
@@ -304,7 +305,14 @@ export const ReactDateRangePickerCustom = (
 
   return (
     <>
-      <div className="date-range-field" onClick={handleClickSelectDate}>
+      <div
+        className="date-range-field"
+        style={{
+          background: props?.bgColor || "",
+          borderColor: props?.bgColor || "",
+        }}
+        onClick={handleClickSelectDate}
+      >
         <Box
           sx={{
             width: "16px",
