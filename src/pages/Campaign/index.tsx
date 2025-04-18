@@ -22,6 +22,11 @@ const Campaign = (props: CampaignProps) => {
   const [tabActive, setTabActive] = React.useState<string>("campaign");
   const [data, setData] = useState<Array<any>>([]);
   const [isOpenChart, setIsOpenChart] = useState<boolean>(false);
+  const [selectedItems, setSelectedItems] = useState({
+    campaign: [],
+    adSet: [],
+    ads: [],
+  });
 
   const tabList = [
     {
@@ -41,10 +46,23 @@ const Campaign = (props: CampaignProps) => {
     },
   ];
 
+  const handleSetSelectedItems = (ids: string[], code: string) => {
+    setSelectedItems((prev) => ({
+      ...prev,
+      [code]: ids?.map((e) => Number(e))?.filter((e) => e),
+    }));
+  };
+
   const renderTable = (type: string) => {
     switch (type) {
       case "campaign":
-        return <CampaignTable data={data} />;
+        return (
+          <CampaignTable
+            data={data}
+            selectedItems={selectedItems?.campaign}
+            onSelectedItems={handleSetSelectedItems}
+          />
+        );
       case "adSet":
         return <AdsetTable />;
       case "ads":
@@ -68,8 +86,6 @@ const Campaign = (props: CampaignProps) => {
       const response = await axiosInstance.get(URL_PATHS.GET_CAMPAIGS, {
         params,
       });
-      console.log("GET_CAMPAIGS", response);
-
       if (!!response) {
         const data = response.data;
         setData(data);
@@ -79,6 +95,36 @@ const Campaign = (props: CampaignProps) => {
   useEffect(() => {
     getData();
   }, [JSON.stringify(paramObj)]);
+
+  useEffect(() => {
+    const objParam = getParamsId();
+    const selected_campaign_ids = objParam?.selected_campaign_ids;
+    const selected_adset_ids = objParam?.selected_adset_ids;
+    const selected_ads_ids = objParam?.selected_ads_ids;
+    const arrCampaignId = !!selected_campaign_ids
+      ? selected_campaign_ids
+          .split("and")
+          ?.filter((e: string) => e)
+          ?.map((e: string) => Number(e))
+      : [];
+    const arrAdSetId = !!selected_adset_ids
+      ? selected_adset_ids
+          .split("and")
+          ?.filter((e: string) => e)
+          ?.map((e: string) => Number(e))
+      : [];
+    const arrAdsId = !!selected_ads_ids
+      ? selected_ads_ids
+          .split("and")
+          ?.filter((e: string) => e)
+          ?.map((e: string) => Number(e))
+      : [];
+    setSelectedItems({
+      campaign: arrCampaignId,
+      adSet: arrAdSetId,
+      ads: arrAdsId,
+    });
+  }, []);
 
   const handleToggleChart = (show: boolean) => {
     setIsOpenChart(show);

@@ -213,16 +213,29 @@ const ViewChart = (props: ViewChartProps) => {
                     }}
                   />
                   <Switch
+                    defaultChecked={params?.value}
                     sx={{
                       padding: "8px",
+                      ".MuiSwitch-root": {
+                        display: "none",
+                      },
                       "& span.MuiSwitch-track": {
                         borderRadius: "20px",
-                        background: "#e1edf7 !important",
+                        background: "white",
                         border: "1px solid #cbd2d9",
                       },
                       "& span.MuiSwitch-thumb": {
                         height: "22px",
                         width: "22px",
+                      },
+                      "& span.MuiSwitch-switchBase": {
+                        color: "#283943",
+                        "&.Mui-checked": {
+                          color: "#0a78be",
+                        },
+                        "&.Mui-checked+.MuiSwitch-track": {
+                          background: "#e1edf7",
+                        },
                       },
                     }}
                   />
