@@ -47,7 +47,6 @@ const HomePage = (props: HomePageProps) => {
       headerName: "Reach",
       width: 172,
       renderCell: (params) => {
-        console.log("🚀 ~ HomePage ~ params:", params);
         if (params.id === "summary") {
           return (
             <div className="row-number">
@@ -187,8 +186,9 @@ const HomePage = (props: HomePageProps) => {
             (sum: any, row: any) => sum + parseFloat(String(row.amountSpent)),
             0
           );
-          const totalMessages = rows.reduce(
-            (sum, row) => sum + Number(row.messaginConversationStarted),
+          const totalMessages = data.reduce(
+            (sum: any, row: any) =>
+              sum + Number(row.messaginConversationStarted),
             0
           );
           const avgCostPerMessage = totalAmountSpent / totalMessages || 0;

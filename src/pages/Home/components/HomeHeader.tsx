@@ -12,7 +12,7 @@ const HomeHeader = () => {
               width: " 16px",
               height: "16px",
               maskImage:
-                " url(https://static.xx.fbcdn.net/rsrc.php/v4/yG/r/jg3IY981y5G.png)",
+                "url(https://static.xx.fbcdn.net/rsrc.php/v4/yG/r/jg3IY981y5G.png)",
               maskPosition: "0px -135px",
               background: "#1c2b33",
             }}
@@ -145,7 +145,7 @@ const HomeHeader = () => {
         <div className="header-button btn-icon">
           <Box
             sx={{
-              width: " 16px",
+              width: "16px",
               height: "16px",
               maskImage:
                 "url(https://static.xx.fbcdn.net/rsrc.php/v4/yh/r/-mpd5-YMO3O.png)",
