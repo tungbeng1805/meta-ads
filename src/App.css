@@ -482,4 +482,9 @@ body {
   line-height: 1.2 !important;
 }
 
+.title-footer-table {
+  color: #1c2b33a6;
+  font-weight: 400;
+  font-size: 12px;
+}
 /*RIGHT SIDE BAR PICKER */

@@ -90,7 +90,26 @@ const AdsTable = (props: AdsTableProps) => {
     {
       field: "ad",
       headerName: "Ad",
-      width: 153,
+      width: 180,
+      renderCell: (params) => {
+        if (params.id !== "summary") {
+          return (
+            <div style={{display: 'flex', alignItems: 'center', columnGap: '10px'}}>
+              <div>
+                <img src={`http://103.159.50.75:3000/${params.row.image}`} style={{width: '46px', height: '46px'}} />
+              </div>
+              <div>{params.row.ad}</div>
+            </div>
+          );
+        } else {
+          return (
+            <div>
+              <p>Results from {rows.length} ads</p>
+              <p className="title-footer-table">Excludes deleted items</p>
+            </div>
+          )
+        }
+      },
     },
     { 
       field: "deliveryStatus", 
@@ -158,7 +177,7 @@ const AdsTable = (props: AdsTableProps) => {
     {
       field: "attributionSetting",
       headerName: "Attribution setting",
-      width: 120,
+      width: 180,
       renderCell: (params) => {
         if (params.id === 'summary') {
           return (
@@ -185,7 +204,7 @@ const AdsTable = (props: AdsTableProps) => {
         return (
           <div>
             <p>{params.row.resultsCost}</p>
-            <p>Multiple conversions</p>
+            <p className="title-footer-table">Multiple conversions</p>
           </div>
         )
       }
@@ -199,7 +218,7 @@ const AdsTable = (props: AdsTableProps) => {
           return (
             <div>
               <div>{params.row.reach}</div>
-              <div>Accounts Centre accounts</div>
+              <div className="title-footer-table">Accounts Centre accounts</div>
             </div>
           );
         }
@@ -214,7 +233,7 @@ const AdsTable = (props: AdsTableProps) => {
           return (
             <div>
               <div>{params.row.impressions}</div>
-              <div>Total</div>
+              <div className="title-footer-table">Total</div>
             </div>
           );
         }
@@ -229,7 +248,7 @@ const AdsTable = (props: AdsTableProps) => {
           return (
             <div>
               <div>{`đ ${params.row.costPerResultCost}`}</div>
-              <div>Multiple conversions</div>
+              <div className="title-footer-table">Multiple conversions</div>
             </div>
           );
         } else {
@@ -299,7 +318,7 @@ const AdsTable = (props: AdsTableProps) => {
           return (
             <div>
               <div>{`đ ${params.row.amountSpent}`}</div>
-              <div>Total Spent</div>
+              <div className="title-footer-table">Total Spent</div>
             </div>
           );
         } else {

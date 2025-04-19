@@ -61,13 +61,13 @@ const CampaignTable = (props: CampaignTableProps) => {
     {
       field: "campaign",
       headerName: "Campaign",
-      width: 153,
+      width: 170,
       renderCell: (params) => {
         if (params.id === "summary") {
           return (
             <div>
               <p>{`Results from ${rows?.length}/${rows?.length} campaigns`}</p>
-              <p>Excludes deleted items</p>
+              <p className="title-footer-table">Excludes deleted items</p>
             </div>
           );
         }
@@ -99,7 +99,14 @@ const CampaignTable = (props: CampaignTableProps) => {
     {
       field: "attributionSetting",
       headerName: "Attribution setting",
-      width: 120,
+      width: 170,
+      renderCell: (params) => {
+        if (params.id == "summary") {
+          return (
+            <div className="title-footer-table">Multiple attribution settings</div>
+          );
+        }
+      },
     },
     {
       field: "resultsCost",
@@ -114,7 +121,7 @@ const CampaignTable = (props: CampaignTableProps) => {
             </div>
           );
         }
-        return <div>{`đ ${params.row.resultsCost}`}</div>;
+        return <div className="title-footer-table">{`đ ${params.row.resultsCost}`}</div>;
       },
     },
     {
@@ -126,7 +133,7 @@ const CampaignTable = (props: CampaignTableProps) => {
           return (
             <div>
               <div>{params.row.reach}</div>
-              <div>Accounts Centre accounts</div>
+              <div className="title-footer-table">Accounts Centre accounts</div>
             </div>
           );
         }
@@ -141,7 +148,7 @@ const CampaignTable = (props: CampaignTableProps) => {
           return (
             <div>
               <div>{params.row.impressions}</div>
-              <div>Total</div>
+              <div className="title-footer-table">Total</div>
             </div>
           );
         }
@@ -156,7 +163,7 @@ const CampaignTable = (props: CampaignTableProps) => {
           return (
             <div>
               <div>{params.row.costPerResultCost}</div>
-              <div>Multiple conversions</div>
+              <div className="title-footer-table">Multiple conversions</div>
             </div>
           );
         }
@@ -171,7 +178,7 @@ const CampaignTable = (props: CampaignTableProps) => {
           return (
             <div>
               <div>{`đ ${params.row.amountSpent}`}</div>
-              <div>Total Spent</div>
+              <div className="title-footer-table">Total Spent</div>
             </div>
           );
         }
