@@ -1,12 +1,9 @@
-import IconClose from "@/assets/close.svg";
-import SelectCustom from "@/components/SelectCustom";
-import TextFieldCustom from "@/components/TextFieldCustom";
 import MESSAGE_API from "@/constants/message";
 import axiosInstance from "@/services/api-services";
 import URL_PATHS from "@/services/url-path";
+import IconClose from "@/assets/close.svg";
 import {
   Button,
-  Checkbox,
   Dialog,
   DialogActions,
   DialogContent,
@@ -14,11 +11,16 @@ import {
   Grid,
   IconButton,
   styled,
+  FormControlLabel,
+  Checkbox,
 } from "@mui/material";
-import { DatePicker } from "@mui/x-date-pickers";
-import moment from "moment";
 import { Controller, useForm } from "react-hook-form";
 import { Bounce, toast } from "react-toastify";
+import dayjs from "dayjs";
+import TextFieldCustom from "@/components/TextFieldCustom";
+import { DatePicker } from "@mui/x-date-pickers";
+import SelectCustom from "@/components/SelectCustom";
+import moment from "moment";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -29,26 +31,31 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-const ModalAdminBusiness = (props: any) => {
-  const { handleSubmit, control, watch, setValue } = useForm<any>({
+const ModalAdminAdSets = (props: any) => {
+  const { handleSubmit, control, setValue, watch } = useForm<any>({
     defaultValues: props?.defaultValues ?? {
-      amountSpent: "",
-      attributionSetting: "",
-      bidStrategy: "",
+      campaign_id: "",
+      status: false,
+      adSet: "",
+      deliveryStatus: "",
+      deliveryDescription: "",
+      bidStrategyCost: "",
+      bidStrategyDescription: "",
+      lastSignificantEdit: null,
       budgetCost: "",
       budgetDescription: "",
-      campaign: "",
-      costPerResultCost: "",
-      costPerResultDescription: "",
-      deliveryDescription: "",
-      deliveryStatus: "",
-      endsDate: null,
-      endsOngoing: false,
-      impressions: "",
-      reach: "",
+      attributionSetting: "",
       resultsCost: "",
       resultsDescription: "",
-      status: false,
+      reach: "",
+      impressions: "",
+      costPerResultCost: "",
+      costPerResultDescription: "",
+      amountSpent: "",
+      endsOngoing: false,
+      endsDate: null,
+      scheduleFrom: null,
+      scheduleTo: null,
     },
     mode: "onChange",
     reValidateMode: "onChange",
@@ -56,19 +63,30 @@ const ModalAdminBusiness = (props: any) => {
 
   const onSubmit = async (data: any) => {
     try {
+      const lastSignificantEdit = data?.lastSignificantEdit
+        ? moment(new Date(data?.lastSignificantEdit)).format("YYYY/MM/DD")
+        : null;
+      const scheduleFrom = data?.scheduleFrom ? moment(new Date(data?.scheduleFrom)).format("YYYY/MM/DD") : null;
+      const scheduleTo = data?.scheduleTo ? moment(new Date(data?.scheduleTo)).format("YYYY/MM/DD") : null;
       const endsDate = data?.endsDate ? moment(new Date(data?.endsDate)).format("YYYY/MM/DD") : null;
-      const item: any = props?.defaultValues
-        ? await axiosInstance.put(URL_PATHS.UPDATE_CAMPAIGNS.replace(":id", props?.defaultValues?.id), {
+      const response: any = props?.defaultValues
+        ? await axiosInstance.put(URL_PATHS.UPDATE_AD_SET.replace(":id", props?.defaultValues?.id), {
             ...data,
             endsDate,
+            lastSignificantEdit,
+            scheduleFrom,
+            scheduleTo,
           })
-        : await axiosInstance.post(URL_PATHS.CREATE_CAMPAIGNS, {
+        : await axiosInstance.post(URL_PATHS.CREATE_AD_SET, {
             ...data,
             endsDate,
+            lastSignificantEdit,
+            scheduleFrom,
+            scheduleTo,
           });
-      if (item?.status === 200) {
+      if (response?.status === 200) {
         props.getList();
-        toast.success(props?.defaultValues ? MESSAGE_API.updateSuccessCampaigns : MESSAGE_API.createSuccessCampaigns, {
+        toast.success(props?.defaultValues ? MESSAGE_API.updateSuccessAdSets : MESSAGE_API.createSuccessAdSets, {
           position: "top-right",
           autoClose: 1000,
           hideProgressBar: false,
@@ -107,6 +125,9 @@ const ModalAdminBusiness = (props: any) => {
       });
     }
   };
+
+  console.log("props?.dataCampaigns", props?.dataCampaigns);
+
   return (
     <BootstrapDialog
       maxWidth="md"
@@ -138,25 +159,24 @@ const ModalAdminBusiness = (props: any) => {
         </IconButton>
         <DialogContent dividers>
           <Grid container spacing={2}>
-            <Grid size={12}>
+            <Grid size={5.5}>
               <Controller
                 control={control}
-                name="business_id"
+                name="campaign_id"
                 render={({ field: { onChange, value } }) => (
                   <SelectCustom
                     value={value ?? ""}
                     onChange={onChange}
                     name="Business"
-                    options={props?.dataListBusiness?.map((item: any) => ({
+                    options={props?.dataCampaigns?.map((item: any) => ({
                       value: item?.id,
-                      label: item?.accountName,
+                      label: item?.campaign,
                     }))}
                   />
                 )}
               />
             </Grid>
-          </Grid>
-          <Grid container spacing={2} paddingTop={2}>
+            <Grid size={1}></Grid>
             <Grid size={5.5}>
               <Controller
                 control={control}
@@ -169,15 +189,17 @@ const ModalAdminBusiness = (props: any) => {
                 )}
               />
             </Grid>
-            <Grid size={1}></Grid>
+          </Grid>
+
+          <Grid container spacing={2} style={{ marginTop: 15 }}>
             <Grid size={5.5}>
               <Controller
                 control={control}
-                name="campaign"
+                name="adSet"
                 render={({ field: { onChange, onBlur, value } }) => (
                   <TextFieldCustom
                     disabled={props?.isView}
-                    label="Campaign"
+                    label="Ad Set"
                     onChange={onChange}
                     onBlur={onBlur}
                     value={value}
@@ -186,8 +208,7 @@ const ModalAdminBusiness = (props: any) => {
                 )}
               />
             </Grid>
-          </Grid>
-          <Grid container spacing={2} paddingTop={2}>
+            <Grid size={1}></Grid>
             <Grid size={5.5}>
               <Controller
                 control={control}
@@ -205,7 +226,9 @@ const ModalAdminBusiness = (props: any) => {
                 )}
               />
             </Grid>
-            <Grid size={1}></Grid>
+          </Grid>
+
+          <Grid container spacing={2} style={{ marginTop: 15 }}>
             <Grid size={5.5}>
               <Controller
                 control={control}
@@ -222,8 +245,66 @@ const ModalAdminBusiness = (props: any) => {
                 )}
               />
             </Grid>
+            <Grid size={1}></Grid>
+            <Grid size={5.5}>
+              <Controller
+                control={control}
+                name="bidStrategyCost"
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TextFieldCustom
+                    disabled={props?.isView}
+                    label="Bid Strategy Cost"
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    value={value}
+                    fullWidth
+                  />
+                )}
+              />
+            </Grid>
           </Grid>
-          <Grid container spacing={2} paddingTop={2}>
+
+          <Grid container spacing={2} style={{ marginTop: 15 }}>
+            <Grid size={5.5}>
+              <Controller
+                control={control}
+                name="bidStrategyDescription"
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <>
+                    <p style={{ marginTop: "18px" }}></p>
+                    <TextFieldCustom
+                      disabled={props?.isView}
+                      label="Bid Strategy Description"
+                      onChange={onChange}
+                      onBlur={onBlur}
+                      value={value}
+                      fullWidth
+                    />
+                  </>
+                )}
+              />
+            </Grid>
+            <Grid size={1}></Grid>
+            <Grid size={5.5}>
+              <Controller
+                control={control}
+                name="lastSignificantEdit"
+                render={({ field: { onChange, value } }) => (
+                  <>
+                    <p>Last Significant Edit</p>
+                    <DatePicker
+                      value={value ?? null}
+                      onChange={onChange}
+                      slots={{ textField: TextFieldCustom }}
+                      format="DD/MM/YYYY"
+                    />
+                  </>
+                )}
+              />
+            </Grid>
+          </Grid>
+
+          <Grid container spacing={2} style={{ marginTop: 15 }}>
             <Grid size={5.5}>
               <Controller
                 control={control}
@@ -258,42 +339,8 @@ const ModalAdminBusiness = (props: any) => {
               />
             </Grid>
           </Grid>
-          <Grid container spacing={2} paddingTop={2}>
-            <Grid size={5.5}>
-              <Controller
-                control={control}
-                name="attributionSetting"
-                render={({ field: { onChange, onBlur, value } }) => (
-                  <TextFieldCustom
-                    disabled={props?.isView}
-                    label="Attribution Setting"
-                    onChange={onChange}
-                    onBlur={onBlur}
-                    value={value}
-                    fullWidth
-                  />
-                )}
-              />
-            </Grid>
-            <Grid size={1}></Grid>
-            <Grid size={5.5}>
-              <Controller
-                control={control}
-                name="reach"
-                render={({ field: { onChange, onBlur, value } }) => (
-                  <TextFieldCustom
-                    disabled={props?.isView}
-                    label="Reach"
-                    onChange={onChange}
-                    onBlur={onBlur}
-                    value={value}
-                    fullWidth
-                  />
-                )}
-              />
-            </Grid>
-          </Grid>
-          <Grid container spacing={2} paddingTop={2}>
+
+          <Grid container spacing={2} style={{ marginTop: 15 }}>
             <Grid size={5.5}>
               <Controller
                 control={control}
@@ -328,7 +375,44 @@ const ModalAdminBusiness = (props: any) => {
               />
             </Grid>
           </Grid>
-          <Grid container spacing={2} paddingTop={2}>
+
+          <Grid container spacing={2} style={{ marginTop: 15 }}>
+            <Grid size={5.5}>
+              <Controller
+                control={control}
+                name="attributionSetting"
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TextFieldCustom
+                    disabled={props?.isView}
+                    label="Attribution Setting"
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    value={value}
+                    fullWidth
+                  />
+                )}
+              />
+            </Grid>
+            <Grid size={1}></Grid>
+            <Grid size={5.5}>
+              <Controller
+                control={control}
+                name="reach"
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TextFieldCustom
+                    disabled={props?.isView}
+                    label="Reach"
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    value={value}
+                    fullWidth
+                  />
+                )}
+              />
+            </Grid>
+          </Grid>
+
+          <Grid container spacing={2} style={{ marginTop: 15 }}>
             <Grid size={5.5}>
               <Controller
                 control={control}
@@ -337,6 +421,42 @@ const ModalAdminBusiness = (props: any) => {
                   <TextFieldCustom
                     disabled={props?.isView}
                     label="Impressions"
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    value={value}
+                    fullWidth
+                  />
+                )}
+              />
+            </Grid>
+            <Grid size={1}></Grid>
+            <Grid size={5.5}>
+              <Controller
+                control={control}
+                name="costPerResultCost"
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TextFieldCustom
+                    disabled={props?.isView}
+                    label="Cost Per Result Cost"
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    value={value}
+                    fullWidth
+                  />
+                )}
+              />
+            </Grid>
+          </Grid>
+
+          <Grid container spacing={2} style={{ marginTop: 15 }}>
+            <Grid size={5.5}>
+              <Controller
+                control={control}
+                name="costPerResultDescription"
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TextFieldCustom
+                    disabled={props?.isView}
+                    label="Cost Per Result Description"
                     onChange={onChange}
                     onBlur={onBlur}
                     value={value}
@@ -363,20 +483,22 @@ const ModalAdminBusiness = (props: any) => {
               />
             </Grid>
           </Grid>
-          <Grid container spacing={2} paddingTop={2}>
+
+          <Grid container spacing={2} style={{ marginTop: 15 }}>
             <Grid size={5.5}>
               <Controller
                 control={control}
-                name="costPerResultCost"
-                render={({ field: { onChange, onBlur, value } }) => (
-                  <TextFieldCustom
-                    disabled={props?.isView}
-                    label="Cost Per Result Cost"
-                    onChange={onChange}
-                    onBlur={onBlur}
-                    value={value}
-                    fullWidth
-                  />
+                name="scheduleFrom"
+                render={({ field: { onChange, value } }) => (
+                  <>
+                    <p>Schedule From</p>
+                    <DatePicker
+                      value={value ?? null}
+                      onChange={onChange}
+                      slots={{ textField: TextFieldCustom }}
+                      format="DD/MM/YYYY"
+                    />
+                  </>
                 )}
               />
             </Grid>
@@ -384,21 +506,23 @@ const ModalAdminBusiness = (props: any) => {
             <Grid size={5.5}>
               <Controller
                 control={control}
-                name="costPerResultDescription"
-                render={({ field: { onChange, onBlur, value } }) => (
-                  <TextFieldCustom
-                    disabled={props?.isView}
-                    label="Cost Per Result Description"
-                    onChange={onChange}
-                    onBlur={onBlur}
-                    value={value}
-                    fullWidth
-                  />
+                name="scheduleTo"
+                render={({ field: { onChange, value } }) => (
+                  <>
+                    <p>Schedule To</p>
+                    <DatePicker
+                      value={value ?? null}
+                      onChange={onChange}
+                      slots={{ textField: TextFieldCustom }}
+                      format="DD/MM/YYYY"
+                    />
+                  </>
                 )}
               />
             </Grid>
           </Grid>
-          <Grid container spacing={2} paddingTop={2}>
+
+          <Grid container spacing={2} style={{ marginTop: 15 }}>
             <Grid size={12}>
               <Controller
                 control={control}
@@ -418,8 +542,6 @@ const ModalAdminBusiness = (props: any) => {
                 )}
               />
             </Grid>
-          </Grid>
-          <Grid container spacing={2} paddingTop={2}>
             <Grid size={5.5}>
               <Controller
                 control={control}
@@ -431,24 +553,6 @@ const ModalAdminBusiness = (props: any) => {
                     slots={{ textField: TextFieldCustom }}
                     disabled={!!watch("endsOngoing")}
                     format="DD/MM/YYYY"
-                  />
-                )}
-              />
-            </Grid>
-            <Grid size={1}></Grid>
-            <Grid size={5.5}>
-              <Controller
-                control={control}
-                name="bidStrategy"
-                render={({ field: { onChange, value } }) => (
-                  <SelectCustom
-                    value={value ?? ""}
-                    onChange={onChange}
-                    name="Bid Strategy"
-                    options={[
-                      { value: "Highest volume", label: "Highest volume" },
-                      { value: "Using ad set bid strategy", label: "Using ad set bid strategy" },
-                    ]}
                   />
                 )}
               />
@@ -465,4 +569,4 @@ const ModalAdminBusiness = (props: any) => {
   );
 };
 
-export default ModalAdminBusiness;
+export default ModalAdminAdSets;

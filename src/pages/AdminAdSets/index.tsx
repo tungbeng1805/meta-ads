@@ -19,16 +19,16 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Bounce, toast } from "react-toastify";
-import ModalAdminBusiness from "./modal";
+import ModalAdminAdSets from "./modal";
 import dayjs from "dayjs";
 import moment from "moment";
 
 const columns: any = [
-  { id: "business_id", label: "Business", align: "start", minWidth: 150 },
+  { id: "campaign_id", label: "Campaign", align: "start", minWidth: 150 },
   { id: "status", label: "On/Off", align: "center", minWidth: 50 },
   {
-    id: "campaign",
-    label: "Campaign",
+    id: "adSet",
+    label: "Ad Set",
     minWidth: 150,
     align: "start",
   },
@@ -45,13 +45,31 @@ const columns: any = [
     align: "start",
   },
   {
-    id: "bidStrategy",
-    label: "Bid Strategy",
+    id: "bidStrategyCost",
+    label: "Bid Strategy Cost",
+    minWidth: 150,
+    align: "start",
+  },
+  {
+    id: "bidStrategyDescription",
+    label: "Bid Strategy Description",
+    minWidth: 150,
+    align: "start",
+  },
+  {
+    id: "lastSignificantEdit",
+    label: "Last Significant Edit",
     minWidth: 150,
     align: "start",
   },
   {
     id: "budgetCost",
+    label: "Budget Cost",
+    minWidth: 150,
+    align: "start",
+  },
+  {
+    id: "budgetDescription",
     label: "Budget Description",
     minWidth: 150,
     align: "start",
@@ -116,6 +134,18 @@ const columns: any = [
     minWidth: 150,
     align: "start",
   },
+  {
+    id: "scheduleFrom",
+    label: "Schedule From",
+    minWidth: 150,
+    align: "start",
+  },
+  {
+    id: "scheduleTo",
+    label: "Schedule To",
+    minWidth: 150,
+    align: "start",
+  },
 ];
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
@@ -127,14 +157,14 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const AdminBusiness = () => {
+const AdminAdSets = () => {
   const [dataList, setDataList] = useState([]);
-  const [dataListBusiness, setDataBusiness] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [dataSelected, setDataSelected] = useState(null);
   const [dataDetail, setDataDetail] = useState(null);
   const [isView, setIsView] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [dataCampaigns, setDataCampaigns] = useState([]);
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
@@ -145,7 +175,7 @@ const AdminBusiness = () => {
 
   const getList = async () => {
     try {
-      const data: any = await axiosInstance.get(URL_PATHS.GET_CAMPAIGNS);
+      const data: any = await axiosInstance.get(URL_PATHS.GET_AD_SET);
       if (data?.status === 200) {
         setDataList(data?.data);
       } else {
@@ -187,11 +217,14 @@ const AdminBusiness = () => {
 
   const getDetail = async (item: any) => {
     try {
-      const data: any = await axiosInstance.get(URL_PATHS.GET_DETAIL_CAMPAIGNS.replace(":id", item?.id));
+      const data: any = await axiosInstance.get(URL_PATHS.GET_DETAIL_AD_SET.replace(":id", item?.id));
       if (data?.status === 200) {
         setDataDetail({
           ...data?.data,
           endsDate: dayjs(data?.data?.endsDate),
+          lastSignificantEdit: dayjs(data?.data?.lastSignificantEdit),
+          scheduleFrom: dayjs(data?.data?.scheduleFrom),
+          scheduleTo: dayjs(data?.data?.scheduleTo),
           status: data?.data?.status === 1,
           endsOngoing: data?.data?.endsOngoing === 1,
         });
@@ -240,10 +273,10 @@ const AdminBusiness = () => {
     setAnchorEl(null);
     if (confirm("Are you sure you want to delete this record?")) {
       try {
-        const data = await axiosInstance.delete(URL_PATHS.DELETE_CAMPAIGNS.replace(":id", item?.id));
+        const data = await axiosInstance.delete(URL_PATHS.DELETE_AD_SET.replace(":id", item?.id));
         if (data?.status === 200) {
           await getList();
-          toast.error(MESSAGE_API.deleteSuccessCampaigns, {
+          toast.error(MESSAGE_API.deleteSuccessAdSets, {
             position: "top-right",
             autoClose: 1000,
             hideProgressBar: false,
@@ -285,9 +318,9 @@ const AdminBusiness = () => {
 
   const getListBusiness = async () => {
     try {
-      const data: any = await axiosInstance.get(URL_PATHS.GET_BUSINESS);
+      const data: any = await axiosInstance.get(URL_PATHS.GET_CAMPAIGNS);
       if (data?.status === 200) {
-        setDataBusiness(data?.data);
+        setDataCampaigns(data?.data);
       }
     } catch (error) {}
   };
@@ -333,13 +366,6 @@ const AdminBusiness = () => {
                         return (
                           <TableCell key={`${col?.id}${index}`} align={col.align}>
                             {row[col?.id] ? moment(row[col?.id]).format("DD/MM/YYYY") : ""}
-                          </TableCell>
-                        );
-                      }
-                      if (col?.id === "business_id") {
-                        return (
-                          <TableCell key={`${col?.id}${index}`} align={col.align}>
-                            {(dataListBusiness.find((item: any) => item?.id === row[col?.id]) as any)?.accountName}
                           </TableCell>
                         );
                       }
@@ -390,7 +416,7 @@ const AdminBusiness = () => {
         </Popover>
       </IF>
       {isOpen && (
-        <ModalAdminBusiness
+        <ModalAdminAdSets
           open={isOpen}
           handleClose={() => {
             setIsOpen(false);
@@ -398,13 +424,13 @@ const AdminBusiness = () => {
             setDataDetail(null);
           }}
           defaultValues={dataDetail}
-          dataListBusiness={dataListBusiness}
           getList={getList}
           isView={isView}
+          dataCampaigns={dataCampaigns}
         />
       )}
     </div>
   );
 };
 
-export default AdminBusiness;
+export default AdminAdSets;
