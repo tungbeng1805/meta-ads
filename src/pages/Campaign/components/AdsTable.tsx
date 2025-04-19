@@ -323,11 +323,15 @@ const AdsTable = (props: AdsTableProps) => {
   const getData = async () => {
     const business_id = objParam?.business_id
     const selected_campaign_ids = objParam?.selected_campaign_ids
+    const selected_adset_id = objParam?.selected_adset_ids
 
+    console.log('selected_adset_id', selected_adset_id);
+    
     try {
       const params = {
-        business_id: business_id && !selected_campaign_ids ? business_id : '',
-        campaign_id: !!selected_campaign_ids ? selected_campaign_ids.replaceAll('and', ',') : []
+        business_id: business_id && !selected_campaign_ids && !selected_adset_id ? business_id : '',
+        campaign_id: !!selected_campaign_ids && !selected_adset_id ? selected_campaign_ids.replaceAll('and', ',') : [],
+        ad_set_id: !!selected_adset_id ? selected_adset_id.replaceAll('and', ',') : [],
       }
       const response = await axiosInstance.get(URL_PATHS.GET_AD, { params })
       if (response && response.data) {
@@ -400,7 +404,6 @@ const AdsTable = (props: AdsTableProps) => {
         ),
         footer: () => null,
       }}
-      rowSelection={false}
       className="table-custom"
     />
   );

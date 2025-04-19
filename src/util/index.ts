@@ -10,3 +10,8 @@ export const getParamsId = () => {
     }
     return obj
 }
+
+export const STATUS = {
+    ACTIVE: "Active",
+    IN_ACTIVE: "InActive"
+}
