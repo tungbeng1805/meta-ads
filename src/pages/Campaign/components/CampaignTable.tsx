@@ -1,7 +1,6 @@
 import ROUTERS_PATHS from "@/constants/router-paths";
-import { getParamsId } from "@/util";
 import { Switch } from "@mui/material";
-import { Box, styled } from "@mui/system";
+import { Box } from "@mui/system";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -10,6 +9,7 @@ interface CampaignTableProps {
   data: any
 }
 
+<<<<<<< Updated upstream
 const paginationModel = { page: 0, pageSize: 5 };
 
 const IOSSwitch = styled((props: any) => (
@@ -77,6 +77,13 @@ const CampaignTable = (props: CampaignTableProps) => {
   const [rows, setRows] = useState<Array<any>>([])
   const [displayRows, setDisplayRows] = useState<Array<any>>([])
   const [arrSelectedRow, setArrSelectedRow] = useState<Array<any>>([])
+=======
+const CampaignTable = (props: CampaignTableProps) => {
+  const { data, selectedItems, onSelectedItems } = props;
+  
+  const [rows, setRows] = useState<Array<any>>([]);
+  const [displayRows, setDisplayRows] = useState<Array<any>>([]);
+>>>>>>> Stashed changes
 
   const navigate = useNavigate();
 

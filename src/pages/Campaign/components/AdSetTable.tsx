@@ -1,7 +1,7 @@
 import ROUTERS_PATHS from "@/constants/router-paths";
 import axiosInstance from "@/services/api-services";
 import URL_PATHS from "@/services/url-path";
-import { getParamsId } from "@/util";
+import { getParamsId, STATUS } from "@/util";
 import { Switch } from "@mui/material";
 import { Box, styled } from "@mui/system";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
@@ -70,6 +70,8 @@ const AdsetTable = (props: AdsetTableProps) => {
   const [displayRows, setDisplayRows] = useState<Array<any>>([])
   const [arrSelectedRow, setArrSelectedRow] = useState<Array<any>>([])
 
+  console.log('arrSelectedRow', arrSelectedRow);
+  
   const objParam = getParamsId()
 
   const columns: GridColDef[] = [
@@ -80,7 +82,34 @@ const AdsetTable = (props: AdsetTableProps) => {
       renderCell: (params) => {
         if (params.id !== "summary") {
           return (
-            <IOSSwitch sx={{ m: 1 }} checked={arrSelectedRow.includes(String(params.id))}  />
+            <IOSSwitch
+              checked={!!params.row && !!params.row.deliveryStatus && params.row.deliveryStatus === STATUS.ACTIVE}
+
+              sx={{
+                padding: "8px",
+                ".MuiSwitch-root": {
+                  display: "none",
+                },
+                "& span.MuiSwitch-track": {
+                  borderRadius: "20px",
+                  background: "white",
+                  border: "1px solid #cbd2d9",
+                },
+                "& span.MuiSwitch-thumb": {
+                  height: "22px",
+                  width: "22px",
+                },
+                "& span.MuiSwitch-switchBase": {
+                  color: "#283943",
+                  "&.Mui-checked": {
+                    color: "#0a78be",
+                  },
+                  "&.Mui-checked+.MuiSwitch-track": {
+                    background: "#e1edf7",
+                  },
+                },
+              }}
+            />
           );
         }
       },
@@ -101,8 +130,8 @@ const AdsetTable = (props: AdsetTableProps) => {
       },
     },
     {
-      field: "deliveryStatus", 
-      headerName: "Delivery", 
+      field: "deliveryStatus",
+      headerName: "Delivery",
       width: 172,
       renderCell: (params) => {
         if (params.id !== 'summary') {
@@ -116,9 +145,9 @@ const AdsetTable = (props: AdsetTableProps) => {
         return <div></div>
       }
     },
-    { 
-      field: "bidStrategyCost", 
-      headerName: "Bid strategy", 
+    {
+      field: "bidStrategyCost",
+      headerName: "Bid strategy",
       width: 130,
       renderCell: (params) => {
         if (params.id !== 'summary') {
@@ -343,7 +372,7 @@ const AdsetTable = (props: AdsetTableProps) => {
     const objParam = getParamsId()
     const selected_adset_ids = objParam?.selected_adset_ids
     const arrId = !!selected_adset_ids ? selected_adset_ids.split('and') : []
-    setArrSelectedRow(arrId) 
+    setArrSelectedRow(arrId.map((e: any) => Number(e)))
   }, [])
 
   return (
@@ -351,10 +380,12 @@ const AdsetTable = (props: AdsetTableProps) => {
       rows={displayRows}
       columns={columns}
       checkboxSelection={true}
+      rowSelectionModel={arrSelectedRow}
       onRowSelectionModelChange={(newSelection: any) => {
-        console.log("🚀 ~ CampaignTable ~ newSelection:", newSelection)
+        console.log('newSelection', newSelection);
+        
         const _arr = newSelection.map((i: any) => String(i))
-        const stringId = _arr.reduce((acc:any, cur: any) => { return acc += String(cur) + 'and' }, '')
+        const stringId = _arr.reduce((acc: any, cur: any) => { return acc += String(cur) + 'and' }, '')
         const params = new URLSearchParams(window.location.search);
         if (stringId !== '') {
           params.set('selected_adset_ids', stringId);
@@ -363,7 +394,7 @@ const AdsetTable = (props: AdsetTableProps) => {
         }
         const newUrl = `${window.location.pathname}?${params.toString()}`;
         window.history.pushState({}, '', newUrl)
-        setArrSelectedRow(_arr) 
+        setArrSelectedRow(_arr.map((e: any) => Number(e)))
       }}
       sx={{
         border: 0,
@@ -398,7 +429,6 @@ const AdsetTable = (props: AdsetTableProps) => {
         ),
         footer: () => null,
       }}
-      rowSelection={false}
       className="table-custom"
     />
   );
