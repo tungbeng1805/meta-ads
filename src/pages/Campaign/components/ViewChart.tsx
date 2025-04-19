@@ -20,8 +20,8 @@ import {
 import React from "react";
 
 interface ViewChartProps {
-  open: boolean;
-  onToggleChart: (show: boolean) => void;
+  openChartType: string | null;
+  onToggleChart: (type: string | null) => void;
 }
 
 interface IMenuItem {
@@ -31,7 +31,7 @@ interface IMenuItem {
 }
 
 const ViewChart = (props: ViewChartProps) => {
-  const { open, onToggleChart } = props;
+  const { openChartType, onToggleChart } = props;
   const [activeMenu, setActiveMenu] = React.useState<number[]>([1]);
 
   const listMenu = [
@@ -143,13 +143,16 @@ const ViewChart = (props: ViewChartProps) => {
 
   return (
     <Drawer
-      open={open}
-      onClose={() => onToggleChart(false)}
+      open={!!openChartType}
+      onClose={() => onToggleChart(null)}
       anchor="right"
       hideBackdrop
     >
       <div className="view-chart-container">
-        <RightSideBar side="left" onCloseChart={() => onToggleChart(false)} />
+        <RightSideBar
+          onCloseChart={() => onToggleChart(null)}
+          type={openChartType}
+        />
         <div className="view-chart-wrapper">
           <div className="view-chart-menu">
             <Box padding="6px 12px">
