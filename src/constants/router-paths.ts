@@ -3,6 +3,7 @@ const ROUTERS_PATHS = {
   HOME: "/home",
   ADMIN_BUSINESS: "/admin/business",
   ADMIN_CAMPAIGNS: "/admin/campaigns",
+  ADMIN_AD_SET: "/admin/ad-sets",
   CHART: "/chart",
   CAMPAIGN: "/adsmanager/manage/campaigns",
 };
