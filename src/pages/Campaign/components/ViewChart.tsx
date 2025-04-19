@@ -1,20 +1,23 @@
-import React from "react";
-import RightSideBar from "@/layouts/RightSidBar";
-import BotChart from "@/pages/Chart/BotChart";
-import TopChart from "@/pages/Chart/TopChart";
-import { Box, Divider, Drawer, InputAdornment, TextField } from "@mui/material";
-import CampaignIcon from "@/components/SvgIcons/CampainIcon";
-import AdSetIcon from "@/components/SvgIcons/AdSetIcon";
-import AdsIcon from "@/components/SvgIcons/AdsIcon";
-import FolderIcon from "@/components/SvgIcons/FolderIcon";
-import FolderActive from "@/assets/folder_active.svg";
 import Folder from "@/assets/folder.svg";
+import FolderActive from "@/assets/folder_active.svg";
 import MenuCategoryActive from "@/assets/menu-category-active.svg";
 import MenuCategory from "@/assets/menu-category.svg";
 import MenuTabletActive from "@/assets/menu-tablet-active.svg";
 import MenuTablet from "@/assets/menu-tablet.svg";
-import { Switch } from "@mui/material";
 import ReactDateRangePickerCustom from "@/components/DateRangePicker";
+import RightSideBar from "@/layouts/RightSidBar";
+import BotChart from "@/pages/Chart/BotChart";
+import TopChart from "@/pages/Chart/TopChart";
+import TurnOn from "@/pages/Chart/TurnOn";
+import {
+  Box,
+  Divider,
+  Drawer,
+  InputAdornment,
+  Switch,
+  TextField,
+} from "@mui/material";
+import React from "react";
 
 interface ViewChartProps {
   open: boolean;
@@ -29,7 +32,7 @@ interface IMenuItem {
 
 const ViewChart = (props: ViewChartProps) => {
   const { open, onToggleChart } = props;
-  const [activeMenu, setActiveMenu] = React.useState<number | null>(1);
+  const [activeMenu, setActiveMenu] = React.useState<number[]>([1]);
 
   const listMenu = [
     {
@@ -37,10 +40,12 @@ const ViewChart = (props: ViewChartProps) => {
       name: "Huy- 2250k Mess gym - Bản sao",
       groups: [
         {
+          parentId: 1,
           id: 11,
           name: "Nhóm quảng cáo Lượt tương tác mới - Bản sao",
           groups: [
             {
+              parentId: 11,
               id: 111,
               name: "Quảng cáo Lượt tương tác mới",
             },
@@ -98,7 +103,7 @@ const ViewChart = (props: ViewChartProps) => {
   };
 
   const renderMenu = (menu: IMenuItem, index: number, depth: number = 1) => {
-    const active = menu?.id === activeMenu;
+    const active = activeMenu?.includes(menu?.id);
 
     return (
       <div key={menu?.id}>
@@ -115,6 +120,24 @@ const ViewChart = (props: ViewChartProps) => {
         </div>
         {menu?.groups?.map((group, i) => renderMenu(group, i, depth + 1))}
       </div>
+    );
+  };
+
+  const renderBreadCrumbs = () => {
+    return (
+      <Box display="flex" alignItems="center" gap="4px">
+        <div
+          className={`bread-btn`}
+          onClick={() => {
+            // handleClickMenu(menu);
+          }}
+        >
+          <Box display="flex" alignItems="center" gap="4px">
+            {renderIconByDeep(1, true)}
+            <p className={`menu-name`}>{"a"}</p>
+          </Box>
+        </div>
+      </Box>
     );
   };
 
@@ -181,7 +204,7 @@ const ViewChart = (props: ViewChartProps) => {
                 gap="8px"
                 bgcolor="white"
               >
-                <Box display="flex" alignItems="center" gap="8px">
+                <Box display="flex" alignItems="center" gap="12px">
                   <div className="header-button btn-icon">
                     <Box
                       sx={{
@@ -195,6 +218,7 @@ const ViewChart = (props: ViewChartProps) => {
                       }}
                     />
                   </div>
+                  {renderBreadCrumbs()}
                 </Box>
                 <Box display="flex" alignItems="center" gap="8px">
                   <Box
@@ -213,7 +237,7 @@ const ViewChart = (props: ViewChartProps) => {
                     }}
                   />
                   <Switch
-                    defaultChecked={params?.value}
+                    defaultChecked={true}
                     sx={{
                       padding: "8px",
                       ".MuiSwitch-root": {
@@ -274,6 +298,8 @@ const ViewChart = (props: ViewChartProps) => {
             <div className="chart-container">
               <div className="chart-wrapper">
                 <TopChart />
+                <TurnOn />
+                {/* <DeliveryRecommend /> */}
                 <BotChart />
               </div>
             </div>

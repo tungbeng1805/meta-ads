@@ -219,9 +219,7 @@ const Campaign = (props: CampaignProps) => {
         </div>
       </div>
       <RightSideBar side="right" />
-      {isOpenChart && (
-        <ViewChart open={isOpenChart} onToggleChart={handleToggleChart} />
-      )}
+      {true && <ViewChart open={true} onToggleChart={handleToggleChart} />}
     </Box>
   );
 };
