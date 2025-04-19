@@ -19,16 +19,21 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Bounce, toast } from "react-toastify";
-import ModalAdminAdSets from "./modal";
+import ModalAdminAds from "./modal";
 import dayjs from "dayjs";
 import moment from "moment";
 
 const columns: any = [
-  { id: "campaign_id", label: "Campaign", align: "start", minWidth: 150 },
   { id: "status", label: "On/Off", align: "center", minWidth: 50 },
   {
-    id: "adSet",
-    label: "Ad Set",
+    id: "ad",
+    label: "Ad",
+    minWidth: 150,
+    align: "start",
+  },
+  {
+    id: "adSetName",
+    label: "Ad Set Name",
     minWidth: 150,
     align: "start",
   },
@@ -135,14 +140,38 @@ const columns: any = [
     align: "start",
   },
   {
-    id: "scheduleFrom",
-    label: "Schedule From",
+    id: "qualityRankingTitle",
+    label: "Quality Ranking Title",
     minWidth: 150,
     align: "start",
   },
   {
-    id: "scheduleTo",
-    label: "Schedule To",
+    id: "qualityRankingDescription",
+    label: "Quality Ranking Description",
+    minWidth: 150,
+    align: "start",
+  },
+  {
+    id: "engagementRateRankingTitle",
+    label: "Engagement Rate Ranking Title",
+    minWidth: 150,
+    align: "start",
+  },
+  {
+    id: "engagementRateRankingDescription",
+    label: "Engagement Rate Ranking Description",
+    minWidth: 150,
+    align: "start",
+  },
+  {
+    id: "conversionRateRankingTitle",
+    label: "Conversion Rate Ranking Title",
+    minWidth: 150,
+    align: "start",
+  },
+  {
+    id: "conversionRateRankingDescription",
+    label: "Conversion Rate Ranking Description",
     minWidth: 150,
     align: "start",
   },
@@ -157,25 +186,25 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const AdminAdSets = () => {
+const AdminAds = () => {
   const [dataList, setDataList] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [dataSelected, setDataSelected] = useState(null);
   const [dataDetail, setDataDetail] = useState(null);
   const [isView, setIsView] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [dataCampaigns, setDataCampaigns] = useState([]);
+  const [dataAdSets, setDataAdSets] = useState([]);
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
   useEffect(() => {
     getList();
-    getListBusiness();
+    getListAdSets();
   }, []);
 
   const getList = async () => {
     try {
-      const data: any = await axiosInstance.get(URL_PATHS.GET_AD_SET);
+      const data: any = await axiosInstance.get(URL_PATHS.GET_AD);
       if (data?.status === 200) {
         setDataList(data?.data);
       } else {
@@ -217,7 +246,7 @@ const AdminAdSets = () => {
 
   const getDetail = async (item: any) => {
     try {
-      const data: any = await axiosInstance.get(URL_PATHS.GET_DETAIL_AD_SET.replace(":id", item?.id));
+      const data: any = await axiosInstance.get(URL_PATHS.GET_DETAIL_AD.replace(":id", item?.id));
       if (data?.status === 200) {
         setDataDetail({
           ...data?.data,
@@ -273,7 +302,7 @@ const AdminAdSets = () => {
     setAnchorEl(null);
     if (confirm("Are you sure you want to delete this record?")) {
       try {
-        const data = await axiosInstance.delete(URL_PATHS.DELETE_AD_SET.replace(":id", item?.id));
+        const data = await axiosInstance.delete(URL_PATHS.DELETE_AD.replace(":id", item?.id));
         if (data?.status === 200) {
           await getList();
           toast.error(MESSAGE_API.deleteSuccessBusiness, {
@@ -316,11 +345,11 @@ const AdminAdSets = () => {
     }
   };
 
-  const getListBusiness = async () => {
+  const getListAdSets = async () => {
     try {
-      const data: any = await axiosInstance.get(URL_PATHS.GET_CAMPAIGNS);
+      const data: any = await axiosInstance.get(URL_PATHS.GET_AD_SET);
       if (data?.status === 200) {
-        setDataCampaigns(data?.data);
+        setDataAdSets(data?.data);
       }
     } catch (error) {}
   };
@@ -416,7 +445,7 @@ const AdminAdSets = () => {
         </Popover>
       </IF>
       {isOpen && (
-        <ModalAdminAdSets
+        <ModalAdminAds
           open={isOpen}
           handleClose={() => {
             setIsOpen(false);
@@ -426,11 +455,11 @@ const AdminAdSets = () => {
           defaultValues={dataDetail}
           getList={getList}
           isView={isView}
-          dataCampaigns={dataCampaigns}
+          dataAdSets={dataAdSets}
         />
       )}
     </div>
   );
 };
 
-export default AdminAdSets;
+export default AdminAds;
