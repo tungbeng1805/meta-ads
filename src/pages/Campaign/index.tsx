@@ -21,7 +21,7 @@ interface CampaignProps {}
 const Campaign = (props: CampaignProps) => {
   const [tabActive, setTabActive] = React.useState<string>("campaign");
   const [data, setData] = useState<Array<any>>([]);
-  const [openChartType, setOpenChartType] = useState<string | null>();
+  const [openChartType, setOpenChartType] = useState<string | null>("edit");
   const [selectedItems, setSelectedItems] = useState({
     campaign: [],
     adSet: [],

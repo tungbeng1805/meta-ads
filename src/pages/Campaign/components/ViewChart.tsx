@@ -148,7 +148,13 @@ const ViewChart = (props: ViewChartProps) => {
       anchor="right"
       hideBackdrop
     >
-      <div className="view-chart-container">
+      <div
+        className={
+          openChartType === "view"
+            ? "view-chart-container"
+            : "edit-chart-container"
+        }
+      >
         <RightSideBar
           onCloseChart={() => onToggleChart(null)}
           type={openChartType}
@@ -280,31 +286,87 @@ const ViewChart = (props: ViewChartProps) => {
                   </div>
                 </Box>
               </Box>
-              <Divider />
-              <Box
-                display="flex"
-                alignItems="center"
-                justifyContent="flex-end"
-                padding="8px"
-                bgcolor="white"
-              >
-                <ReactDateRangePickerCustom
-                  onChange={(dateRange) => {}}
-                  initialDateRange={{
-                    startDate: new Date(),
-                    endDate: new Date(),
-                  }}
-                  bgColor="rgba(0, 0, 0, 0.05)"
-                />
-              </Box>
+              {openChartType === "view" && (
+                <>
+                  <Divider />
+                  <Box
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="flex-end"
+                    padding="8px"
+                    bgcolor="white"
+                  >
+                    <ReactDateRangePickerCustom
+                      onChange={(dateRange) => {}}
+                      initialDateRange={{
+                        startDate: new Date(),
+                        endDate: new Date(),
+                      }}
+                      bgColor="rgba(0, 0, 0, 0.05)"
+                    />
+                  </Box>
+                </>
+              )}
+              {openChartType === "edit" && (
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  padding="8px"
+                  bgcolor="white"
+                  gap="8px"
+                >
+                  <div className="tab-btn tab-btn-active">
+                    <Box
+                      sx={{
+                        width: "16px",
+                        height: "16px",
+                        maskImage:
+                          "url(https://static.xx.fbcdn.net/rsrc.php/v4/yH/r/4uSWT7f8xsz.png?_nc_eui2=AeELvwE_1Snrp73cViBoS83cZgSDTUs6p0pmBINNSzqnSv1j1jdZzkvYLXi_Ea3MoGImH_NFt_jw3pkEBK6PBg9j)",
+                        maskPosition: "0px -807px",
+                        background: "#0a78be",
+                      }}
+                    />
+                    Edit
+                  </div>
+                  <div className="tab-btn">
+                    <Box
+                      sx={{
+                        width: "16px",
+                        height: "16px",
+                        maskImage:
+                          "url(https://static.xx.fbcdn.net/rsrc.php/v4/ys/r/ljZf5LpWM8u.png?_nc_eui2=AeHOWrpHBG1OX8GpkcI4NkNcUKGpy66a4QBQoanLrprhAMRX99tVfDOSt9c2tNkBC1-_JfCWxZ0LhNZDgIkPJmq5)",
+                        maskPosition: "-21px -262px",
+                        background: "#1c2b33",
+                      }}
+                    />
+                    Review
+                  </div>
+                </Box>
+              )}
             </div>
-            <div className="chart-container">
-              <div className="chart-wrapper">
-                <TopChart />
-                <TurnOn />
-                {/* <DeliveryRecommend /> */}
-                <BotChart />
-              </div>
+            <div
+              className={
+                openChartType === "view"
+                  ? "chart-container"
+                  : "chart-edit-container"
+              }
+            >
+              {openChartType === "view" && (
+                <div className="chart-wrapper">
+                  <TopChart />
+                  <TurnOn />
+                  <BotChart />
+                </div>
+              )}
+              {openChartType === "edit" && (
+                <div className="chart-edit-wrapper">
+                  <Box display="flex" flexDirection="column" gap="16px">
+                    <div className="edit-section">aaa</div>
+                  </Box>
+                  <div className="edit-section">aaa</div>
+                </div>
+              )}
             </div>
           </div>
         </div>
