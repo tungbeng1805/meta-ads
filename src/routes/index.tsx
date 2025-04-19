@@ -58,6 +58,11 @@ const routes: IRoutesState[] = [
     layout: MainLayout,
     path: ROUTERS_PATHS.CHART,
     component: lazy(() => import("@/pages/Chart"))
+  },
+  {
+    layout: MainLayout,
+    path: ROUTERS_PATHS.ADMIN_AD_SET,
+    component: lazy(() => import("@/pages/AdminAdSets"))
   }
 ];
 

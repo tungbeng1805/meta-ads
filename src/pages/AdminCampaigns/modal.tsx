@@ -30,13 +30,13 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 }));
 
 const ModalAdminBusiness = (props: any) => {
-  console.log("props?.defaultValues", props?.defaultValues);
   const { handleSubmit, control, watch, setValue } = useForm<any>({
     defaultValues: props?.defaultValues ?? {
       amountSpent: "",
       attributionSetting: "",
       bidStrategy: "",
       budgetCost: "",
+      budgetDescription: "",
       campaign: "",
       costPerResultCost: "",
       costPerResultDescription: "",
@@ -62,7 +62,10 @@ const ModalAdminBusiness = (props: any) => {
             ...data,
             endsDate,
           })
-        : await axiosInstance.post(URL_PATHS.CREATE_CAMPAIGNS, data);
+        : await axiosInstance.post(URL_PATHS.CREATE_CAMPAIGNS, {
+            ...data,
+            endsDate,
+          });
       if (item?.status === 200) {
         props.getList();
         toast.success(props?.defaultValues ? MESSAGE_API.updateSuccessBusiness : MESSAGE_API.createSuccessBusiness, {
@@ -224,16 +227,15 @@ const ModalAdminBusiness = (props: any) => {
             <Grid size={5.5}>
               <Controller
                 control={control}
-                name="bidStrategy"
-                render={({ field: { onChange, value } }) => (
-                  <SelectCustom
-                    value={value ?? ""}
+                name="budgetCost"
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TextFieldCustom
+                    disabled={props?.isView}
+                    label="Budget Cost"
                     onChange={onChange}
-                    name="Bid Strategy"
-                    options={[
-                      { value: "Highest volume", label: "Highest volume" },
-                      { value: "Using ad set bid strategy", label: "Using ad set bid strategy" },
-                    ]}
+                    onBlur={onBlur}
+                    value={value}
+                    fullWidth
                   />
                 )}
               />
@@ -242,7 +244,7 @@ const ModalAdminBusiness = (props: any) => {
             <Grid size={5.5}>
               <Controller
                 control={control}
-                name="budgetCost"
+                name="budgetDescription"
                 render={({ field: { onChange, onBlur, value } }) => (
                   <TextFieldCustom
                     disabled={props?.isView}
@@ -416,6 +418,8 @@ const ModalAdminBusiness = (props: any) => {
                 )}
               />
             </Grid>
+          </Grid>
+          <Grid container spacing={2} paddingTop={2}>
             <Grid size={5.5}>
               <Controller
                 control={control}
@@ -427,6 +431,24 @@ const ModalAdminBusiness = (props: any) => {
                     slots={{ textField: TextFieldCustom }}
                     disabled={!!watch("endsOngoing")}
                     format="DD/MM/YYYY"
+                  />
+                )}
+              />
+            </Grid>
+            <Grid size={1}></Grid>
+            <Grid size={5.5}>
+              <Controller
+                control={control}
+                name="bidStrategy"
+                render={({ field: { onChange, value } }) => (
+                  <SelectCustom
+                    value={value ?? ""}
+                    onChange={onChange}
+                    name="Bid Strategy"
+                    options={[
+                      { value: "Highest volume", label: "Highest volume" },
+                      { value: "Using ad set bid strategy", label: "Using ad set bid strategy" },
+                    ]}
                   />
                 )}
               />
