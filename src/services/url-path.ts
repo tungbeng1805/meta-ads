@@ -23,6 +23,8 @@ const URL_PATHS = {
   CREATE_AD: "/ads/create",
   UPDATE_AD: "/ads/update/:id",
   DELETE_AD: "/ads/delete/:id",
+  UPLOAD_IMAGE: "/upload/image",
+  DELETE_IMAGE: "/upload/image/:filename",
 };
 
 export default URL_PATHS;

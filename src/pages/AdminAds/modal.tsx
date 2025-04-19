@@ -30,27 +30,87 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 
 const ModalAdminAds = (props: any) => {
   const { handleSubmit, control } = useForm<any>({
-    defaultValues: props?.defaultValues ?? {
-      image: "",
-      status: "",
-      ad: "",
-      adSetName: "",
-      deliveryStatus: "",
-      deliveryDescription: "",
-      qualityRankingTitle: "",
-      qualityRankingDescription: "",
-      engagementRateRankingTitle: "",
-      engagementRateRankingDescription: "",
-      conversionRateRankingTitle: "",
-      conversionRateRankingDescription: "",
-    },
+    defaultValues: props?.defaultValues
+      ? {
+          image: props?.defaultValues?.image || "",
+          status: props?.defaultValues?.status || "",
+          ad: props?.defaultValues?.ad || "",
+          adSetName: props?.defaultValues?.adSetName || "",
+          deliveryStatus: props?.defaultValues?.deliveryStatus || "",
+          deliveryDescription: props?.defaultValues?.deliveryDescription || "",
+          qualityRankingTitle: props?.defaultValues?.qualityRankingTitle || "",
+          qualityRankingDescription: props?.defaultValues?.qualityRankingDescription || "",
+          engagementRateRankingTitle: props?.defaultValues?.engagementRateRankingTitle || "",
+          engagementRateRankingDescription: props?.defaultValues?.engagementRateRankingDescription || "",
+          conversionRateRankingTitle: props?.defaultValues?.conversionRateRankingTitle || "",
+          conversionRateRankingDescription: props?.defaultValues?.conversionRateRankingDescription || "",
+          ad_set_id: props?.defaultValues?.ad_set_id || "",
+        }
+      : {
+          image: "",
+          status: "",
+          ad: "",
+          adSetName: "",
+          deliveryStatus: "",
+          deliveryDescription: "",
+          qualityRankingTitle: "",
+          qualityRankingDescription: "",
+          engagementRateRankingTitle: "",
+          engagementRateRankingDescription: "",
+          conversionRateRankingTitle: "",
+          conversionRateRankingDescription: "",
+        },
     mode: "onChange",
     reValidateMode: "onChange",
   });
 
   const onSubmit = async (data: any) => {
     try {
-      const dataAdSet = props.dataAdSets.find((item: any) => item?.id === data?.adSetName);
+      if (data.image && data.image !== props?.defaultValues?.image) {
+        const formData = new FormData();
+        formData.append("image", data.image);
+        try {
+          const uploadResponse = await axiosInstance.post(URL_PATHS.UPLOAD_IMAGE, formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          });
+          try {
+            await axiosInstance.delete(
+              URL_PATHS.DELETE_IMAGE.replace(":filename", props?.defaultValues?.image?.replace("uploads/", ""))
+            );
+          } catch (error) {}
+          if (uploadResponse?.status !== 200) {
+            toast.error(MESSAGE_API.errorApi, {
+              position: "top-right",
+              autoClose: 1000,
+              hideProgressBar: false,
+              closeOnClick: false,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+              transition: Bounce,
+            });
+            return;
+          }
+          data.image = uploadResponse?.data?.path;
+        } catch (error) {
+          toast.error(MESSAGE_API.errorApi, {
+            position: "top-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Bounce,
+          });
+          return;
+        }
+      }
+      const dataAdSet = props.dataAdSets.find((item: any) => item?.id === data?.ad_set_id);
       const lastSignificantEdit = dataAdSet?.lastSignificantEdit
         ? moment(new Date(dataAdSet?.lastSignificantEdit)).format("YYYY/MM/DD")
         : null;
@@ -73,16 +133,10 @@ const ModalAdminAds = (props: any) => {
         endsOngoing: dataAdSet?.endsOngoing || false,
         ...data,
         adSetName: dataAdSet?.adSet,
-        ad_set_id: data?.adSetName,
       };
-      delete dataSubmit.image;
       const response: any = props?.defaultValues
-        ? await axiosInstance.put(URL_PATHS.UPDATE_AD.replace(":id", props?.defaultValues?.id), {
-            ...dataSubmit,
-          })
-        : await axiosInstance.post(URL_PATHS.CREATE_AD, {
-            ...dataSubmit,
-          });
+        ? await axiosInstance.put(URL_PATHS.UPDATE_AD.replace(":id", props?.defaultValues?.id), dataSubmit)
+        : await axiosInstance.post(URL_PATHS.CREATE_AD, dataSubmit);
       if (response?.status === 200) {
         props.getList();
         toast.success(props?.defaultValues ? MESSAGE_API.updateSuccessAds : MESSAGE_API.createSuccessAds, {
@@ -183,7 +237,11 @@ const ModalAdminAds = (props: any) => {
                     {value && (
                       <div style={{ marginTop: 15, height: "100px", width: "100px", position: "relative" }}>
                         <img
-                          src={typeof value === "string" ? value : URL.createObjectURL(value)}
+                          src={
+                            typeof value === "string"
+                              ? import.meta.env.VITE_BASE_FOLDER + value
+                              : URL.createObjectURL(value)
+                          }
                           alt="Preview"
                           style={{ height: "100px", width: "100px", objectFit: "cover" }}
                         />
@@ -237,7 +295,7 @@ const ModalAdminAds = (props: any) => {
             <Grid size={5.5}>
               <Controller
                 control={control}
-                name="adSetName"
+                name="ad_set_id"
                 render={({ field: { onChange, value } }) => (
                   <SelectCustom
                     value={value ?? ""}
