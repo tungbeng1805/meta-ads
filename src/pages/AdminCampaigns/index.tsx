@@ -243,7 +243,7 @@ const AdminBusiness = () => {
         const data = await axiosInstance.delete(URL_PATHS.DELETE_CAMPAIGNS.replace(":id", item?.id));
         if (data?.status === 200) {
           await getList();
-          toast.error(MESSAGE_API.deleteSuccessBusiness, {
+          toast.error(MESSAGE_API.deleteSuccessCampaigns, {
             position: "top-right",
             autoClose: 1000,
             hideProgressBar: false,

@@ -68,7 +68,7 @@ const ModalAdminBusiness = (props: any) => {
           });
       if (item?.status === 200) {
         props.getList();
-        toast.success(props?.defaultValues ? MESSAGE_API.updateSuccessBusiness : MESSAGE_API.createSuccessBusiness, {
+        toast.success(props?.defaultValues ? MESSAGE_API.updateSuccessCampaigns : MESSAGE_API.createSuccessCampaigns, {
           position: "top-right",
           autoClose: 1000,
           hideProgressBar: false,

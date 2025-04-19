@@ -85,7 +85,7 @@ const ModalAdminAds = (props: any) => {
           });
       if (response?.status === 200) {
         props.getList();
-        toast.success(props?.defaultValues ? MESSAGE_API.updateSuccessBusiness : MESSAGE_API.createSuccessBusiness, {
+        toast.success(props?.defaultValues ? MESSAGE_API.updateSuccessAds : MESSAGE_API.createSuccessAds, {
           position: "top-right",
           autoClose: 1000,
           hideProgressBar: false,
@@ -255,8 +255,16 @@ const ModalAdminAds = (props: any) => {
               <Controller
                 control={control}
                 name="deliveryStatus"
-                render={({ field }) => (
-                  <TextFieldCustom {...field} label="Delivery Status" fullWidth disabled={props?.isView} />
+                render={({ field: { onChange, value } }) => (
+                  <SelectCustom
+                    value={value ?? ""}
+                    onChange={onChange}
+                    name="Delivery Status"
+                    options={[
+                      { value: "Active", label: "Active" },
+                      { value: "Off", label: "Off" },
+                    ]}
+                  />
                 )}
               />
             </Grid>

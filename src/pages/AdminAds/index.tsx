@@ -305,7 +305,7 @@ const AdminAds = () => {
         const data = await axiosInstance.delete(URL_PATHS.DELETE_AD.replace(":id", item?.id));
         if (data?.status === 200) {
           await getList();
-          toast.error(MESSAGE_API.deleteSuccessBusiness, {
+          toast.error(MESSAGE_API.deleteSuccessAds, {
             position: "top-right",
             autoClose: 1000,
             hideProgressBar: false,
