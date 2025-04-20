@@ -14,5 +14,8 @@ const MESSAGE_API = {
   deleteSuccessCampaigns: "Delete successful campaigns",
   updateSuccessFormFace: "Update successful form face",
   deleteSuccessFormFace: "Delete successful form face",
+  updateSuccessChart: "Update successful chart",
+  createSuccessChart: "Create successful chart",
+  deleteSuccessChart: "Delete successful chart",
 };
 export default MESSAGE_API;

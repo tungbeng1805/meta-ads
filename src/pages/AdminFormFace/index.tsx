@@ -45,7 +45,7 @@ const AdminFormFace: React.FC = () => {
     }
     try {
       delete data?.id;
-      const response: any = await axiosInstance.put(URL_PATHS.UPDATE_IMAGE, data);
+      const response: any = await axiosInstance.put(URL_PATHS.UPDATE_FACE, data);
       if (response?.status === 200) {
         toast.success(MESSAGE_API.updateSuccessFormFace, {
           position: "top-right",
@@ -76,7 +76,7 @@ const AdminFormFace: React.FC = () => {
 
   const getDetailPost = async () => {
     try {
-      const response = await axiosInstance.get(URL_PATHS.GET_DETAIL_IMAGE);
+      const response = await axiosInstance.get(URL_PATHS.GET_DETAIL_FACE);
       if (response?.status === 200) {
         reset(response?.data);
         setImageUrl(response?.data?.image ? import.meta.env.VITE_BASE_FOLDER + response?.data?.image : "");
