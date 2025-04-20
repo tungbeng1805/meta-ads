@@ -10,6 +10,7 @@ import axiosInstance from "@/services/api-services";
 import URL_PATHS from "@/services/url-path";
 import { Bounce, toast } from "react-toastify";
 import MESSAGE_API from "@/constants/message";
+import moment from "moment";
 
 const AdminFormFace: React.FC = () => {
   const { handleSubmit, control, reset } = useForm({
@@ -45,7 +46,10 @@ const AdminFormFace: React.FC = () => {
     }
     try {
       delete data?.id;
-      const response: any = await axiosInstance.put(URL_PATHS.UPDATE_FACE, data);
+      const response: any = await axiosInstance.put(URL_PATHS.UPDATE_FACE, {
+        ...data,
+        datePost: data?.datePost ? moment(data?.datePost).format("YYYY-MM-DD") : null,
+      });
       if (response?.status === 200) {
         toast.success(MESSAGE_API.updateSuccessFormFace, {
           position: "top-right",
