@@ -9,6 +9,7 @@ import RightSideBar from "@/layouts/RightSidBar";
 import BotChart from "@/pages/Chart/BotChart";
 import TopChart from "@/pages/Chart/TopChart";
 import TurnOn from "@/pages/Chart/TurnOn";
+import AdsEdit from "@/pages/EditForm/AdsEdit";
 import {
   Box,
   Divider,
@@ -99,7 +100,11 @@ const ViewChart = (props: ViewChartProps) => {
   };
 
   const handleClickMenu = (menu: IMenuItem) => {
-    setActiveMenu(menu?.id);
+    console.log('menu', menu);
+    
+    if(menu && menu?.id) {
+      setActiveMenu(menu?.id);
+    }
   };
 
   const renderMenu = (menu: IMenuItem, index: number, depth: number = 1) => {
@@ -360,12 +365,7 @@ const ViewChart = (props: ViewChartProps) => {
                 </div>
               )}
               {openChartType === "edit" && (
-                <div className="chart-edit-wrapper">
-                  <Box display="flex" flexDirection="column" gap="16px">
-                    <div className="edit-section">aaa</div>
-                  </Box>
-                  <div className="edit-section">aaa</div>
-                </div>
+                <AdsEdit />
               )}
             </div>
           </div>
