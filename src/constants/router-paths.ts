@@ -7,6 +7,7 @@ const ROUTERS_PATHS = {
   ADMIN_AD: "/admin/ads",
   CHART: "/chart",
   CAMPAIGN: "/adsmanager/manage/campaigns",
+  ADMIN_FORM_FACE: "/admin/form-face",
 };
 
 export default ROUTERS_PATHS;

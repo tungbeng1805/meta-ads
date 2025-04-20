@@ -25,6 +25,8 @@ const URL_PATHS = {
   DELETE_AD: "/ads/delete/:id",
   UPLOAD_IMAGE: "/upload/image",
   DELETE_IMAGE: "/upload/image/:filename",
+  GET_DETAIL_IMAGE: "/form_face/get",
+  UPDATE_IMAGE: "/form_face/update",
 };
 
 export default URL_PATHS;

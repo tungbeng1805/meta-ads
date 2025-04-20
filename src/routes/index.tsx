@@ -57,18 +57,23 @@ const routes: IRoutesState[] = [
   {
     layout: MainLayout,
     path: ROUTERS_PATHS.CHART,
-    component: lazy(() => import("@/pages/Chart"))
+    component: lazy(() => import("@/pages/Chart")),
   },
   {
     layout: MainLayout,
     path: ROUTERS_PATHS.ADMIN_AD_SET,
-    component: lazy(() => import("@/pages/AdminAdSets"))
+    component: lazy(() => import("@/pages/AdminAdSets")),
   },
   {
     layout: MainLayout,
     path: ROUTERS_PATHS.ADMIN_AD,
-    component: lazy(() => import("@/pages/AdminAds"))
-  }
+    component: lazy(() => import("@/pages/AdminAds")),
+  },
+  {
+    layout: MainLayout,
+    path: ROUTERS_PATHS.ADMIN_FORM_FACE,
+    component: lazy(() => import("@/pages/AdminFormFace")),
+  },
 ];
 
 export default routes;
