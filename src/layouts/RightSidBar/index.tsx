@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 interface RightSideBarProps {
   onCloseChart?: () => void;
-  // type is  "normal" | "view" | "edit"
+  // type is  "normal" | "view" | "edit-adset" | "edit-ads"
   type?: string | null;
 }
 
@@ -63,8 +63,12 @@ const RightSideBar = (props: RightSideBarProps) => {
             />
           )}
         </div>
-        <div className={`menu-right-btn ${type === "edit" && "active-btn"}`}>
-          {type === "edit" ? (
+        <div
+          className={`menu-right-btn ${
+            type && ["edit-adset", "edit-ads"].includes(type) && "active-btn"
+          }`}
+        >
+          {type && ["edit-adset", "edit-ads"].includes(type) ? (
             <Box
               sx={{
                 width: "16px",

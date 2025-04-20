@@ -1,6 +1,10 @@
 .campaign-page {
-  padding: 8px 0px 16px 0px;
+  padding: 8px 3px 16px 3px;
   margin-right: 44px;
+}
+
+.campaign-page .header-campaign {
+  padding: 0px 8px;
 }
 
 .campaign-page .campaign-title {
@@ -363,11 +367,106 @@
   background: #e1edf7;
   border-radius: 4px;
 }
+/*END VIEW CHART*/
 
-.right-chart-content .edit-section {
+/*ADSET EDIT */
+.right-chart-content .edit-adset-section {
   background: white;
   border-radius: 4px;
   padding: 16px;
+  width: 568px;
 }
 
-/*END VIEW CHART*/
+.right-chart-content .adset-title {
+  font-size: 16px;
+  font-weight: bold;
+  font-family: Optimistic Display, system-ui, sans-serif;
+  color: #1c2b33;
+  line-height: 20px;
+}
+
+.right-chart-content .conversion-location {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+.right-chart-content .conversion-location:hover {
+  background: rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+}
+
+.right-chart-content .conversion-location:hover .conversion-edit-btn {
+  display: block;
+}
+
+.right-chart-content .conversion-title {
+  font-size: 14px;
+  font-weight: bold;
+  font-family: Optimistic Display, system-ui, sans-serif;
+  color: #1c2b33;
+  line-height: 20px;
+}
+
+.right-chart-content .conversion-des {
+  font-size: 14px;
+  font-family: Optimistic Display, system-ui, sans-serif;
+  color: #1c2b33;
+  line-height: 20px;
+}
+
+.right-chart-content .conversion-edit-btn {
+  display: none;
+}
+
+.right-chart-content .des-little {
+  font-size: 12px;
+  font-family: Optimistic Display, system-ui, sans-serif;
+  color: #465a69;
+  line-height: 18px;
+}
+
+.right-chart-content .disable-input {
+  padding: 8px 12px;
+  background: #f1f4f7;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 400;
+  color: #1c2b3399;
+  border: 1px solid #cbd2d9;
+  line-height: 20px;
+  font-family: Optimistic Display, system-ui, sans-serif !important;
+  cursor: no-drop;
+}
+
+.right-chart-content .des-link {
+  font-size: 14px;
+  font-family: Optimistic Display, system-ui, sans-serif;
+  color: #0a78be;
+  line-height: 18px;
+}
+
+.right-chart-content .des-link:hover {
+  text-decoration: underline;
+}
+
+.right-chart-content .start-date {
+  border-radius: 4px 0px 0px 4px;
+  width: 100%;
+  justify-content: flex-start;
+}
+
+.right-chart-content .start-date-left {
+  border-radius: 0px 4px 4px 0px;
+  border-left: none;
+  width: 100%;
+  justify-content: flex-start;
+}
+
+/*END ADSET EDIT */

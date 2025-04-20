@@ -127,9 +127,9 @@ const Campaign = (props: CampaignProps) => {
     });
   }, []);
 
-  const handleClickOpenChart = (id: any) => {
-    setOpenChartType('edit')
-  }
+  const handleClickOpenChart = (id: number, type: string) => {
+    setOpenChartType(type);
+  };
 
   const handleToggleChart = (type: string | null) => {
     setOpenChartType(type);

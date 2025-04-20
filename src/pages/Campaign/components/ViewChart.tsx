@@ -10,6 +10,7 @@ import BotChart from "@/pages/Chart/BotChart";
 import TopChart from "@/pages/Chart/TopChart";
 import TurnOn from "@/pages/Chart/TurnOn";
 import AdsEdit from "@/pages/EditForm/AdsEdit";
+import AdSetEdit from "@/pages/EditForm/AdsetEdit";
 import {
   Box,
   Divider,
@@ -100,11 +101,9 @@ const ViewChart = (props: ViewChartProps) => {
   };
 
   const handleClickMenu = (menu: IMenuItem) => {
-    console.log('menu', menu);
-    
-    if(menu && menu?.id) {
-      setActiveMenu(menu?.id);
-    }
+    // if (menu && menu?.id) {
+    //   setActiveMenu([menu?.id]);
+    // }
   };
 
   const renderMenu = (menu: IMenuItem, index: number, depth: number = 1) => {
@@ -312,7 +311,7 @@ const ViewChart = (props: ViewChartProps) => {
                   </Box>
                 </>
               )}
-              {openChartType === "edit" && (
+              {openChartType !== "view" && (
                 <Box
                   display="flex"
                   alignItems="center"
@@ -364,9 +363,8 @@ const ViewChart = (props: ViewChartProps) => {
                   <BotChart />
                 </div>
               )}
-              {openChartType === "edit" && (
-                <AdsEdit />
-              )}
+              {openChartType === "edit-ads" && <AdsEdit />}
+              {openChartType === "edit-adset" && <AdSetEdit />}
             </div>
           </div>
         </div>

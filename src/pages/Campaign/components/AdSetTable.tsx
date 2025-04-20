@@ -1,9 +1,9 @@
 import axiosInstance from "@/services/api-services";
 import URL_PATHS from "@/services/url-path";
 import { getParamsId, STATUS } from "@/util";
-import BarChartIcon from '@mui/icons-material/BarChart';
-import EditIcon from '@mui/icons-material/Edit';
-import FileCopyIcon from '@mui/icons-material/FileCopy';
+import BarChartIcon from "@mui/icons-material/BarChart";
+import EditIcon from "@mui/icons-material/Edit";
+import FileCopyIcon from "@mui/icons-material/FileCopy";
 import { Switch } from "@mui/material";
 import { Box, styled } from "@mui/system";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
@@ -11,7 +11,7 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 
 interface AdsetTableProps {
-  handleClickOpenChart: (id: any) => void
+  handleClickOpenChart: (id: number, type: string) => void;
 }
 
 const IOSSwitch = styled((props: any) => (
@@ -20,62 +20,62 @@ const IOSSwitch = styled((props: any) => (
   width: 42,
   height: 26,
   padding: 0,
-  '& .MuiSwitch-switchBase': {
+  "& .MuiSwitch-switchBase": {
     padding: 0,
     margin: 2,
-    transitionDuration: '300ms',
-    '&.Mui-checked': {
-      transform: 'translateX(16px)',
-      color: '#fff',
-      '& + .MuiSwitch-track': {
-        backgroundColor: '#0a78be',
+    transitionDuration: "300ms",
+    "&.Mui-checked": {
+      transform: "translateX(16px)",
+      color: "#fff",
+      "& + .MuiSwitch-track": {
+        backgroundColor: "#0a78be",
         opacity: 1,
         border: 0,
-        ...theme.applyStyles('dark', {
-          backgroundColor: '#0a78be',
+        ...theme.applyStyles("dark", {
+          backgroundColor: "#0a78be",
         }),
       },
-      '&.Mui-disabled + .MuiSwitch-track': {
+      "&.Mui-disabled + .MuiSwitch-track": {
         opacity: 0.5,
       },
     },
-    '&.Mui-focusVisible .MuiSwitch-thumb': {
-      color: '#0a78be',
-      border: '6px solid #fff',
+    "&.Mui-focusVisible .MuiSwitch-thumb": {
+      color: "#0a78be",
+      border: "6px solid #fff",
     },
-    '&.Mui-disabled + .MuiSwitch-track': {
+    "&.Mui-disabled + .MuiSwitch-track": {
       opacity: 0.7,
-      ...theme.applyStyles('dark', {
+      ...theme.applyStyles("dark", {
         opacity: 0.3,
       }),
     },
   },
-  '& .MuiSwitch-thumb': {
-    boxSizing: 'border-box',
+  "& .MuiSwitch-thumb": {
+    boxSizing: "border-box",
     width: 22,
     height: 22,
   },
-  '& .MuiSwitch-track': {
+  "& .MuiSwitch-track": {
     borderRadius: 26 / 2,
-    backgroundColor: '#E9E9EA',
+    backgroundColor: "#E9E9EA",
     opacity: 1,
-    transition: theme?.transitions?.create(['background-color'], {
+    transition: theme?.transitions?.create(["background-color"], {
       duration: 500,
     }),
-    ...theme.applyStyles('dark', {
-      backgroundColor: '#39393D',
+    ...theme.applyStyles("dark", {
+      backgroundColor: "#39393D",
     }),
   },
 }));
 
 const AdsetTable = (props: AdsetTableProps) => {
-  const { handleClickOpenChart } = props
-  const [rows, setRows] = useState<Array<any>>([])
-  const [displayRows, setDisplayRows] = useState<Array<any>>([])
-  const [arrSelectedRow, setArrSelectedRow] = useState<Array<any>>([])
-  const [openOption, setOpenOption] = useState<any>()
+  const { handleClickOpenChart } = props;
+  const [rows, setRows] = useState<Array<any>>([]);
+  const [displayRows, setDisplayRows] = useState<Array<any>>([]);
+  const [arrSelectedRow, setArrSelectedRow] = useState<Array<any>>([]);
+  const [openOption, setOpenOption] = useState<any>();
 
-  const objParam = getParamsId()
+  const objParam = getParamsId();
 
   const columns: GridColDef[] = [
     {
@@ -86,7 +86,11 @@ const AdsetTable = (props: AdsetTableProps) => {
         if (params.id !== "summary") {
           return (
             <IOSSwitch
-              checked={!!params.row && !!params.row.deliveryStatus && params.row.deliveryStatus === STATUS.ACTIVE}
+              checked={
+                !!params.row &&
+                !!params.row.deliveryStatus &&
+                params.row.deliveryStatus === STATUS.ACTIVE
+              }
               sx={{
                 padding: "8px",
                 ".MuiSwitch-root": {
@@ -124,32 +128,52 @@ const AdsetTable = (props: AdsetTableProps) => {
         if (params.id === "summary") {
           return (
             <div>
-              <p >{`Results from ${rows?.length} ad sets`}</p>
+              <p>{`Results from ${rows?.length} ad sets`}</p>
               <p className="title-footer-table">Excludes deleted items</p>
             </div>
           );
         } else {
           return (
-            <div onMouseEnter={() => {setOpenOption(params.row.id)}} onMouseLeave={() => setOpenOption(null)}>
+            <div
+              onMouseEnter={() => {
+                setOpenOption(params.row.id);
+              }}
+              onMouseLeave={() => setOpenOption(null)}
+            >
               <div>{params.value}</div>
               {openOption === params.row.id && (
-                <div style={{display: 'flex', columnGap: '10px', fontSize: '12px', cursor: 'pointer'}}>
-                  <div style={{display: 'flex', alignItems: 'center'}} onClick={() => handleClickOpenChart(params.row.id)}>
+                <div
+                  style={{
+                    display: "flex",
+                    columnGap: "10px",
+                    fontSize: "12px",
+                    cursor: "pointer",
+                  }}
+                >
+                  <div
+                    style={{ display: "flex", alignItems: "center" }}
+                    onClick={() => handleClickOpenChart(params.row.id, "view")}
+                  >
                     <BarChartIcon sx={{ fontSize: "12px" }} />
                     <span>View Charts</span>
                   </div>
-                  <div style={{display: 'flex', alignItems: 'center'}} onClick={() => handleClickOpenChart(params.row.id)}>
+                  <div
+                    style={{ display: "flex", alignItems: "center" }}
+                    onClick={() =>
+                      handleClickOpenChart(params.row.id, "edit-adset")
+                    }
+                  >
                     <EditIcon sx={{ fontSize: "12px" }} />
-                    <span>Edit</span>  
+                    <span>Edit</span>
                   </div>
-                  <div style={{display: 'flex', alignItems: 'center'}}>
+                  <div style={{ display: "flex", alignItems: "center" }}>
                     <FileCopyIcon sx={{ fontSize: "12px" }} />
-                    <span>Duplicate</span>  
+                    <span>Duplicate</span>
                   </div>
                 </div>
               )}
             </div>
-          )
+          );
         }
         return <div onClick={() => handleClickName()}>{params.value}</div>;
       },
@@ -159,7 +183,7 @@ const AdsetTable = (props: AdsetTableProps) => {
       headerName: "Delivery",
       width: 172,
       renderCell: (params) => {
-        if (params.id !== 'summary') {
+        if (params.id !== "summary") {
           return (
             <div>
               <div>{params.row.deliveryStatus}</div>
@@ -167,15 +191,15 @@ const AdsetTable = (props: AdsetTableProps) => {
             </div>
           );
         }
-        return <div></div>
-      }
+        return <div></div>;
+      },
     },
     {
       field: "bidStrategyCost",
       headerName: "Bid strategy",
       width: 130,
       renderCell: (params) => {
-        if (params.id !== 'summary') {
+        if (params.id !== "summary") {
           return (
             <div>
               <div>{params.row.bidStrategyCost}</div>
@@ -183,15 +207,15 @@ const AdsetTable = (props: AdsetTableProps) => {
             </div>
           );
         }
-        return <div></div>
-      }
+        return <div></div>;
+      },
     },
     {
       field: "budgetDescription",
       headerName: "Budget",
       width: 188,
       renderCell: (params) => {
-        if (params.id !== 'summary') {
+        if (params.id !== "summary") {
           return (
             <div>
               <div>{`đ ${params.row.budgetCost}`}</div>
@@ -199,44 +223,46 @@ const AdsetTable = (props: AdsetTableProps) => {
             </div>
           );
         }
-        return <div></div>
-      }
+        return <div></div>;
+      },
     },
     {
-      field: 'lastSignificantEdit',
-      headerName: 'Last significant edit',
+      field: "lastSignificantEdit",
+      headerName: "Last significant edit",
       width: 188,
       renderCell: (params) => {
-        if (params.id !== 'summary') {
+        if (params.id !== "summary") {
           return (
             <div>
               {moment(params.row.lastSignificantEdit).format("D MMM YYYY")}
             </div>
           );
         }
-        return <div></div>
-      }
+        return <div></div>;
+      },
     },
     {
       field: "attributionSetting",
       headerName: "Attribution setting",
       width: 120,
       renderCell: (params) => {
-        if (params.id === 'summary') {
+        if (params.id === "summary") {
           return (
             <div>
-              <div className="title-footer-table">Multiple attribution settings</div>
+              <div className="title-footer-table">
+                Multiple attribution settings
+              </div>
             </div>
           );
         }
-      }
+      },
     },
     {
       field: "resultsCost",
       headerName: "Results",
       width: 200,
       renderCell: (params) => {
-        if (params.id !== 'summary') {
+        if (params.id !== "summary") {
           return (
             <div>
               <div>{params.row.resultsCost}</div>
@@ -249,15 +275,15 @@ const AdsetTable = (props: AdsetTableProps) => {
             <p>{params.row.resultsCost}</p>
             <p className="title-footer-table">Multiple conversions</p>
           </div>
-        )
-      }
+        );
+      },
     },
     {
       field: "reach",
       headerName: "Reach",
       width: 158,
       renderCell: (params) => {
-        if (params.id == 'summary') {
+        if (params.id == "summary") {
           return (
             <div>
               <div>{params.row.reach}</div>
@@ -265,14 +291,14 @@ const AdsetTable = (props: AdsetTableProps) => {
             </div>
           );
         }
-      }
+      },
     },
     {
       field: "impressions",
       headerName: "Impressions",
       width: 196,
       renderCell: (params) => {
-        if (params.id == 'summary') {
+        if (params.id == "summary") {
           return (
             <div>
               <div>{params.row.impressions}</div>
@@ -280,14 +306,14 @@ const AdsetTable = (props: AdsetTableProps) => {
             </div>
           );
         }
-      }
+      },
     },
     {
       field: "costPerResultCost",
       headerName: "Cost per result",
       width: 196,
       renderCell: (params) => {
-        if (params.id == 'summary') {
+        if (params.id == "summary") {
           return (
             <div>
               <div>{`đ ${params.row.costPerResultCost}`}</div>
@@ -300,16 +326,16 @@ const AdsetTable = (props: AdsetTableProps) => {
               <div>{`đ ${params.row.costPerResultCost}`}</div>
               <div>{params.row.costPerResultDescription}</div>
             </div>
-          )
+          );
         }
-      }
+      },
     },
     {
       field: "amountSpent",
       headerName: "Amount spent",
       width: 196,
       renderCell: (params) => {
-        if (params.id == 'summary') {
+        if (params.id == "summary") {
           return (
             <div>
               <div>{`đ ${params.row.amountSpent}`}</div>
@@ -317,11 +343,9 @@ const AdsetTable = (props: AdsetTableProps) => {
             </div>
           );
         } else {
-          return (
-            <div>{`đ ${params.row.amountSpent}`}</div>
-          )
+          return <div>{`đ ${params.row.amountSpent}`}</div>;
         }
-      }
+      },
     },
     {
       field: "endsOngoing",
@@ -333,16 +357,14 @@ const AdsetTable = (props: AdsetTableProps) => {
       headerName: "Schedule",
       width: 196,
       renderCell: (params) => {
-        if (params.id !== 'summary') {
+        if (params.id !== "summary") {
           return (
-            <div>
-              {moment(params.row.scheduleFrom).format("D MMM YYYY")}
-            </div>
+            <div>{moment(params.row.scheduleFrom).format("D MMM YYYY")}</div>
           );
         }
-        return <div></div>
-      }
-    }
+        return <div></div>;
+      },
+    },
   ];
 
   const handleClickName = () => {
@@ -350,21 +372,37 @@ const AdsetTable = (props: AdsetTableProps) => {
   };
 
   const getData = async () => {
-    const business_id = objParam?.business_id
-    const selected_campaign_ids = objParam?.selected_campaign_ids
+    const business_id = objParam?.business_id;
+    const selected_campaign_ids = objParam?.selected_campaign_ids;
 
     try {
       const params = {
-        business_id: business_id && !selected_campaign_ids ? business_id : '',
-        campaign_id: !!selected_campaign_ids ? selected_campaign_ids.replaceAll('and', ',') : []
-      }
-      const response = await axiosInstance.get(URL_PATHS.GET_AD_SET, { params })
+        business_id: business_id && !selected_campaign_ids ? business_id : "",
+        campaign_id: !!selected_campaign_ids
+          ? selected_campaign_ids.replaceAll("and", ",")
+          : [],
+      };
+      const response = await axiosInstance.get(URL_PATHS.GET_AD_SET, {
+        params,
+      });
       if (response && response.data) {
-        const data = response.data
-        const totalReach = data.reduce((sum: any, row: any) => sum + Number(row.reach), 0);
-        const totalResultsCost = data.reduce((sum: any, row: any) => sum + Number(row.resultsCost), 0);
-        const totalCostPerResultCost = data.reduce((sum: any, row: any) => sum + Number(row.costPerResultCost), 0);
-        const totalImpressions = data.reduce((sum: any, row: any) => sum + Number(row.impressions), 0);
+        const data = response.data;
+        const totalReach = data.reduce(
+          (sum: any, row: any) => sum + Number(row.reach),
+          0
+        );
+        const totalResultsCost = data.reduce(
+          (sum: any, row: any) => sum + Number(row.resultsCost),
+          0
+        );
+        const totalCostPerResultCost = data.reduce(
+          (sum: any, row: any) => sum + Number(row.costPerResultCost),
+          0
+        );
+        const totalImpressions = data.reduce(
+          (sum: any, row: any) => sum + Number(row.impressions),
+          0
+        );
         const totalAmountSpent = data.reduce(
           (sum: any, row: any) => sum + parseFloat(String(row.amountSpent)),
           0
@@ -381,24 +419,22 @@ const AdsetTable = (props: AdsetTableProps) => {
           attributionSetting: "Multiple attribution settinng",
         };
         const displayRows = [...data, summaryRow];
-        setRows(data)
-        setDisplayRows(displayRows)
+        setRows(data);
+        setDisplayRows(displayRows);
       }
-    } catch (error) {
-
-    }
-  }
+    } catch (error) {}
+  };
 
   useEffect(() => {
-    getData()
-  }, [JSON.stringify(objParam)])
+    getData();
+  }, [JSON.stringify(objParam)]);
 
   useEffect(() => {
-    const objParam = getParamsId()
-    const selected_adset_ids = objParam?.selected_adset_ids
-    const arrId = !!selected_adset_ids ? selected_adset_ids.split('and') : []
-    setArrSelectedRow(arrId.map((e: any) => Number(e)))
-  }, [])
+    const objParam = getParamsId();
+    const selected_adset_ids = objParam?.selected_adset_ids;
+    const arrId = !!selected_adset_ids ? selected_adset_ids.split("and") : [];
+    setArrSelectedRow(arrId.map((e: any) => Number(e)));
+  }, []);
 
   return (
     <DataGrid
@@ -407,17 +443,19 @@ const AdsetTable = (props: AdsetTableProps) => {
       checkboxSelection={true}
       rowSelectionModel={arrSelectedRow}
       onRowSelectionModelChange={(newSelection: any) => {
-        const _arr = newSelection.map((i: any) => String(i))
-        const stringId = _arr.reduce((acc: any, cur: any) => { return acc += String(cur) + 'and' }, '')
+        const _arr = newSelection.map((i: any) => String(i));
+        const stringId = _arr.reduce((acc: any, cur: any) => {
+          return (acc += String(cur) + "and");
+        }, "");
         const params = new URLSearchParams(window.location.search);
-        if (stringId !== '') {
-          params.set('selected_adset_ids', stringId);
+        if (stringId !== "") {
+          params.set("selected_adset_ids", stringId);
         } else {
-          params.delete('selected_adset_ids');
+          params.delete("selected_adset_ids");
         }
         const newUrl = `${window.location.pathname}?${params.toString()}`;
-        window.history.pushState({}, '', newUrl)
-        setArrSelectedRow(_arr.map((e: any) => Number(e)))
+        window.history.pushState({}, "", newUrl);
+        setArrSelectedRow(_arr.map((e: any) => Number(e)));
       }}
       sx={{
         border: 0,
