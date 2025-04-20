@@ -21,7 +21,7 @@ interface CampaignProps {}
 const Campaign = (props: CampaignProps) => {
   const [tabActive, setTabActive] = React.useState<string>("campaign");
   const [data, setData] = useState<Array<any>>([]);
-  const [openChartType, setOpenChartType] = useState<string | null>("edit");
+  const [openChartType, setOpenChartType] = useState<string | null>(null);
   const [selectedItems, setSelectedItems] = useState({
     campaign: [],
     adSet: [],
@@ -61,12 +61,13 @@ const Campaign = (props: CampaignProps) => {
             data={data}
             selectedItems={selectedItems?.campaign}
             onSelectedItems={handleSetSelectedItems}
+            handleClickOpenChart={handleClickOpenChart}
           />
         );
       case "adSet":
-        return <AdsetTable />;
+        return <AdsetTable handleClickOpenChart={handleClickOpenChart} />;
       case "ads":
-        return <AdsTable />;
+        return <AdsTable handleClickOpenChart={handleClickOpenChart} />;
       default:
         return;
     }
@@ -125,6 +126,10 @@ const Campaign = (props: CampaignProps) => {
       ads: arrAdsId,
     });
   }, []);
+
+  const handleClickOpenChart = (id: any) => {
+    setOpenChartType('edit')
+  }
 
   const handleToggleChart = (type: string | null) => {
     setOpenChartType(type);

@@ -1,15 +1,18 @@
-import ROUTERS_PATHS from "@/constants/router-paths";
 import axiosInstance from "@/services/api-services";
 import URL_PATHS from "@/services/url-path";
 import { getParamsId, STATUS } from "@/util";
+import BarChartIcon from '@mui/icons-material/BarChart';
+import EditIcon from '@mui/icons-material/Edit';
+import FileCopyIcon from '@mui/icons-material/FileCopy';
 import { Switch } from "@mui/material";
 import { Box, styled } from "@mui/system";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import moment from "moment";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
-interface AdsetTableProps { }
+interface AdsetTableProps {
+  handleClickOpenChart: (id: any) => void
+}
 
 const IOSSwitch = styled((props: any) => (
   <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
@@ -66,11 +69,11 @@ const IOSSwitch = styled((props: any) => (
 }));
 
 const AdsetTable = (props: AdsetTableProps) => {
+  const { handleClickOpenChart } = props
   const [rows, setRows] = useState<Array<any>>([])
   const [displayRows, setDisplayRows] = useState<Array<any>>([])
   const [arrSelectedRow, setArrSelectedRow] = useState<Array<any>>([])
-
-  console.log('arrSelectedRow', arrSelectedRow);
+  const [openOption, setOpenOption] = useState<any>()
 
   const objParam = getParamsId()
 
@@ -116,7 +119,7 @@ const AdsetTable = (props: AdsetTableProps) => {
     {
       field: "adSet",
       headerName: "Ad set",
-      width: 170,
+      width: 250,
       renderCell: (params) => {
         if (params.id === "summary") {
           return (
@@ -125,6 +128,28 @@ const AdsetTable = (props: AdsetTableProps) => {
               <p className="title-footer-table">Excludes deleted items</p>
             </div>
           );
+        } else {
+          return (
+            <div onMouseEnter={() => {setOpenOption(params.row.id)}} onMouseLeave={() => setOpenOption(null)}>
+              <div>{params.value}</div>
+              {openOption === params.row.id && (
+                <div style={{display: 'flex', columnGap: '10px', fontSize: '12px', cursor: 'pointer'}}>
+                  <div style={{display: 'flex', alignItems: 'center'}} onClick={() => handleClickOpenChart(params.row.id)}>
+                    <BarChartIcon sx={{ fontSize: "12px" }} />
+                    <span>View Charts</span>
+                  </div>
+                  <div style={{display: 'flex', alignItems: 'center'}} onClick={() => handleClickOpenChart(params.row.id)}>
+                    <EditIcon sx={{ fontSize: "12px" }} />
+                    <span>Edit</span>  
+                  </div>
+                  <div style={{display: 'flex', alignItems: 'center'}}>
+                    <FileCopyIcon sx={{ fontSize: "12px" }} />
+                    <span>Duplicate</span>  
+                  </div>
+                </div>
+              )}
+            </div>
+          )
         }
         return <div onClick={() => handleClickName()}>{params.value}</div>;
       },
