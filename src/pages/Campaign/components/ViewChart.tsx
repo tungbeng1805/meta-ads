@@ -9,6 +9,7 @@ import RightSideBar from "@/layouts/RightSidBar";
 import BotChart from "@/pages/Chart/BotChart";
 import TopChart from "@/pages/Chart/TopChart";
 import TurnOn from "@/pages/Chart/TurnOn";
+import AdsEdit from "@/pages/EditForm/AdsEdit";
 import {
   Box,
   Divider,
@@ -20,8 +21,8 @@ import {
 import React from "react";
 
 interface ViewChartProps {
-  open: boolean;
-  onToggleChart: (show: boolean) => void;
+  openChartType: string | null;
+  onToggleChart: (type: string | null) => void;
 }
 
 interface IMenuItem {
@@ -31,7 +32,7 @@ interface IMenuItem {
 }
 
 const ViewChart = (props: ViewChartProps) => {
-  const { open, onToggleChart } = props;
+  const { openChartType, onToggleChart } = props;
   const [activeMenu, setActiveMenu] = React.useState<number[]>([1]);
 
   const listMenu = [
@@ -99,7 +100,11 @@ const ViewChart = (props: ViewChartProps) => {
   };
 
   const handleClickMenu = (menu: IMenuItem) => {
-    setActiveMenu(menu?.id);
+    console.log('menu', menu);
+    
+    if(menu && menu?.id) {
+      setActiveMenu(menu?.id);
+    }
   };
 
   const renderMenu = (menu: IMenuItem, index: number, depth: number = 1) => {
@@ -143,13 +148,22 @@ const ViewChart = (props: ViewChartProps) => {
 
   return (
     <Drawer
-      open={open}
-      onClose={() => onToggleChart(false)}
+      open={!!openChartType}
+      onClose={() => onToggleChart(null)}
       anchor="right"
       hideBackdrop
     >
-      <div className="view-chart-container">
-        <RightSideBar side="left" onCloseChart={() => onToggleChart(false)} />
+      <div
+        className={
+          openChartType === "view"
+            ? "view-chart-container"
+            : "edit-chart-container"
+        }
+      >
+        <RightSideBar
+          onCloseChart={() => onToggleChart(null)}
+          type={openChartType}
+        />
         <div className="view-chart-wrapper">
           <div className="view-chart-menu">
             <Box padding="6px 12px">
@@ -277,31 +291,82 @@ const ViewChart = (props: ViewChartProps) => {
                   </div>
                 </Box>
               </Box>
-              <Divider />
-              <Box
-                display="flex"
-                alignItems="center"
-                justifyContent="flex-end"
-                padding="8px"
-                bgcolor="white"
-              >
-                <ReactDateRangePickerCustom
-                  onChange={(dateRange) => {}}
-                  initialDateRange={{
-                    startDate: new Date(),
-                    endDate: new Date(),
-                  }}
-                  bgColor="rgba(0, 0, 0, 0.05)"
-                />
-              </Box>
+              {openChartType === "view" && (
+                <>
+                  <Divider />
+                  <Box
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="flex-end"
+                    padding="8px"
+                    bgcolor="white"
+                  >
+                    <ReactDateRangePickerCustom
+                      onChange={(dateRange) => {}}
+                      initialDateRange={{
+                        startDate: new Date(),
+                        endDate: new Date(),
+                      }}
+                      bgColor="rgba(0, 0, 0, 0.05)"
+                    />
+                  </Box>
+                </>
+              )}
+              {openChartType === "edit" && (
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  padding="8px"
+                  bgcolor="white"
+                  gap="8px"
+                >
+                  <div className="tab-btn tab-btn-active">
+                    <Box
+                      sx={{
+                        width: "16px",
+                        height: "16px",
+                        maskImage:
+                          "url(https://static.xx.fbcdn.net/rsrc.php/v4/yH/r/4uSWT7f8xsz.png?_nc_eui2=AeELvwE_1Snrp73cViBoS83cZgSDTUs6p0pmBINNSzqnSv1j1jdZzkvYLXi_Ea3MoGImH_NFt_jw3pkEBK6PBg9j)",
+                        maskPosition: "0px -807px",
+                        background: "#0a78be",
+                      }}
+                    />
+                    Edit
+                  </div>
+                  <div className="tab-btn">
+                    <Box
+                      sx={{
+                        width: "16px",
+                        height: "16px",
+                        maskImage:
+                          "url(https://static.xx.fbcdn.net/rsrc.php/v4/ys/r/ljZf5LpWM8u.png?_nc_eui2=AeHOWrpHBG1OX8GpkcI4NkNcUKGpy66a4QBQoanLrprhAMRX99tVfDOSt9c2tNkBC1-_JfCWxZ0LhNZDgIkPJmq5)",
+                        maskPosition: "-21px -262px",
+                        background: "#1c2b33",
+                      }}
+                    />
+                    Review
+                  </div>
+                </Box>
+              )}
             </div>
-            <div className="chart-container">
-              <div className="chart-wrapper">
-                <TopChart />
-                <TurnOn />
-                {/* <DeliveryRecommend /> */}
-                <BotChart />
-              </div>
+            <div
+              className={
+                openChartType === "view"
+                  ? "chart-container"
+                  : "chart-edit-container"
+              }
+            >
+              {openChartType === "view" && (
+                <div className="chart-wrapper">
+                  <TopChart />
+                  <TurnOn />
+                  <BotChart />
+                </div>
+              )}
+              {openChartType === "edit" && (
+                <AdsEdit />
+              )}
             </div>
           </div>
         </div>

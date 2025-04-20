@@ -1,0 +1,28 @@
+.titlePaper {
+    font-weight: 700;
+    color: #1c2b33;
+    font-size: 16px;
+}
+
+.text {
+    font-weight: 400;
+    color: #1c2b33;
+    font-size: 14px;
+}
+
+.learnMore {
+    color: #385898;
+    cursor: pointer;
+}
+
+.box {
+    display: flex;
+    column-gap: 5px;
+    margin-top: 10px;
+    border: 1px solid #f1ecec;
+    padding: 10px;
+    border-left-width: 4px;
+    border-left-style: solid;
+    border-left-color: red;
+    border-radius: 4px;
+}

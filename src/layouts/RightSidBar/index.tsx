@@ -3,22 +3,23 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 interface RightSideBarProps {
-  side: "left" | "right";
   onCloseChart?: () => void;
+  // type is  "normal" | "view" | "edit"
+  type?: string | null;
 }
 
 const RightSideBar = (props: RightSideBarProps) => {
   const navigate = useNavigate();
-  const { side, onCloseChart } = props;
+  const { onCloseChart, type = "normal" } = props;
 
   return (
     <div
       className={`right-side-bar ${
-        side === "right" ? "side-position-right" : ""
+        type === "normal" ? "side-position-right" : ""
       }`}
     >
       <div className="right-sidebar-wrapper">
-        {side === "left" && (
+        {type !== "normal" && (
           <div
             className="menu-right-btn active-btn"
             onClick={onCloseChart && onCloseChart}
@@ -36,31 +37,57 @@ const RightSideBar = (props: RightSideBarProps) => {
             />
           </div>
         )}
-        <div className={`menu-right-btn ${side === "left" && "active-btn"}`}>
-          <Box
-            sx={{
-              width: "16px",
-              height: "16px",
-              maskImage:
-                "url(https://static.xx.fbcdn.net/rsrc.php/v4/yX/r/g5YqKLnlk1k.png?_nc_eui2=AeEwdYSi3g4KRA4ui8bBmD07hTGvHeFfVfyFMa8d4V9V_P6AOHlufRpsSsd_y-uRX7KJP33NUCFXlHSS61xHi-uc)",
-              maskPosition: "-411px -325px",
-              maskSize: "441px 397px",
-              background: "white",
-            }}
-          />
+        <div className={`menu-right-btn ${type === "view" && "active-btn"}`}>
+          {type === "view" ? (
+            <Box
+              sx={{
+                width: "16px",
+                height: "16px",
+                maskImage:
+                  "url(https://static.xx.fbcdn.net/rsrc.php/v4/yX/r/g5YqKLnlk1k.png?_nc_eui2=AeEwdYSi3g4KRA4ui8bBmD07hTGvHeFfVfyFMa8d4V9V_P6AOHlufRpsSsd_y-uRX7KJP33NUCFXlHSS61xHi-uc)",
+                maskPosition: "-411px -325px",
+                maskSize: "441px 397px",
+                background: "white",
+              }}
+            />
+          ) : (
+            <Box
+              sx={{
+                width: "16px",
+                height: "16px",
+                maskImage:
+                  "url(https://static.xx.fbcdn.net/rsrc.php/v4/yH/r/4uSWT7f8xsz.png?_nc_eui2=AeELvwE_1Snrp73cViBoS83cZgSDTUs6p0pmBINNSzqnSv1j1jdZzkvYLXi_Ea3MoGImH_NFt_jw3pkEBK6PBg9j)",
+                maskPosition: "0px -416px",
+                background: type !== "normal" ? "white" : "#ffffff99",
+              }}
+            />
+          )}
         </div>
-        <div className="menu-right-btn">
-          <Box
-            sx={{
-              width: "16px",
-              height: "16px",
-              maskImage:
-                "url(https://static.xx.fbcdn.net/rsrc.php/v4/yl/r/_tluDGOtAlV.png?_nc_eui2=AeFWQe1bHi04-awbDGavvrLYjXcSO7ekFu2NdxI7t6QW7RbiaBOA0xM5n7Af6QrZZmVqRWlC35ipB2hgp3IC3Tyb)",
-              maskPosition: "0px -841px",
-              maskSize: "25px 1271px",
-              background: "#ffffff99",
-            }}
-          />
+        <div className={`menu-right-btn ${type === "edit" && "active-btn"}`}>
+          {type === "edit" ? (
+            <Box
+              sx={{
+                width: "16px",
+                height: "16px",
+                maskImage:
+                  "url(https://static.xx.fbcdn.net/rsrc.php/v4/yH/r/4uSWT7f8xsz.png?_nc_eui2=AeELvwE_1Snrp73cViBoS83cZgSDTUs6p0pmBINNSzqnSv1j1jdZzkvYLXi_Ea3MoGImH_NFt_jw3pkEBK6PBg9j)",
+                maskPosition: "0px -807px",
+                background: "white",
+              }}
+            />
+          ) : (
+            <Box
+              sx={{
+                width: "16px",
+                height: "16px",
+                maskImage:
+                  "url(https://static.xx.fbcdn.net/rsrc.php/v4/yl/r/_tluDGOtAlV.png?_nc_eui2=AeFWQe1bHi04-awbDGavvrLYjXcSO7ekFu2NdxI7t6QW7RbiaBOA0xM5n7Af6QrZZmVqRWlC35ipB2hgp3IC3Tyb)",
+                maskPosition: "0px -841px",
+                maskSize: "25px 1271px",
+                background: type !== "normal" ? "white" : "#ffffff99",
+              }}
+            />
+          )}
         </div>
         <div className="menu-right-btn">
           <Box
@@ -71,7 +98,7 @@ const RightSideBar = (props: RightSideBarProps) => {
                 "url(https://static.xx.fbcdn.net/rsrc.php/v4/yA/r/2M_0CXhP5Bo.png?_nc_eui2=AeHiDmTsbWD5rqhVcmGmb5aEkO_Mln0pzxiQ78yWfSnPGJmTcChrNjR9FK35n4aNK5wSDmoY8GN8WZyVpMp95-Vp)",
               maskPosition: "-21px -194px",
               maskSize: "41px 489px",
-              background: "#ffffff99",
+              background: type !== "normal" ? "white" : "#ffffff99",
             }}
           />
         </div>

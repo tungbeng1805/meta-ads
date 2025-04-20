@@ -21,7 +21,7 @@ interface CampaignProps {}
 const Campaign = (props: CampaignProps) => {
   const [tabActive, setTabActive] = React.useState<string>("campaign");
   const [data, setData] = useState<Array<any>>([]);
-  const [isOpenChart, setIsOpenChart] = useState<boolean>(false);
+  const [openChartType, setOpenChartType] = useState<string | null>(null);
   const [selectedItems, setSelectedItems] = useState({
     campaign: [],
     adSet: [],
@@ -61,12 +61,13 @@ const Campaign = (props: CampaignProps) => {
             data={data}
             selectedItems={selectedItems?.campaign}
             onSelectedItems={handleSetSelectedItems}
+            handleClickOpenChart={handleClickOpenChart}
           />
         );
       case "adSet":
-        return <AdsetTable />;
+        return <AdsetTable handleClickOpenChart={handleClickOpenChart} />;
       case "ads":
-        return <AdsTable />;
+        return <AdsTable handleClickOpenChart={handleClickOpenChart} />;
       default:
         return;
     }
@@ -126,8 +127,12 @@ const Campaign = (props: CampaignProps) => {
     });
   }, []);
 
-  const handleToggleChart = (show: boolean) => {
-    setIsOpenChart(show);
+  const handleClickOpenChart = (id: any) => {
+    setOpenChartType('edit')
+  }
+
+  const handleToggleChart = (type: string | null) => {
+    setOpenChartType(type);
   };
 
   return (
@@ -218,9 +223,12 @@ const Campaign = (props: CampaignProps) => {
           </Box>
         </div>
       </div>
-      <RightSideBar side="right" />
-      {isOpenChart && (
-        <ViewChart open={isOpenChart} onToggleChart={handleToggleChart} />
+      <RightSideBar />
+      {!!openChartType && (
+        <ViewChart
+          openChartType={openChartType}
+          onToggleChart={handleToggleChart}
+        />
       )}
     </Box>
   );

@@ -1,15 +1,20 @@
 import ROUTERS_PATHS from "@/constants/router-paths";
 import axiosInstance from "@/services/api-services";
 import URL_PATHS from "@/services/url-path";
-import { getParamsId } from "@/util";
+import { getParamsId, STATUS } from "@/util";
 import { Switch } from "@mui/material";
 import { Box, styled } from "@mui/system";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import BarChartIcon from '@mui/icons-material/BarChart';
+import EditIcon from '@mui/icons-material/Edit';
+import FileCopyIcon from '@mui/icons-material/FileCopy';
 
-interface AdsTableProps {}
+interface AdsTableProps {
+  handleClickOpenChart: (id: any) => void;
+}
 
 const IOSSwitch = styled((props: any) => (
   <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
@@ -66,8 +71,10 @@ const IOSSwitch = styled((props: any) => (
 }));
 
 const AdsTable = (props: AdsTableProps) => {
+  const { handleClickOpenChart } = props
   const [rows, setRows] = useState<Array<any>>([])
   const [displayRows, setDisplayRows] = useState<Array<any>>([])
+  const [openOption, setOpenOption] = useState<any>()
   const objParam = getParamsId()
   const navigate = useNavigate();
 
@@ -82,7 +89,33 @@ const AdsTable = (props: AdsTableProps) => {
       renderCell: (params) => {
         if (params.id !== "summary") {
           return (
-            <IOSSwitch sx={{ m: 1 }} onClick={() => hanldeSelectRow(String(params.id))} />
+            <IOSSwitch 
+              checked={!!params.row && !!params.row.deliveryStatus && params.row.deliveryStatus === STATUS.ACTIVE}
+              sx={{
+                padding: "8px",
+                ".MuiSwitch-root": {
+                  display: "none",
+                },
+                "& span.MuiSwitch-track": {
+                  borderRadius: "20px",
+                  background: "white",
+                  border: "1px solid #cbd2d9",
+                },
+                "& span.MuiSwitch-thumb": {
+                  height: "22px",
+                  width: "22px",
+                },
+                "& span.MuiSwitch-switchBase": {
+                  color: "#283943",
+                  "&.Mui-checked": {
+                    color: "#0a78be",
+                  },
+                  "&.Mui-checked+.MuiSwitch-track": {
+                    background: "#e1edf7",
+                  },
+                },
+              }}
+            />
           );
         }
       },
@@ -90,7 +123,45 @@ const AdsTable = (props: AdsTableProps) => {
     {
       field: "ad",
       headerName: "Ad",
-      width: 153,
+      width: 250,
+      renderCell: (params) => {
+        if (params.id !== "summary") {
+          return (
+            <div style={{display: 'flex', alignItems: 'center', columnGap: '10px'}}>
+              <div>
+                <img src={`http://103.159.50.75:3000/${params.row.image}`} style={{width: '46px', height: '46px'}} />
+              </div>
+              <div onMouseEnter={() => {setOpenOption(params.row.id)}} onMouseLeave={() => setOpenOption(null)}>
+              <div>{params.row.ad}</div>
+
+              {openOption === params.row.id && (
+                <div style={{display: 'flex', columnGap: '10px', fontSize: '12px', cursor: 'pointer'}}>
+                  <div style={{display: 'flex', alignItems: 'center'}} onClick={() => handleClickOpenChart(params.row.id)}>
+                    <BarChartIcon sx={{ fontSize: "12px" }} />
+                    <span>View Charts</span>
+                  </div>
+                  <div style={{display: 'flex', alignItems: 'center'}} onClick={() => handleClickOpenChart(params.row.id)}>
+                    <EditIcon sx={{ fontSize: "12px" }} />
+                    <span>Edit</span>  
+                  </div>
+                  <div style={{display: 'flex', alignItems: 'center'}}>
+                    <FileCopyIcon sx={{ fontSize: "12px" }} />
+                    <span>Duplicate</span>  
+                  </div>
+                </div>
+              )}
+            </div>
+            </div>
+          );
+        } else {
+          return (
+            <div>
+              <p>Results from {rows.length} ads</p>
+              <p className="title-footer-table">Excludes deleted items</p>
+            </div>
+          )
+        }
+      },
     },
     { 
       field: "deliveryStatus", 
@@ -158,7 +229,7 @@ const AdsTable = (props: AdsTableProps) => {
     {
       field: "attributionSetting",
       headerName: "Attribution setting",
-      width: 120,
+      width: 180,
       renderCell: (params) => {
         if (params.id === 'summary') {
           return (
@@ -185,7 +256,7 @@ const AdsTable = (props: AdsTableProps) => {
         return (
           <div>
             <p>{params.row.resultsCost}</p>
-            <p>Multiple conversions</p>
+            <p className="title-footer-table">Multiple conversions</p>
           </div>
         )
       }
@@ -199,7 +270,7 @@ const AdsTable = (props: AdsTableProps) => {
           return (
             <div>
               <div>{params.row.reach}</div>
-              <div>Accounts Centre accounts</div>
+              <div className="title-footer-table">Accounts Centre accounts</div>
             </div>
           );
         }
@@ -214,7 +285,7 @@ const AdsTable = (props: AdsTableProps) => {
           return (
             <div>
               <div>{params.row.impressions}</div>
-              <div>Total</div>
+              <div className="title-footer-table">Total</div>
             </div>
           );
         }
@@ -229,7 +300,7 @@ const AdsTable = (props: AdsTableProps) => {
           return (
             <div>
               <div>{`đ ${params.row.costPerResultCost}`}</div>
-              <div>Multiple conversions</div>
+              <div className="title-footer-table">Multiple conversions</div>
             </div>
           );
         } else {
@@ -299,7 +370,7 @@ const AdsTable = (props: AdsTableProps) => {
           return (
             <div>
               <div>{`đ ${params.row.amountSpent}`}</div>
-              <div>Total Spent</div>
+              <div className="title-footer-table">Total Spent</div>
             </div>
           );
         } else {

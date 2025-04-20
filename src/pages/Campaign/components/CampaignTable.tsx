@@ -4,18 +4,25 @@ import { Box } from "@mui/system";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import BarChartIcon from '@mui/icons-material/BarChart';
+import EditIcon from '@mui/icons-material/Edit';
+import FileCopyIcon from '@mui/icons-material/FileCopy';
 
 interface CampaignTableProps {
   data: any;
   selectedItems: any;
   onSelectedItems: (ids: string[], code: string) => void;
+  handleClickOpenChart: (type: string) => void;
 }
 
 const CampaignTable = (props: CampaignTableProps) => {
-  const { data, selectedItems, onSelectedItems } = props;
-  
+  const { data, selectedItems, onSelectedItems, handleClickOpenChart } = props;
+
   const [rows, setRows] = useState<Array<any>>([]);
   const [displayRows, setDisplayRows] = useState<Array<any>>([]);
+  const [openOption, setOpenOption] = useState<any>()
+  console.log('openOption', openOption);
+
 
   const navigate = useNavigate();
 
@@ -61,17 +68,37 @@ const CampaignTable = (props: CampaignTableProps) => {
     {
       field: "campaign",
       headerName: "Campaign",
-      width: 153,
+      width: 300,
       renderCell: (params) => {
         if (params.id === "summary") {
           return (
-            <div>
+            <div >
               <p>{`Results from ${rows?.length}/${rows?.length} campaigns`}</p>
-              <p>Excludes deleted items</p>
+              <p className="title-footer-table">Excludes deleted items</p>
             </div>
           );
         }
-        return <div onClick={() => handleClickName()}>{params.value}</div>;
+        return (
+          <div onMouseEnter={() => {setOpenOption(params.row.id)}} onMouseLeave={() => setOpenOption(null)}>
+            <div>{params.value}</div>
+            {openOption === params.row.id && (
+              <div style={{display: 'flex', columnGap: '10px', fontSize: '12px', cursor: 'pointer'}}>
+                <div style={{display: 'flex', alignItems: 'center'}} onClick={() => handleClickOpenChart(params.row.id)}>
+                  <BarChartIcon sx={{ fontSize: "12px" }} />
+                  <span>View Charts</span>
+                </div>
+                <div style={{display: 'flex', alignItems: 'center'}} onClick={() => handleClickOpenChart(params.row.id)}>
+                  <EditIcon sx={{ fontSize: "12px" }} />
+                  <span>Edit</span>  
+                </div>
+                <div style={{display: 'flex', alignItems: 'center'}}>
+                  <FileCopyIcon sx={{ fontSize: "12px" }} />
+                  <span>Duplicate</span>  
+                </div>
+              </div>
+            )}
+          </div>
+        ) 
       },
     },
     {
@@ -99,7 +126,14 @@ const CampaignTable = (props: CampaignTableProps) => {
     {
       field: "attributionSetting",
       headerName: "Attribution setting",
-      width: 120,
+      width: 170,
+      renderCell: (params) => {
+        if (params.id == "summary") {
+          return (
+            <div className="title-footer-table">Multiple attribution settings</div>
+          );
+        }
+      },
     },
     {
       field: "resultsCost",
@@ -114,7 +148,7 @@ const CampaignTable = (props: CampaignTableProps) => {
             </div>
           );
         }
-        return <div>{`đ ${params.row.resultsCost}`}</div>;
+        return <div className="title-footer-table">{`đ ${params.row.resultsCost}`}</div>;
       },
     },
     {
@@ -126,7 +160,7 @@ const CampaignTable = (props: CampaignTableProps) => {
           return (
             <div>
               <div>{params.row.reach}</div>
-              <div>Accounts Centre accounts</div>
+              <div className="title-footer-table">Accounts Centre accounts</div>
             </div>
           );
         }
@@ -141,7 +175,7 @@ const CampaignTable = (props: CampaignTableProps) => {
           return (
             <div>
               <div>{params.row.impressions}</div>
-              <div>Total</div>
+              <div className="title-footer-table">Total</div>
             </div>
           );
         }
@@ -156,7 +190,7 @@ const CampaignTable = (props: CampaignTableProps) => {
           return (
             <div>
               <div>{params.row.costPerResultCost}</div>
-              <div>Multiple conversions</div>
+              <div className="title-footer-table">Multiple conversions</div>
             </div>
           );
         }
@@ -171,7 +205,7 @@ const CampaignTable = (props: CampaignTableProps) => {
           return (
             <div>
               <div>{`đ ${params.row.amountSpent}`}</div>
-              <div>Total Spent</div>
+              <div className="title-footer-table">Total Spent</div>
             </div>
           );
         }
