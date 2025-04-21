@@ -12,7 +12,7 @@ const CheckboxCustom = (props: CheckboxProps) => {
           width="22px"
           height="22px"
           border="1px solid #cbd2d9"
-          borderRadius="4px"
+          borderRadius="6px"
         />
       }
       checkedIcon={
@@ -23,11 +23,18 @@ const CheckboxCustom = (props: CheckboxProps) => {
           width="22px"
           height="22px"
           border="1px solid #cbd2d9"
-          borderRadius="4px"
+          borderRadius="6px"
         >
-          <svg height="16" viewBox="0 0 16 16" width="16">
-            <path d="M13.305 3.28L5.993 10.6l-3.31-3.306a1 1 0 00-1.415 1.414l4.013 4.012a.997.997 0 001.414 0l8.024-8.024a1 1 0 00-1.414-1.416z"></path>
-          </svg>
+          <Box
+            sx={{
+              width: "16px",
+              height: "16px",
+              maskImage:
+                "url(https://static.xx.fbcdn.net/rsrc.php/v4/yH/r/4uSWT7f8xsz.png?_nc_eui2=AeELvwE_1Snrp73cViBoS83cZgSDTUs6p0pmBINNSzqnSv1j1jdZzkvYLXi_Ea3MoGImH_NFt_jw3pkEBK6PBg9j)",
+              maskPosition: "0px -501px",
+              background: "#0a78be",
+            }}
+          />
         </Box>
       }
       {...props}

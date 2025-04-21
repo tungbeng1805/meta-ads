@@ -10,7 +10,7 @@ import BotChart from "@/pages/Chart/BotChart";
 import TopChart from "@/pages/Chart/TopChart";
 import TurnOn from "@/pages/Chart/TurnOn";
 import AdsEdit from "@/pages/EditForm/AdsEdit";
-import AdSetEdit from "@/pages/EditForm/AdsetEdit";
+import AdSetEdit from "@/pages/EditForm/AdSetEdit";
 import {
   Box,
   Divider,
@@ -128,19 +128,81 @@ const ViewChart = (props: ViewChartProps) => {
   };
 
   const renderBreadCrumbs = () => {
+    const activeCampaign = activeMenu?.includes(listMenu[0]?.id);
+    const activeAdset = activeMenu?.includes(listMenu[0]?.groups[0]?.id);
+    const activeAds = activeMenu?.includes(
+      listMenu[0]?.groups[0]?.groups[0]?.id
+    );
+
     return (
       <Box display="flex" alignItems="center" gap="4px">
         <div
-          className={`bread-btn`}
+          className={`bread-btn ${activeCampaign && "bread-btn-active"}`}
           onClick={() => {
             // handleClickMenu(menu);
           }}
         >
           <Box display="flex" alignItems="center" gap="4px">
-            {renderIconByDeep(1, true)}
-            <p className={`menu-name`}>{"a"}</p>
+            <img src={activeCampaign ? FolderActive : Folder} />
+            <p className={`menu-name`}>{listMenu[0]?.name}</p>
           </Box>
         </div>
+        {listMenu?.[0]?.groups?.length > 0 && (
+          <>
+            <Box
+              sx={{
+                margin: "0 4px",
+                width: "12px",
+                height: "12px",
+                maskImage:
+                  "url(https://static.xx.fbcdn.net/rsrc.php/v4/yv/r/yhbs0ZmhF8d.png?_nc_eui2=AeFvSSPJuFeRuvhHep8a5Dr6-wKYAYLcV3D7ApgBgtxXcO7Ikv8vGJqjeoBuY7uRC7DnauhJpj_2d6fPbLnSZoB6)",
+                maskPosition: "-107px -216px",
+                background: "#1c2b33",
+              }}
+            />
+            <div
+              className={`bread-btn ${activeAdset && "bread-btn-active"}`}
+              onClick={() => {
+                // handleClickMenu(menu);
+              }}
+            >
+              <Box display="flex" alignItems="center" gap="4px">
+                <img src={activeAdset ? MenuCategoryActive : MenuCategory} />
+                <p className={`menu-name`}>
+                  {listMenu?.[0]?.groups?.length} Ad set
+                </p>
+              </Box>
+            </div>
+          </>
+        )}
+        {listMenu[0]?.groups?.[0]?.groups?.length > 0 && (
+          <>
+            <Box
+              sx={{
+                margin: "0 4px",
+                width: "12px",
+                height: "12px",
+                maskImage:
+                  "url(https://static.xx.fbcdn.net/rsrc.php/v4/yv/r/yhbs0ZmhF8d.png?_nc_eui2=AeFvSSPJuFeRuvhHep8a5Dr6-wKYAYLcV3D7ApgBgtxXcO7Ikv8vGJqjeoBuY7uRC7DnauhJpj_2d6fPbLnSZoB6)",
+                maskPosition: "-107px -216px",
+                background: "#1c2b33",
+              }}
+            />
+            <div
+              className={`bread-btn ${activeAds && "bread-btn-active"}`}
+              onClick={() => {
+                // handleClickMenu(menu);
+              }}
+            >
+              <Box display="flex" alignItems="center" gap="4px">
+                <img src={activeAds ? MenuTabletActive : MenuTablet} />
+                <p className={`menu-name`}>
+                  {listMenu[0]?.groups?.[0]?.groups?.length}Ads
+                </p>
+              </Box>
+            </div>
+          </>
+        )}
       </Box>
     );
   };
