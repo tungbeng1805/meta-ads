@@ -366,8 +366,12 @@
 
 .right-chart-content .bread-btn {
   padding: 4px;
-  background: #e1edf7;
+  cursor: pointer;
   border-radius: 4px;
+}
+
+.right-chart-content .bread-btn-active {
+  background: #e1edf7;
 }
 /*END VIEW CHART*/
 
@@ -526,6 +530,42 @@
   font-weight: bold;
   color: #77797c;
   line-height: 18px;
+}
+
+.right-chart-content .list-placement {
+  border: 1px solid #dadcde;
+  margin-top: 4px;
+}
+
+.right-chart-content .placement-name {
+  font-size: 12px;
+  font-family: Optimistic Display, system-ui, sans-serif;
+  font-weight: bold;
+  color: #444950;
+  line-height: 15px;
+}
+
+.right-chart-content .placement-des {
+  font-size: 12px;
+  font-family: Optimistic Display, system-ui, sans-serif;
+  color: #1c2b33a6;
+  line-height: 15px;
+  padding: 0px 32px 4px 36px;
+}
+
+.right-chart-content .placement-child-name {
+  font-size: 12px;
+  font-family: Optimistic Display, system-ui, sans-serif;
+  color: #5b5c5e;
+  line-height: 15px;
+  padding-left: 40px;
+}
+
+.right-chart-content .audience-small {
+  font-size: 12px;
+  font-family: Optimistic Display, system-ui, sans-serif;
+  color: #1c2b33;
+  line-height: 15px;
 }
 
 /*END ADSET EDIT */

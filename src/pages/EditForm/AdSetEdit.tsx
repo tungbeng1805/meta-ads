@@ -3,12 +3,13 @@ import CustomRadio from "@/components/RadioCustom";
 import TooltipCustom from "@/components/TooltipCustom";
 import { Box, Divider, InputAdornment, TextField } from "@mui/material";
 import React from "react";
+import PlacementAccordion from "./PlacementAccordion";
 
 interface AdSetProps {}
 
 const AdSetEdit = (props: AdSetProps) => {
   return (
-    <Box display="flex" gap="8px">
+    <Box display="flex" gap="16px">
       <Box display="flex" flexDirection="column" gap="16px">
         <div className="edit-adset-section">
           <Box display="flex" alignItems="center" gap="8px">
@@ -1017,11 +1018,135 @@ You can receive both Messenger and Instagram messages to your Page's inbox, but 
             <Box display="flex" alignItems="center" gap="8px">
               <p className="conversion-title">Placements</p>
             </Box>
+            <PlacementAccordion />
+          </Box>
+          <Divider
+            sx={{
+              margin: "16px 0px",
+            }}
+          />
+          <Box display="flex" alignItems="center" mb="8px">
+            <p className="des-link">Show more options</p>
+            <Box
+              sx={{
+                width: "16px",
+                height: "16px",
+                maskImage:
+                  "url(https://static.xx.fbcdn.net/rsrc.php/v4/yi/r/yce2C66SV51.png?_nc_eui2=AeGOxUl--o73PWGWkHaXGL6TH-ezJjFgtKwf57MmMWC0rM1xS38nmDACVd5QTRFHRFMdFg9YY8CLRdcfYhgp1O5e)",
+                maskPosition: "-221px -1118px",
+                background: "#0a78be",
+              }}
+            />
           </Box>
         </div>
       </Box>
-      <Box bgcolor="white" width="350px">
-        aa
+      <Box width="350px" position="relative">
+        <Box position="sticky" top={0} paddingTop="12px">
+          <Box padding="16px" borderRadius="4px" bgcolor="white">
+            <Box display="flex" alignItems="center" gap="8px">
+              <p className="adset-title">Audience definition</p>
+              <TooltipCustom
+                placement="bottom-start"
+                title="Audience definition The audience definition scale is based on the audience targeting selections that you are using for this ad set. When an audience is too narrow, ad delivery may be affected."
+              >
+                <Box
+                  sx={{
+                    width: "12px",
+                    height: "12px",
+                    maskImage:
+                      "url(https://static.xx.fbcdn.net/rsrc.php/v4/yT/r/K7R9ikhLWMc.png?_nc_eui2=AeFHnyDq0yr0XS8y8mLvsJBRNZAYEsuXd7w1kBgSy5d3vInP_1xnxsZv9ZGt_mpA0yiVxIwPJ_L3zd1K1bX_szXx)",
+                    maskPosition: "-56px -521px",
+                    background: "#1c2b33",
+                  }}
+                />
+              </TooltipCustom>
+            </Box>
+            <p className="audience-small" style={{ marginTop: "16px" }}>
+              Your audience is broad.
+            </p>
+            <p className="audience-small" style={{ marginTop: "16px" }}>
+              Broad audiences can improve performance and reach more people
+              likely to respond.
+            </p>
+            <Box mt="16px">
+              <Box display="flex" alignItems="center" gap="4px">
+                <Box
+                  flex={1}
+                  height="8px"
+                  borderRadius="8px"
+                  bgcolor="#ffecec"
+                />
+                <Box
+                  flex={1}
+                  height="8px"
+                  borderRadius="8px"
+                  bgcolor="#fff6dd"
+                />
+                <Box
+                  flex={1}
+                  height="8px"
+                  borderRadius="8px"
+                  bgcolor="#007f58"
+                />
+              </Box>
+              <Box
+                display="flex"
+                alignItems="center"
+                justifyContent="space-between"
+                mt="8px"
+              >
+                <p className="audience-small">Narrow</p>
+                <p className="audience-small">Broad</p>
+              </Box>
+              <Divider sx={{ mt: "32px", mb: "8px" }} />
+              <Box display="flex" alignItems="center" gap="8px">
+                <p className="audience-small">
+                  Estimated audience size: 397,100 - 467,200
+                </p>
+                <TooltipCustom
+                  placement="bottom-end"
+                  title="Estimated audience size is an estimate of how many Accounts Centre accounts may meet your targeting criteria. It is based on factors such as targeting selections, ad placements and how many Accounts Centre accounts were shown ads on Meta apps and services in the past 30 days.
+This is not an estimate of how many people will see your ad and is not designed to match population or census data. This metric is in in development."
+                >
+                  <Box
+                    sx={{
+                      width: "12px",
+                      height: "12px",
+                      maskImage:
+                        "url(https://static.xx.fbcdn.net/rsrc.php/v4/yT/r/K7R9ikhLWMc.png?_nc_eui2=AeFHnyDq0yr0XS8y8mLvsJBRNZAYEsuXd7w1kBgSy5d3vInP_1xnxsZv9ZGt_mpA0yiVxIwPJ_L3zd1K1bX_szXx)",
+                      maskPosition: "-56px -521px",
+                      background: "#1c2b33",
+                    }}
+                  />
+                </TooltipCustom>
+              </Box>
+              <Box display="flex" gap="8px" mt="16px">
+                <Box
+                  sx={{
+                    width: "20px",
+                    height: "20px",
+                    maskImage:
+                      "url(https://static.xx.fbcdn.net/rsrc.php/v4/y_/r/NOWSRrvP809.png?_nc_eui2=AeHMrtcHJMZ_fFU5jLaakrnojRO0FoGwrX-NE7QWgbCtf8U7A7IaUAMB8svsCeYfiyqpzOwq6tr3_pn_YsFVQJXc)",
+                    maskPosition: "0px -349px",
+                    background: "#1c2b33",
+                  }}
+                />
+                <p className="audience-small" style={{ flex: 1 }}>
+                  Estimates do not include Advantage audience options and may
+                  vary significantly over time based on your targeting
+                  selections and available data.
+                </p>
+              </Box>
+            </Box>
+          </Box>
+          <Box padding="16px" borderRadius="4px" bgcolor="white" mt="16px">
+            <p className="adset-title">Estimated daily results</p>
+            <p className="conversion-des" style={{ marginTop: "16px" }}>
+              Estimated daily results aren't available for this campaign because
+              it has a budget that is optimised across ad sets.
+            </p>
+          </Box>
+        </Box>
       </Box>
     </Box>
   );
