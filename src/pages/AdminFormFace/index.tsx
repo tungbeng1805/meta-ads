@@ -32,6 +32,10 @@ const AdminFormFace: React.FC = () => {
   const [imageUrl, setImageUrl] = useState<string>("");
 
   const onSubmit = async (data: any) => {
+    let imageUrlDelete = "";
+    if (data.image !== imageUrl && !!imageUrl) {
+      imageUrlDelete = imageUrl?.replace(`${import.meta.env.VITE_BASE_FOLDER}uploads/`, "");
+    }
     if (imageUrl != data?.image && !!data?.image) {
       try {
         const formData = new FormData();
@@ -50,6 +54,12 @@ const AdminFormFace: React.FC = () => {
         ...data,
         datePost: data?.datePost ? moment(data?.datePost).format("YYYY-MM-DD") : null,
       });
+      if (imageUrlDelete) {
+        try {
+          await axiosInstance.delete(URL_PATHS.DELETE_IMAGE.replace(":filename", imageUrlDelete));
+        } catch (error) {}
+      }
+
       if (response?.status === 200) {
         toast.success(MESSAGE_API.updateSuccessFormFace, {
           position: "top-right",
@@ -62,6 +72,7 @@ const AdminFormFace: React.FC = () => {
           theme: "light",
           transition: Bounce,
         });
+        getDetailPost();
       } else {
         toast.error(MESSAGE_API.errorApi, {
           position: "top-right",
