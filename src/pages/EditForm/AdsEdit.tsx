@@ -9,8 +9,10 @@ import InfoOutlineIcon from '@mui/icons-material/InfoOutline';
 import { Box, MenuItem, Paper, Select, SelectChangeEvent, Tooltip, tooltipClasses, TooltipProps } from "@mui/material";
 import Checkbox from '@mui/material/Checkbox';
 import { styled } from '@mui/material/styles';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from './styles.module.scss';
+import axiosInstance from "@/services/api-services";
+import URL_PATHS from "@/services/url-path";
 
 const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -29,6 +31,20 @@ const AdsEdit = () => {
   const handleChangeValue = (event: SelectChangeEvent) => {
     setPerson(event.target.value);
   };
+
+  const getData = async () => {
+    try {
+      const response = await axiosInstance.get(URL_PATHS.GET_FORM_FACE)
+      console.log('response', response);
+      
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    getData()
+  }, [])
   return (
     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', columnGap: '10px', width: '100%' }}>
       <div>
@@ -322,7 +338,7 @@ const AdsEdit = () => {
             </div>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', columnGap: '5px', marginBottom: '5px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', columnGap: '5px', margin: '15px 0px' }}>
             <p className={styles.titlePaper}>URL parameters</p>
             <p>Optional</p>
             <LightTooltip
