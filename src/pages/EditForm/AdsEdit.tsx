@@ -194,7 +194,7 @@ const AdsEdit = () => {
             <MenuItem value={3}>Use Creative Hub mockup</MenuItem>
           </Select>
 
-          <div style={{ display: 'flex', marginTop: '5px' }}>
+          <div style={{ display: 'flex', marginTop: '15px' }}>
             <Checkbox sx={{ height: '16px' }} />
             <div>
               <p style={{ fontSize: '14px', fontWeight: '700' }}>Multi-advertiser ads</p>
