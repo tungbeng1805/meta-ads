@@ -130,8 +130,8 @@ const AdsEdit = () => {
             </LightTooltip>
           </div>
 
-          <Box display="flex" alignItems="center" gap="8px">
-            <div className="table-action" style={{ width: '220px', justifyContent: 'space-between', marginTop: '10px', }}>
+          <Box display="flex" alignItems="center" gap="8px" marginTop="10px">
+            <div className="table-action" style={{ width: '220px', justifyContent: 'space-between' }}>
               Select an Instagram account
               <Box
                 sx={{
@@ -194,7 +194,7 @@ const AdsEdit = () => {
             <MenuItem value={3}>Use Creative Hub mockup</MenuItem>
           </Select>
 
-          <div style={{ display: 'flex', marginTop: '5px' }}>
+          <div style={{ display: 'flex', marginTop: '15px' }}>
             <Checkbox sx={{ height: '16px' }} />
             <div>
               <p style={{ fontSize: '14px', fontWeight: '700' }}>Multi-advertiser ads</p>
@@ -346,10 +346,10 @@ const AdsEdit = () => {
         </Paper>
       </div>
 
-      <div>
+      <div >
         <Paper
           sx={{
-            p: '15px'
+            p: '15px',
           }}
         >
           <div>
