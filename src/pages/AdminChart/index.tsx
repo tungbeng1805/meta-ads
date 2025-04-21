@@ -19,49 +19,32 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Bounce, toast } from "react-toastify";
-import ModalAdminBusiness from "./modal";
+import ModalAdminChart from "./modal";
 import { useLoading } from "@/stores/loadingStore";
+
 const columns: any = [
-  { id: "accountName", label: "Account Name", minWidth: 300 },
+  { id: "name", label: "Name", minWidth: 300 },
   {
-    id: "reach",
-    label: "Reach",
+    id: "men",
+    label: "Men",
     minWidth: 50,
     align: "start",
   },
   {
-    id: "impressions",
-    label: "Impressions",
+    id: "women",
+    label: "Women",
     minWidth: 150,
     align: "start",
   },
   {
-    id: "frequency",
-    label: "Frequency",
+    id: "costPerResultMen",
+    label: "Cost Per Result Men",
     minWidth: 150,
     align: "start",
   },
   {
-    id: "amountSpent",
-    label: "Amount Spent",
-    minWidth: 150,
-    align: "start",
-  },
-  {
-    id: "attributionSetting",
-    label: "Attribution Setting",
-    minWidth: 150,
-    align: "start",
-  },
-  {
-    id: "messaginConversationStarted",
-    label: "Messagin Conversation Started",
-    minWidth: 150,
-    align: "start",
-  },
-  {
-    id: "costPerMessagingConversationStarted",
-    label: "Cost Per Messaging Conversation Started",
+    id: "costPerResultWomen",
+    label: "Cost Per Result Women",
     minWidth: 150,
     align: "start",
   },
@@ -76,7 +59,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const AdminBusiness = () => {
+const AdminChart = () => {
   const { showLoading, hideLoading } = useLoading();
   const [dataList, setDataList] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
@@ -94,7 +77,7 @@ const AdminBusiness = () => {
   const getList = async () => {
     try {
       showLoading();
-      const data: any = await axiosInstance.get(URL_PATHS.GET_BUSINESS);
+      const data: any = await axiosInstance.get(URL_PATHS.GET_CHART);
       if (data?.status === 200) {
         setDataList(data?.data);
       } else {
@@ -139,7 +122,7 @@ const AdminBusiness = () => {
   const getDetail = async (item: any) => {
     try {
       showLoading();
-      const data: any = await axiosInstance.get(URL_PATHS.GET_DETAIL_BUSINESS.replace(":id", item?.id));
+      const data: any = await axiosInstance.get(URL_PATHS.GET_CHART_BY_ID.replace(":id", item?.id));
       if (data?.status === 200) {
         setDataDetail(data?.data);
       } else {
@@ -190,10 +173,10 @@ const AdminBusiness = () => {
     if (confirm("Are you sure you want to delete this record?")) {
       try {
         showLoading();
-        const data = await axiosInstance.delete(URL_PATHS.DELETE_BUSINESS.replace(":id", item?.id));
+        const data = await axiosInstance.delete(URL_PATHS.DELETE_CHART.replace(":id", item?.id));
         if (data?.status === 200) {
           await getList();
-          toast.error(MESSAGE_API.deleteSuccessBusiness, {
+          toast.error(MESSAGE_API.deleteSuccessChart, {
             position: "top-right",
             autoClose: 1000,
             hideProgressBar: false,
@@ -310,7 +293,7 @@ const AdminBusiness = () => {
         </Popover>
       </IF>
       {isOpen && (
-        <ModalAdminBusiness
+        <ModalAdminChart
           open={isOpen}
           handleClose={() => {
             setIsOpen(false);
@@ -326,4 +309,4 @@ const AdminBusiness = () => {
   );
 };
 
-export default AdminBusiness;
+export default AdminChart;

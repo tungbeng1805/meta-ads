@@ -4,7 +4,7 @@ import React from "react";
 
 const CampaignHeader = () => {
   return (
-    <div className="layout-header">
+    <div className="layout-header header-campaign">
       <div className="header-left">
         <p className="campaign-title">Campaigns</p>
         <div className="media-btn">

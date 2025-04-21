@@ -4,15 +4,15 @@ import { Box } from "@mui/system";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import BarChartIcon from '@mui/icons-material/BarChart';
-import EditIcon from '@mui/icons-material/Edit';
-import FileCopyIcon from '@mui/icons-material/FileCopy';
+import BarChartIcon from "@mui/icons-material/BarChart";
+import EditIcon from "@mui/icons-material/Edit";
+import FileCopyIcon from "@mui/icons-material/FileCopy";
 
 interface CampaignTableProps {
   data: any;
   selectedItems: any;
   onSelectedItems: (ids: string[], code: string) => void;
-  handleClickOpenChart: (type: string) => void;
+  handleClickOpenChart: (id: number, type: string) => void;
 }
 
 const CampaignTable = (props: CampaignTableProps) => {
@@ -20,9 +20,8 @@ const CampaignTable = (props: CampaignTableProps) => {
 
   const [rows, setRows] = useState<Array<any>>([]);
   const [displayRows, setDisplayRows] = useState<Array<any>>([]);
-  const [openOption, setOpenOption] = useState<any>()
-  console.log('openOption', openOption);
-
+  const [openOption, setOpenOption] = useState<any>();
+  console.log("openOption", openOption);
 
   const navigate = useNavigate();
 
@@ -72,33 +71,53 @@ const CampaignTable = (props: CampaignTableProps) => {
       renderCell: (params) => {
         if (params.id === "summary") {
           return (
-            <div >
+            <div>
               <p>{`Results from ${rows?.length}/${rows?.length} campaigns`}</p>
               <p className="title-footer-table">Excludes deleted items</p>
             </div>
           );
         }
         return (
-          <div onMouseEnter={() => {setOpenOption(params.row.id)}} onMouseLeave={() => setOpenOption(null)}>
+          <div
+            onMouseEnter={() => {
+              setOpenOption(params.row.id);
+            }}
+            onMouseLeave={() => setOpenOption(null)}
+          >
             <div>{params.value}</div>
             {openOption === params.row.id && (
-              <div style={{display: 'flex', columnGap: '10px', fontSize: '12px', cursor: 'pointer'}}>
-                <div style={{display: 'flex', alignItems: 'center'}} onClick={() => handleClickOpenChart(params.row.id)}>
+              <div
+                style={{
+                  display: "flex",
+                  columnGap: "10px",
+                  fontSize: "12px",
+                  cursor: "pointer",
+                }}
+              >
+                <div
+                  style={{ display: "flex", alignItems: "center" }}
+                  onClick={() => handleClickOpenChart(params.row.id, "view")}
+                >
                   <BarChartIcon sx={{ fontSize: "12px" }} />
                   <span>View Charts</span>
                 </div>
-                <div style={{display: 'flex', alignItems: 'center'}} onClick={() => handleClickOpenChart(params.row.id)}>
+                <div
+                  style={{ display: "flex", alignItems: "center" }}
+                  onClick={() =>
+                    handleClickOpenChart(params.row.id, "edit-adset")
+                  }
+                >
                   <EditIcon sx={{ fontSize: "12px" }} />
-                  <span>Edit</span>  
+                  <span>Edit</span>
                 </div>
-                <div style={{display: 'flex', alignItems: 'center'}}>
+                <div style={{ display: "flex", alignItems: "center" }}>
                   <FileCopyIcon sx={{ fontSize: "12px" }} />
-                  <span>Duplicate</span>  
+                  <span>Duplicate</span>
                 </div>
               </div>
             )}
           </div>
-        ) 
+        );
       },
     },
     {
@@ -130,7 +149,9 @@ const CampaignTable = (props: CampaignTableProps) => {
       renderCell: (params) => {
         if (params.id == "summary") {
           return (
-            <div className="title-footer-table">Multiple attribution settings</div>
+            <div className="title-footer-table">
+              Multiple attribution settings
+            </div>
           );
         }
       },
@@ -148,7 +169,9 @@ const CampaignTable = (props: CampaignTableProps) => {
             </div>
           );
         }
-        return <div className="title-footer-table">{`đ ${params.row.resultsCost}`}</div>;
+        return (
+          <div className="title-footer-table">{`đ ${params.row.resultsCost}`}</div>
+        );
       },
     },
     {

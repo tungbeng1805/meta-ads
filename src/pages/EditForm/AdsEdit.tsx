@@ -6,6 +6,8 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import InfoIcon from '@mui/icons-material/Info';
 import InfoOutlineIcon from '@mui/icons-material/InfoOutline';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { Box, MenuItem, Paper, Select, SelectChangeEvent, Tooltip, tooltipClasses, TooltipProps } from "@mui/material";
 import Checkbox from '@mui/material/Checkbox';
 import { styled } from '@mui/material/styles';
@@ -13,6 +15,7 @@ import { useEffect, useState } from "react";
 import styles from './styles.module.scss';
 import axiosInstance from "@/services/api-services";
 import URL_PATHS from "@/services/url-path";
+import moment from "moment";
 
 const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -28,15 +31,18 @@ const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
 const AdsEdit = () => {
   const [isOpen, setIsOpen] = useState<boolean>(true)
   const [person, setPerson] = useState<any>(2);
+  const [data, setData] = useState<any>({})
   const handleChangeValue = (event: SelectChangeEvent) => {
     setPerson(event.target.value);
   };
 
   const getData = async () => {
     try {
-      const response = await axiosInstance.get(URL_PATHS.GET_FORM_FACE)
+      const response = await axiosInstance.get(URL_PATHS.GET_DETAIL_FACE)
       console.log('response', response);
-      
+      if(response && response.data) {
+        setData(response.data)
+      }
     } catch (error) {
       console.log(error)
     }
@@ -107,7 +113,10 @@ const AdsEdit = () => {
               placement="right-start"
             >
               <div className="table-action" style={{ width: '100%', justifyContent: 'space-between', marginTop: '10px', background: '#f7f7f7' }}>
-                S Body Studio
+                <div style={{display: 'flex', gap: '8px'}}>
+                  <img src={`http://103.159.50.75:3000/${data.image}`} style={{width: '20px', height: '20px', borderRadius: '50%'}} />
+                  {data.namePage}
+                </div>
                 <Box
                   sx={{
                     width: " 16px",
@@ -185,7 +194,7 @@ const AdsEdit = () => {
             >
               <CheckCircleOutlineIcon sx={{ color: '#63be09' }} />
             </LightTooltip>
-            <p className={styles.titlePaper}>Ad setup for 3 ads</p>
+            <p className={styles.titlePaper}>Ad setup</p>
           </div>
 
           <Select
@@ -210,7 +219,7 @@ const AdsEdit = () => {
             <MenuItem value={3}>Use Creative Hub mockup</MenuItem>
           </Select>
 
-          <div style={{ display: 'flex', marginTop: '5px' }}>
+          <div style={{ display: 'flex', marginTop: '15px' }}>
             <Checkbox sx={{ height: '16px' }} />
             <div>
               <p style={{ fontSize: '14px', fontWeight: '700' }}>Multi-advertiser ads</p>
@@ -242,19 +251,197 @@ const AdsEdit = () => {
             >
               <CheckCircleOutlineIcon sx={{ color: '#63be09' }} />
             </LightTooltip>
-            <p className={styles.titlePaper}>Ad creative for 3 ads</p>
+            <p className={styles.titlePaper}>Ad creative</p>
           </div>
           <p className={styles.text} style={{ marginTop: '10px' }}>View content insights or choose existing content to create an ad. You can also customise media and text for each placement.<span className={styles.learnMore}>Learn more</span></p>
-          <div className="table-action" style={{ width: '150px', marginTop: '10px', justifyContent: 'center' }}>
-            Select content
+          <div className={styles.box} style={{ borderLeftColor: '#385898' }}>
+            <InfoOutlineIcon sx={{ color: '#385898' }} />
+            <p className={styles.text}>Your Instagram ad will render Facebook mentions as regular text.</p>
           </div>
-          <div style={{ columnGap: '15px', display: 'flex', marginTop: '10px' }}>
+
+          <div style={{display: 'flex', margin: '15px 0px', gap: '10px'}}>
+              <img src={`http://103.159.50.75:3000/${data.image}`} style={{width: '95px', height: '60px'}} />
+              <div>
+                <div style={{display: 'flex', alignItems: 'center'}}>
+                  <FacebookIcon />
+                  <span>Facebook Post</span>
+                </div>
+                <div style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', width: '200px', fontWeight: 'bold'}}>{data.Description}</div>
+                <div style={{color: '#1c2b33a6'}}>
+                  <span>{data.idPost}</span> - <span>{moment(data.datePost).format('D MMM YYYY')}</span>
+                </div>
+              </div>
+          </div>
+
+          <div className="table-action" style={{ width: '150px', marginTop: '10px', justifyContent: 'center' }}>
+            Change content
+          </div>
+          <div style={{ columnGap: '15px', display: 'flex', margin: '10px 0px' }}>
             <span className={styles.learnMore}>Enter post ID</span>
             <span className={styles.learnMore}>Create a new post</span>
           </div>
-          <div className={styles.box} style={{ borderLeftColor: '#385898' }}>
-            <InfoOutlineIcon sx={{ color: '#385898' }} />
-            <p className={styles.text}>At least one of the ads that you selected uses customised creative for different placements, so some options can't be edited.</p>
+          <strong>Primary text</strong>
+          <div style={{border: '1px solid #1c2b33a6', borderRadius: '5px', padding: '5px 10px', color: '#1c2b33a6'}}>
+            {data.Description}
+          </div>
+          <Box display="flex" alignItems="center" gap="8px">
+            <LightTooltip
+              title={(
+                <div>
+                  <p className={styles.text}>The account that you selected for your ad's messaging destination must be used as one of the identities.<span className={styles.learnMore}>Edit selection</span></p>
+                </div>
+              )}
+              placement="right-start"
+            >
+              <div className="table-action" style={{ width: '200px', justifyContent: 'space-between', marginTop: '10px', background: '#f7f7f7' }}>
+                <AddCircleOutlineIcon />
+                Add text option
+                <Box
+                  sx={{
+                    width: " 16px",
+                    height: "16px",
+                    maskImage:
+                      "url(https://static.xx.fbcdn.net/rsrc.php/v4/y-/r/pqHpzOoq1-k.png)",
+                    maskPosition: "-170px -1094px",
+                    background: "#1c2b33",
+                  }}
+                />
+              </div>
+            </LightTooltip>
+          </Box>
+          <div style={{ display: 'flex', alignItems: 'center', columnGap: '5px', marginTop: '10px' }}>
+            <p className={styles.titlePaper}>Call to action</p>
+            <LightTooltip
+              title={(
+                <div>
+                  <p className={styles.text}>Choose the action that you want people to take when they see your ad. Adding a button to your ad will also update your original post.<span className={styles.learnMore}>Learn more</span></p>
+                </div>
+              )}
+              placement="top-start"
+            >
+              <InfoIcon sx={{ fontSize: '14px' }} />
+            </LightTooltip>
+          </div>
+          <Box display="flex" alignItems="center" gap="8px">
+            
+              <div className="table-action" style={{ width: '200px', justifyContent: 'space-between', marginTop: '10px', background: '#f7f7f7' }}>
+                Send message
+                <Box
+                  sx={{
+                    width: " 16px",
+                    height: "16px",
+                    maskImage:
+                      "url(https://static.xx.fbcdn.net/rsrc.php/v4/y-/r/pqHpzOoq1-k.png)",
+                    maskPosition: "-170px -1094px",
+                    background: "#1c2b33",
+                  }}
+                />
+              </div>
+          </Box>
+          <Box display="flex" alignItems="center" gap="8px" mt="16px" mb="8px">
+            <p className="adset-title">Message destinations</p>
+            
+          </Box>
+          <p className="conversion-des">
+            Choose where you want to receive messages. Selecting multiple apps
+            will send people to the app where they're most likely to engage.
+          </p>
+          <Box display="flex" alignItems="center" gap="8px" mt="16px" mb="8px">
+            <p className="adset-title">Message destinations</p>
+          </Box>
+          <Box
+            display="flex"
+            alignItems="center"
+            gap="8px"
+            justifyContent="space-between"
+            mb="12px"
+          >
+            <Box display="flex" flexDirection="column" gap="16px">
+              <Box display="flex" alignItems="center" gap="8px">
+                <Box
+                  width="48px"
+                  height="48px"
+                  borderRadius="48px"
+                  overflow="hidden"
+                >
+                  <img src={`http://103.159.50.75:3000/${data.image}`} style={{width: '40px', height: '40px', borderRadius: '50%'}} />
+                </Box>
+                <div>
+                  <p className="conversion-title">Messenger</p>
+                </div>
+              </Box>
+              <Box display="flex" alignItems="center" gap="8px">
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  width="48px"
+                  height="48px"
+                  borderRadius="48px"
+                  bgcolor="#f1f4f7"
+                >
+                  <img
+                    width={20}
+                    height={20}
+                    src="https://static.xx.fbcdn.net/rsrc.php/yM/r/gXv36GX8I6t.svg?_nc_eui2=AeERl6DKbADZH_G8Rbj9RXI3lAqehfJLq16UCp6F8kurXk_565Pmf1jAPCfZffCmJ45yr2ElrvevJazPWXY0xeg9"
+                  />
+                </Box>
+                <p className="conversion-title">Instagram</p>
+              </Box>
+              <Box display="flex" alignItems="center" gap="8px">
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  width="48px"
+                  height="48px"
+                  borderRadius="48px"
+                  bgcolor="#f1f4f7"
+                >
+                  <img
+                    width={20}
+                    height={20}
+                    src="https://static.xx.fbcdn.net/rsrc.php/yd/r/RIwqg3B0HgO.svg?_nc_eui2=AeETvJKOu27hf7JDvihLCmDCDEThPlbFLnoMROE-VsUuelOGJ17Puny-z6XkyaZLE9Vk6ClUfeJGQvEBQMA7_hhQ"
+                  />
+                </Box>
+                <p className="conversion-title">WhatsApp</p>
+              </Box>
+            </Box>
+            <div className="header-button icon-btn">Connect account</div>
+          </Box>
+          <p className="conversion-des">
+          This Facebook Page isn't connected to a WhatsApp Business account. You must be an admin of this Facebook Page to connect to an account. <span className={styles.learnMore}>Learn more</span>L
+          </p>
+
+          
+        </Paper>
+
+        <Paper
+          sx={{
+            p: '15px',
+            marginTop: '10px'
+          }}
+        >
+          <p className={styles.titlePaper}>Advantage+ creative</p>
+          <p style={{margin: '15px 0px'}}>Tailor your ad for the <span className={styles.learnMore}>person</span> viewing it by letting us automatically optimise your creative. This can help improve performance.</p>
+          <div style={{ display: 'flex', alignItems: 'center', columnGap: '5px', marginTop: '10px' }}>
+            <p className={styles.titlePaper}>Enhancements (1/3)</p>
+            <InfoIcon sx={{ fontSize: '14px' }} />
+          </div>
+          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+            <div>
+              <div>
+                <span style={{fontWeight: 'bold'}}>Turned off: </span>
+                <span style={{fontSize: '14px'}}>Text improvements, Relevant comments</span>
+              </div>
+              <div>
+                <span style={{fontWeight: 'bold'}}>Turned on: </span>
+                <span style={{fontSize: '14px'}}>Adapt multi-image format</span>
+              </div>
+            </div>
+            <div className="table-action" style={{ width: '80px', marginTop: '10px', justifyContent: 'center' }}>
+            Edit
+          </div>
           </div>
         </Paper>
 

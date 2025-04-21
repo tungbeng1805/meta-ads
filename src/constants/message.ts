@@ -4,14 +4,18 @@ const MESSAGE_API = {
   updateSuccessBusiness: "Update successful business",
   deleteSuccessBusiness: "Delete successful business",
   createSuccessAds: "Create successful ads",
-  updateSuccessAds: "Update successful ads", 
+  updateSuccessAds: "Update successful ads",
   deleteSuccessAds: "Delete successful ads",
   createSuccessAdSets: "Create successful ad sets",
   updateSuccessAdSets: "Update successful ad sets",
   deleteSuccessAdSets: "Delete successful ad sets",
   createSuccessCampaigns: "Create successful campaigns",
   updateSuccessCampaigns: "Update successful campaigns",
-  deleteSuccessCampaigns: "Delete successful campaigns"
+  deleteSuccessCampaigns: "Delete successful campaigns",
+  updateSuccessFormFace: "Update successful form face",
+  deleteSuccessFormFace: "Delete successful form face",
+  updateSuccessChart: "Update successful chart",
+  createSuccessChart: "Create successful chart",
+  deleteSuccessChart: "Delete successful chart",
 };
 export default MESSAGE_API;
-

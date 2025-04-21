@@ -4,6 +4,7 @@ import TextFieldCustom from "@/components/TextFieldCustom";
 import MESSAGE_API from "@/constants/message";
 import axiosInstance from "@/services/api-services";
 import URL_PATHS from "@/services/url-path";
+import { useLoading } from "@/stores/loadingStore";
 import {
   Button,
   Checkbox,
@@ -29,6 +30,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 }));
 
 const ModalAdminAds = (props: any) => {
+  const { showLoading, hideLoading } = useLoading();
   const { handleSubmit, control } = useForm<any>({
     defaultValues: props?.defaultValues
       ? {
@@ -66,6 +68,11 @@ const ModalAdminAds = (props: any) => {
 
   const onSubmit = async (data: any) => {
     try {
+      showLoading();
+      let imageUrlDelete = "";
+      if (data.image !== props?.defaultValues?.image && !!props?.defaultValues?.image) {
+        imageUrlDelete = props?.defaultValues?.image?.replace("uploads/", "");
+      }
       if (data.image && data.image !== props?.defaultValues?.image) {
         const formData = new FormData();
         formData.append("image", data.image);
@@ -75,11 +82,6 @@ const ModalAdminAds = (props: any) => {
               "Content-Type": "multipart/form-data",
             },
           });
-          try {
-            await axiosInstance.delete(
-              URL_PATHS.DELETE_IMAGE.replace(":filename", props?.defaultValues?.image?.replace("uploads/", ""))
-            );
-          } catch (error) {}
           if (uploadResponse?.status !== 200) {
             toast.error(MESSAGE_API.errorApi, {
               position: "top-right",
@@ -137,8 +139,15 @@ const ModalAdminAds = (props: any) => {
       const response: any = props?.defaultValues
         ? await axiosInstance.put(URL_PATHS.UPDATE_AD.replace(":id", props?.defaultValues?.id), dataSubmit)
         : await axiosInstance.post(URL_PATHS.CREATE_AD, dataSubmit);
+
+      if (imageUrlDelete) {
+        try {
+          await axiosInstance.delete(URL_PATHS.DELETE_IMAGE.replace(":filename", imageUrlDelete));
+        } catch (error) {}
+      }
+
       if (response?.status === 200) {
-        props.getList();
+        await props.getList();
         toast.success(props?.defaultValues ? MESSAGE_API.updateSuccessAds : MESSAGE_API.createSuccessAds, {
           position: "top-right",
           autoClose: 1000,
@@ -176,6 +185,8 @@ const ModalAdminAds = (props: any) => {
         theme: "light",
         transition: Bounce,
       });
+    } finally {
+      hideLoading();
     }
   };
 
