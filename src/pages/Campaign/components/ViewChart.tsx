@@ -197,7 +197,7 @@ const ViewChart = (props: ViewChartProps) => {
               <Box display="flex" alignItems="center" gap="4px">
                 <img src={activeAds ? MenuTabletActive : MenuTablet} />
                 <p className={`menu-name`}>
-                  {listMenu[0]?.groups?.[0]?.groups?.length}Ads
+                  {listMenu[0]?.groups?.[0]?.groups?.length} Ad
                 </p>
               </Box>
             </div>
