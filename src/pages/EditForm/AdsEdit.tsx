@@ -130,8 +130,8 @@ const AdsEdit = () => {
             </LightTooltip>
           </div>
 
-          <Box display="flex" alignItems="center" gap="8px">
-            <div className="table-action" style={{ width: '220px', justifyContent: 'space-between', marginTop: '10px', }}>
+          <Box display="flex" alignItems="center" gap="8px" marginTop="10px">
+            <div className="table-action" style={{ width: '220px', justifyContent: 'space-between' }}>
               Select an Instagram account
               <Box
                 sx={{
@@ -346,10 +346,10 @@ const AdsEdit = () => {
         </Paper>
       </div>
 
-      <div>
+      <div >
         <Paper
           sx={{
-            p: '15px'
+            p: '15px',
           }}
         >
           <div>
