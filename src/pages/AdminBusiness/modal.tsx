@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import { Bounce, toast } from "react-toastify";
-
+import { useLoading } from "@/stores/loadingStore";
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
     padding: theme.spacing(2),
@@ -26,6 +26,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 }));
 
 const ModalAdminBusiness = (props: any) => {
+  const { showLoading, hideLoading } = useLoading();
   const { handleSubmit, control } = useForm<any>({
     defaultValues: props?.defaultValues ?? {
       accountName: "",
@@ -43,11 +44,12 @@ const ModalAdminBusiness = (props: any) => {
 
   const onSubmit = async (data: any) => {
     try {
+      showLoading();
       const item: any = props?.defaultValues
         ? await axiosInstance.put(URL_PATHS.UPDATE_BUSINESS.replace(":id", props?.defaultValues?.id), data)
         : await axiosInstance.post(URL_PATHS.CREATE_BUSINESS, data);
       if (item?.status === 200) {
-        props.getList();
+        await props.getList();
         toast.success(props?.defaultValues ? MESSAGE_API.updateSuccessBusiness : MESSAGE_API.createSuccessBusiness, {
           position: "top-right",
           autoClose: 1000,
@@ -85,6 +87,8 @@ const ModalAdminBusiness = (props: any) => {
         theme: "light",
         transition: Bounce,
       });
+    } finally {
+      hideLoading();
     }
   };
   return (

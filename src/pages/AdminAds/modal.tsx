@@ -4,6 +4,7 @@ import TextFieldCustom from "@/components/TextFieldCustom";
 import MESSAGE_API from "@/constants/message";
 import axiosInstance from "@/services/api-services";
 import URL_PATHS from "@/services/url-path";
+import { useLoading } from "@/stores/loadingStore";
 import {
   Button,
   Checkbox,
@@ -29,6 +30,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 }));
 
 const ModalAdminAds = (props: any) => {
+  const { showLoading, hideLoading } = useLoading();
   const { handleSubmit, control } = useForm<any>({
     defaultValues: props?.defaultValues
       ? {
@@ -66,6 +68,7 @@ const ModalAdminAds = (props: any) => {
 
   const onSubmit = async (data: any) => {
     try {
+      showLoading();
       let imageUrlDelete = "";
       if (data.image !== props?.defaultValues?.image && !!props?.defaultValues?.image) {
         imageUrlDelete = props?.defaultValues?.image?.replace("uploads/", "");
@@ -144,7 +147,7 @@ const ModalAdminAds = (props: any) => {
       }
 
       if (response?.status === 200) {
-        props.getList();
+        await props.getList();
         toast.success(props?.defaultValues ? MESSAGE_API.updateSuccessAds : MESSAGE_API.createSuccessAds, {
           position: "top-right",
           autoClose: 1000,
@@ -182,6 +185,8 @@ const ModalAdminAds = (props: any) => {
         theme: "light",
         transition: Bounce,
       });
+    } finally {
+      hideLoading();
     }
   };
 

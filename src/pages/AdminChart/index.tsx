@@ -20,6 +20,7 @@ import {
 import { useEffect, useState } from "react";
 import { Bounce, toast } from "react-toastify";
 import ModalAdminChart from "./modal";
+import { useLoading } from "@/stores/loadingStore";
 
 const columns: any = [
   { id: "name", label: "Name", minWidth: 300 },
@@ -59,6 +60,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const AdminChart = () => {
+  const { showLoading, hideLoading } = useLoading();
   const [dataList, setDataList] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [dataSelected, setDataSelected] = useState(null);
@@ -74,6 +76,7 @@ const AdminChart = () => {
 
   const getList = async () => {
     try {
+      showLoading();
       const data: any = await axiosInstance.get(URL_PATHS.GET_CHART);
       if (data?.status === 200) {
         setDataList(data?.data);
@@ -102,6 +105,8 @@ const AdminChart = () => {
         theme: "light",
         transition: Bounce,
       });
+    } finally {
+      hideLoading();
     }
   };
 
@@ -116,6 +121,7 @@ const AdminChart = () => {
 
   const getDetail = async (item: any) => {
     try {
+      showLoading();
       const data: any = await axiosInstance.get(URL_PATHS.GET_CHART_BY_ID.replace(":id", item?.id));
       if (data?.status === 200) {
         setDataDetail(data?.data);
@@ -144,6 +150,8 @@ const AdminChart = () => {
         theme: "light",
         transition: Bounce,
       });
+    } finally {
+      hideLoading();
     }
   };
 
@@ -164,6 +172,7 @@ const AdminChart = () => {
     setAnchorEl(null);
     if (confirm("Are you sure you want to delete this record?")) {
       try {
+        showLoading();
         const data = await axiosInstance.delete(URL_PATHS.DELETE_CHART.replace(":id", item?.id));
         if (data?.status === 200) {
           await getList();
@@ -203,6 +212,8 @@ const AdminChart = () => {
           theme: "light",
           transition: Bounce,
         });
+      } finally {
+        hideLoading();
       }
     }
   };

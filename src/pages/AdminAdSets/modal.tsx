@@ -1,9 +1,13 @@
+import IconClose from "@/assets/close.svg";
+import SelectCustom from "@/components/SelectCustom";
+import TextFieldCustom from "@/components/TextFieldCustom";
 import MESSAGE_API from "@/constants/message";
 import axiosInstance from "@/services/api-services";
 import URL_PATHS from "@/services/url-path";
-import IconClose from "@/assets/close.svg";
+import { useLoading } from "@/stores/loadingStore";
 import {
   Button,
+  Checkbox,
   Dialog,
   DialogActions,
   DialogContent,
@@ -11,16 +15,11 @@ import {
   Grid,
   IconButton,
   styled,
-  FormControlLabel,
-  Checkbox,
 } from "@mui/material";
+import { DatePicker } from "@mui/x-date-pickers";
+import moment from "moment";
 import { Controller, useForm } from "react-hook-form";
 import { Bounce, toast } from "react-toastify";
-import dayjs from "dayjs";
-import TextFieldCustom from "@/components/TextFieldCustom";
-import { DatePicker } from "@mui/x-date-pickers";
-import SelectCustom from "@/components/SelectCustom";
-import moment from "moment";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -32,6 +31,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 }));
 
 const ModalAdminAdSets = (props: any) => {
+  const { showLoading, hideLoading } = useLoading();
   const { handleSubmit, control, setValue, watch } = useForm<any>({
     defaultValues: props?.defaultValues ?? {
       campaign_id: "",
@@ -63,6 +63,7 @@ const ModalAdminAdSets = (props: any) => {
 
   const onSubmit = async (data: any) => {
     try {
+      showLoading();
       const lastSignificantEdit = data?.lastSignificantEdit
         ? moment(new Date(data?.lastSignificantEdit)).format("YYYY/MM/DD")
         : null;
@@ -85,7 +86,7 @@ const ModalAdminAdSets = (props: any) => {
             scheduleTo,
           });
       if (response?.status === 200) {
-        props.getList();
+        await props.getList();
         toast.success(props?.defaultValues ? MESSAGE_API.updateSuccessAdSets : MESSAGE_API.createSuccessAdSets, {
           position: "top-right",
           autoClose: 1000,
@@ -123,6 +124,8 @@ const ModalAdminAdSets = (props: any) => {
         theme: "light",
         transition: Bounce,
       });
+    } finally {
+      hideLoading();
     }
   };
 

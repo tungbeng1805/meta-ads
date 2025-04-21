@@ -1,6 +1,7 @@
 import LoadingScreen from "@/components/Loading";
 import ROUTERS_PATHS from "@/constants/router-paths";
 import MainLayout from "@/layouts";
+import MainAdminLayout from "@/layouts/MainAdminLayout";
 import React, { Suspense, lazy } from "react";
 import { Routes, Route } from "react-router-dom";
 
@@ -45,12 +46,12 @@ const routes: IRoutesState[] = [
     component: lazy(() => import("@/pages/Campaign")),
   },
   {
-    layout: MainLayout,
+    layout: MainAdminLayout,
     path: ROUTERS_PATHS.ADMIN_BUSINESS,
     component: lazy(() => import("@/pages/AdminBusiness")),
   },
   {
-    layout: MainLayout,
+    layout: MainAdminLayout,
     path: ROUTERS_PATHS.ADMIN_CAMPAIGNS,
     component: lazy(() => import("@/pages/AdminCampaigns")),
   },
@@ -60,22 +61,22 @@ const routes: IRoutesState[] = [
     component: lazy(() => import("@/pages/Chart")),
   },
   {
-    layout: MainLayout,
+    layout: MainAdminLayout,
     path: ROUTERS_PATHS.ADMIN_AD_SET,
     component: lazy(() => import("@/pages/AdminAdSets")),
   },
   {
-    layout: MainLayout,
+    layout: MainAdminLayout,
     path: ROUTERS_PATHS.ADMIN_AD,
     component: lazy(() => import("@/pages/AdminAds")),
   },
   {
-    layout: MainLayout,
+    layout: MainAdminLayout,
     path: ROUTERS_PATHS.ADMIN_FORM_FACE,
     component: lazy(() => import("@/pages/AdminFormFace")),
   },
   {
-    layout: MainLayout,
+    layout: MainAdminLayout,
     path: ROUTERS_PATHS.ADMIN_CHART,
     component: lazy(() => import("@/pages/AdminChart")),
   },

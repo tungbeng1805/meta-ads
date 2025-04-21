@@ -11,8 +11,10 @@ import URL_PATHS from "@/services/url-path";
 import { Bounce, toast } from "react-toastify";
 import MESSAGE_API from "@/constants/message";
 import moment from "moment";
+import { useLoading } from "@/stores/loadingStore";
 
 const AdminFormFace: React.FC = () => {
+  const { showLoading, hideLoading } = useLoading();
   const { handleSubmit, control, reset } = useForm({
     defaultValues: {
       namePage: "",
@@ -32,6 +34,7 @@ const AdminFormFace: React.FC = () => {
   const [imageUrl, setImageUrl] = useState<string>("");
 
   const onSubmit = async (data: any) => {
+    showLoading();
     let imageUrlDelete = "";
     if (data.image !== imageUrl && !!imageUrl) {
       imageUrlDelete = imageUrl?.replace(`${import.meta.env.VITE_BASE_FOLDER}uploads/`, "");
@@ -72,7 +75,7 @@ const AdminFormFace: React.FC = () => {
           theme: "light",
           transition: Bounce,
         });
-        getDetailPost();
+        await getDetailPost();
       } else {
         toast.error(MESSAGE_API.errorApi, {
           position: "top-right",
@@ -86,17 +89,24 @@ const AdminFormFace: React.FC = () => {
           transition: Bounce,
         });
       }
-    } catch (error) {}
+    } catch (error) {
+    } finally {
+      hideLoading();
+    }
   };
 
   const getDetailPost = async () => {
     try {
+      showLoading();
       const response = await axiosInstance.get(URL_PATHS.GET_DETAIL_FACE);
       if (response?.status === 200) {
         reset(response?.data);
         setImageUrl(response?.data?.image ? import.meta.env.VITE_BASE_FOLDER + response?.data?.image : "");
       }
-    } catch (error) {}
+    } catch (error) {
+    } finally {
+      hideLoading();
+    }
   };
 
   useEffect(() => {

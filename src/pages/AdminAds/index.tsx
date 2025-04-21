@@ -22,6 +22,7 @@ import { Bounce, toast } from "react-toastify";
 import ModalAdminAds from "./modal";
 import dayjs from "dayjs";
 import moment from "moment";
+import { useLoading } from "@/stores/loadingStore";
 
 const columns: any = [
   { id: "status", label: "On/Off", align: "center", minWidth: 50 },
@@ -187,6 +188,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const AdminAds = () => {
+  const { showLoading, hideLoading } = useLoading();
   const [dataList, setDataList] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [dataSelected, setDataSelected] = useState(null);
@@ -204,6 +206,7 @@ const AdminAds = () => {
 
   const getList = async () => {
     try {
+      showLoading();
       const data: any = await axiosInstance.get(URL_PATHS.GET_AD);
       if (data?.status === 200) {
         setDataList(data?.data);
@@ -232,6 +235,8 @@ const AdminAds = () => {
         theme: "light",
         transition: Bounce,
       });
+    } finally {
+      hideLoading();
     }
   };
 
@@ -246,6 +251,7 @@ const AdminAds = () => {
 
   const getDetail = async (item: any) => {
     try {
+      showLoading();
       const data: any = await axiosInstance.get(URL_PATHS.GET_DETAIL_AD.replace(":id", item?.id));
       if (data?.status === 200) {
         setDataDetail({
@@ -282,6 +288,8 @@ const AdminAds = () => {
         theme: "light",
         transition: Bounce,
       });
+    } finally {
+      hideLoading();
     }
   };
 
@@ -302,6 +310,7 @@ const AdminAds = () => {
     setAnchorEl(null);
     if (confirm("Are you sure you want to delete this record?")) {
       try {
+        showLoading();
         const data = await axiosInstance.delete(URL_PATHS.DELETE_AD.replace(":id", item?.id));
         if (data?.status === 200) {
           await getList();
@@ -341,6 +350,8 @@ const AdminAds = () => {
           theme: "light",
           transition: Bounce,
         });
+      } finally {
+        hideLoading();
       }
     }
   };

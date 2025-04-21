@@ -2,11 +2,13 @@ import TextFieldCustom from "@/components/TextFieldCustom";
 import MESSAGE_API from "@/constants/message";
 import axiosInstance from "@/services/api-services";
 import URL_PATHS from "@/services/url-path";
+import { useLoading } from "@/stores/loadingStore";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import { Bounce, toast } from "react-toastify";
 
 const ModalAdminChart = (props: any) => {
+  const { showLoading, hideLoading } = useLoading();
   const { open, handleClose, defaultValues, isView, getList } = props;
   const { handleSubmit, control } = useForm({
     defaultValues: props?.defaultValues ?? {
@@ -22,6 +24,7 @@ const ModalAdminChart = (props: any) => {
 
   const onSubmit = async (data: any) => {
     try {
+      showLoading();
       if (defaultValues?.id) {
         const response: any = await axiosInstance.put(URL_PATHS.UPDATE_CHART.replace(":id", defaultValues?.id), data);
         if (response?.status === 200) {
@@ -66,7 +69,7 @@ const ModalAdminChart = (props: any) => {
             transition: Bounce,
           });
           handleClose();
-          getList();
+          await getList();
         } else {
           toast.error(MESSAGE_API.errorApi, {
             position: "top-right",
@@ -93,6 +96,8 @@ const ModalAdminChart = (props: any) => {
         theme: "light",
         transition: Bounce,
       });
+    } finally {
+      hideLoading();
     }
   };
 

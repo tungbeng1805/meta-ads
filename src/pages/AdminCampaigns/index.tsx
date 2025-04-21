@@ -22,7 +22,7 @@ import { Bounce, toast } from "react-toastify";
 import ModalAdminBusiness from "./modal";
 import dayjs from "dayjs";
 import moment from "moment";
-
+import { useLoading } from "@/stores/loadingStore";
 const columns: any = [
   { id: "business_id", label: "Business", align: "start", minWidth: 150 },
   { id: "status", label: "On/Off", align: "center", minWidth: 50 },
@@ -128,6 +128,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const AdminBusiness = () => {
+  const { showLoading, hideLoading } = useLoading();
   const [dataList, setDataList] = useState([]);
   const [dataListBusiness, setDataBusiness] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
@@ -145,6 +146,7 @@ const AdminBusiness = () => {
 
   const getList = async () => {
     try {
+      showLoading();
       const data: any = await axiosInstance.get(URL_PATHS.GET_CAMPAIGNS);
       if (data?.status === 200) {
         setDataList(data?.data);
@@ -173,6 +175,8 @@ const AdminBusiness = () => {
         theme: "light",
         transition: Bounce,
       });
+    } finally {
+      hideLoading();
     }
   };
 
@@ -187,6 +191,7 @@ const AdminBusiness = () => {
 
   const getDetail = async (item: any) => {
     try {
+      showLoading();
       const data: any = await axiosInstance.get(URL_PATHS.GET_DETAIL_CAMPAIGNS.replace(":id", item?.id));
       if (data?.status === 200) {
         setDataDetail({
@@ -220,6 +225,8 @@ const AdminBusiness = () => {
         theme: "light",
         transition: Bounce,
       });
+    } finally {
+      hideLoading();
     }
   };
 
@@ -240,6 +247,7 @@ const AdminBusiness = () => {
     setAnchorEl(null);
     if (confirm("Are you sure you want to delete this record?")) {
       try {
+        showLoading();
         const data = await axiosInstance.delete(URL_PATHS.DELETE_CAMPAIGNS.replace(":id", item?.id));
         if (data?.status === 200) {
           await getList();
@@ -279,6 +287,8 @@ const AdminBusiness = () => {
           theme: "light",
           transition: Bounce,
         });
+      } finally {
+        hideLoading();
       }
     }
   };

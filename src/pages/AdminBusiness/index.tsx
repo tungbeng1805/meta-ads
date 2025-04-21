@@ -20,7 +20,7 @@ import {
 import { useEffect, useState } from "react";
 import { Bounce, toast } from "react-toastify";
 import ModalAdminBusiness from "./modal";
-
+import { useLoading } from "@/stores/loadingStore";
 const columns: any = [
   { id: "accountName", label: "Account Name", minWidth: 300 },
   {
@@ -77,6 +77,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const AdminBusiness = () => {
+  const { showLoading, hideLoading } = useLoading();
   const [dataList, setDataList] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [dataSelected, setDataSelected] = useState(null);
@@ -92,6 +93,7 @@ const AdminBusiness = () => {
 
   const getList = async () => {
     try {
+      showLoading();
       const data: any = await axiosInstance.get(URL_PATHS.GET_BUSINESS);
       if (data?.status === 200) {
         setDataList(data?.data);
@@ -120,6 +122,8 @@ const AdminBusiness = () => {
         theme: "light",
         transition: Bounce,
       });
+    } finally {
+      hideLoading();
     }
   };
 
@@ -134,6 +138,7 @@ const AdminBusiness = () => {
 
   const getDetail = async (item: any) => {
     try {
+      showLoading();
       const data: any = await axiosInstance.get(URL_PATHS.GET_DETAIL_BUSINESS.replace(":id", item?.id));
       if (data?.status === 200) {
         setDataDetail(data?.data);
@@ -162,6 +167,8 @@ const AdminBusiness = () => {
         theme: "light",
         transition: Bounce,
       });
+    } finally {
+      hideLoading();
     }
   };
 
@@ -182,6 +189,7 @@ const AdminBusiness = () => {
     setAnchorEl(null);
     if (confirm("Are you sure you want to delete this record?")) {
       try {
+        showLoading();
         const data = await axiosInstance.delete(URL_PATHS.DELETE_BUSINESS.replace(":id", item?.id));
         if (data?.status === 200) {
           await getList();
@@ -221,6 +229,8 @@ const AdminBusiness = () => {
           theme: "light",
           transition: Bounce,
         });
+      } finally {
+        hideLoading();
       }
     }
   };

@@ -22,7 +22,7 @@ import { Bounce, toast } from "react-toastify";
 import ModalAdminAdSets from "./modal";
 import dayjs from "dayjs";
 import moment from "moment";
-
+import { useLoading } from "@/stores/loadingStore";
 const columns: any = [
   { id: "campaign_id", label: "Campaign", align: "start", minWidth: 150 },
   { id: "status", label: "On/Off", align: "center", minWidth: 50 },
@@ -158,6 +158,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const AdminAdSets = () => {
+  const { showLoading, hideLoading } = useLoading();
   const [dataList, setDataList] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [dataSelected, setDataSelected] = useState(null);
@@ -175,6 +176,7 @@ const AdminAdSets = () => {
 
   const getList = async () => {
     try {
+      showLoading();
       const data: any = await axiosInstance.get(URL_PATHS.GET_AD_SET);
       if (data?.status === 200) {
         setDataList(data?.data);
@@ -203,6 +205,8 @@ const AdminAdSets = () => {
         theme: "light",
         transition: Bounce,
       });
+    } finally {
+      hideLoading();
     }
   };
 
@@ -217,6 +221,7 @@ const AdminAdSets = () => {
 
   const getDetail = async (item: any) => {
     try {
+      showLoading();
       const data: any = await axiosInstance.get(URL_PATHS.GET_DETAIL_AD_SET.replace(":id", item?.id));
       if (data?.status === 200) {
         setDataDetail({
@@ -253,6 +258,8 @@ const AdminAdSets = () => {
         theme: "light",
         transition: Bounce,
       });
+    } finally {
+      hideLoading();
     }
   };
 
@@ -273,6 +280,7 @@ const AdminAdSets = () => {
     setAnchorEl(null);
     if (confirm("Are you sure you want to delete this record?")) {
       try {
+        showLoading();
         const data = await axiosInstance.delete(URL_PATHS.DELETE_AD_SET.replace(":id", item?.id));
         if (data?.status === 200) {
           await getList();
@@ -312,6 +320,8 @@ const AdminAdSets = () => {
           theme: "light",
           transition: Bounce,
         });
+      } finally {
+        hideLoading();
       }
     }
   };

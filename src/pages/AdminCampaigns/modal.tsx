@@ -4,6 +4,7 @@ import TextFieldCustom from "@/components/TextFieldCustom";
 import MESSAGE_API from "@/constants/message";
 import axiosInstance from "@/services/api-services";
 import URL_PATHS from "@/services/url-path";
+import { useLoading } from "@/stores/loadingStore";
 import {
   Button,
   Checkbox,
@@ -30,6 +31,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 }));
 
 const ModalAdminBusiness = (props: any) => {
+  const { showLoading, hideLoading } = useLoading();
   const { handleSubmit, control, watch, setValue } = useForm<any>({
     defaultValues: props?.defaultValues ?? {
       amountSpent: "",
@@ -56,6 +58,7 @@ const ModalAdminBusiness = (props: any) => {
 
   const onSubmit = async (data: any) => {
     try {
+      showLoading();
       const endsDate = data?.endsDate ? moment(new Date(data?.endsDate)).format("YYYY/MM/DD") : null;
       const item: any = props?.defaultValues
         ? await axiosInstance.put(URL_PATHS.UPDATE_CAMPAIGNS.replace(":id", props?.defaultValues?.id), {
@@ -67,7 +70,7 @@ const ModalAdminBusiness = (props: any) => {
             endsDate,
           });
       if (item?.status === 200) {
-        props.getList();
+        await props.getList();
         toast.success(props?.defaultValues ? MESSAGE_API.updateSuccessCampaigns : MESSAGE_API.createSuccessCampaigns, {
           position: "top-right",
           autoClose: 1000,
@@ -105,6 +108,8 @@ const ModalAdminBusiness = (props: any) => {
         theme: "light",
         transition: Bounce,
       });
+    } finally {
+      hideLoading();
     }
   };
   return (
