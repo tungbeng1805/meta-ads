@@ -22,7 +22,7 @@ const Campaign = (props: CampaignProps) => {
   const [tabActive, setTabActive] = React.useState<string>("campaign");
   const [data, setData] = useState<Array<any>>([]);
   const [openChartType, setOpenChartType] = useState<string | null>(null);
-  const [campaignId, setCampaignId] = React.useState<number | null | undefined>(null);
+  const [campaignId, setCampaignId] = React.useState<number | null>(null);
   const [selectedItems, setSelectedItems] = useState({
     campaign: [],
     adSet: [],

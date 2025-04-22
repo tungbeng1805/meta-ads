@@ -45,6 +45,7 @@ const ViewChart = (props: ViewChartProps) => {
   const [data, setData] = React.useState<any>({});
   const [isLoading, setIsLoading] = React.useState(false);
   const [listMenu, setListMenu] = React.useState<IMenuItem[]>([]);
+  const [dataBotChart, setDataBotChart] = React.useState<any>()
 
   const idsLevel2 = getIdsAtLevel(listMenu, 2);
   const idsLevel3 = getIdsAtLevel(listMenu, 3);
@@ -202,9 +203,26 @@ const ViewChart = (props: ViewChartProps) => {
     }
   };
 
+  const getDataBotChart = async () => {
+    try {
+      // const response = await axiosInstance.get(URL_PATHS.GET_CHART_BY_ID.replace(':id', idCampaign as string))
+      const response = await axiosInstance.get(URL_PATHS.GET_CHART)
+      if(response && response.data) {
+        setDataBotChart(response.data)
+      }
+      console.log("🚀 ~ getDataBotChart ~ response:", response)
+    } catch (error) {
+      
+    }
+  }
+
   React.useEffect(() => {
     getData();
   }, []);
+
+  React.useEffect(() => {
+    getDataBotChart()
+  }, [])
 
   return (
     <Drawer
@@ -421,7 +439,7 @@ const ViewChart = (props: ViewChartProps) => {
                 <div className="chart-wrapper">
                   <TopChart listMenu={listMenu} />
                   <TurnOn />
-                  <BotChart data={[]} />
+                  <BotChart data={dataBotChart} />
                 </div>
               )}
               {openChartType === "edit-ads" && <AdsEdit data={data} />}

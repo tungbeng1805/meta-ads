@@ -196,13 +196,12 @@ const AdsEdit = ({ data }: any) => {
             </LightTooltip>
           </div>
 
-          <Box display="flex" alignItems="center" gap="8px">
+          <Box display="flex" alignItems="center" gap="8px" mt="10px">
             <div
               className="table-action"
               style={{
-                width: "220px",
+                width: "250px",
                 justifyContent: "space-between",
-                marginTop: "10px",
               }}
             >
               Select an Instagram account
@@ -288,7 +287,11 @@ const AdsEdit = ({ data }: any) => {
           </div>
           <div
             className="table-action"
-            style={{ width: "100px", marginTop: "10px" }}
+            style={{ 
+              width: "150px",
+              justifyContent: "center",
+              marginTop: "5px", 
+            }}
           >
             Edit each ad
           </div>
