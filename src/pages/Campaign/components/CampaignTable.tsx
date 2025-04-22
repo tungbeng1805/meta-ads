@@ -17,11 +17,9 @@ interface CampaignTableProps {
 
 const CampaignTable = (props: CampaignTableProps) => {
   const { data, selectedItems, onSelectedItems, handleClickOpenChart } = props;
-
   const [rows, setRows] = useState<Array<any>>([]);
   const [displayRows, setDisplayRows] = useState<Array<any>>([]);
   const [openOption, setOpenOption] = useState<any>();
-  console.log("openOption", openOption);
 
   const navigate = useNavigate();
 
@@ -103,9 +101,7 @@ const CampaignTable = (props: CampaignTableProps) => {
                 </div>
                 <div
                   style={{ display: "flex", alignItems: "center" }}
-                  onClick={() =>
-                    handleClickOpenChart(params.row.id, "edit-adset")
-                  }
+                  onClick={() => handleClickOpenChart(params.row.id, "view")}
                 >
                   <EditIcon sx={{ fontSize: "12px" }} />
                   <span>Edit</span>

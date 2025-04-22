@@ -5,9 +5,7 @@ import { Box, Divider, InputAdornment, TextField } from "@mui/material";
 import React from "react";
 import PlacementAccordion from "./PlacementAccordion";
 
-interface AdSetProps {}
-
-const AdSetEdit = (props: AdSetProps) => {
+const AdSetEdit = ({ data, adSetName }: any) => {
   return (
     <Box display="flex" gap="16px">
       <Box display="flex" flexDirection="column" gap="16px">
@@ -28,10 +26,15 @@ const AdSetEdit = (props: AdSetProps) => {
           <Box display="flex" alignItems="center" gap="8px" mt="16px">
             <Box flex={1}>
               <TextField
+                slotProps={{
+                  input: {
+                    readOnly: true,
+                  },
+                }}
                 label=""
                 variant="outlined"
                 size="small"
-                defaultValue={"Nhóm quảng cáo Lượt tương tác mới"}
+                value={adSetName}
                 sx={{
                   width: "100%",
                   "& .MuiOutlinedInput-input": {
@@ -125,11 +128,22 @@ You can receive both Messenger and Instagram messages to your Page's inbox, but 
                 borderRadius="48px"
                 overflow="hidden"
               >
-                <img src="" />
+                <img
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                  }}
+                  src={
+                    data?.image
+                      ? import.meta.env.VITE_BASE_FOLDER + data?.image
+                      : ""
+                  }
+                />
               </Box>
               <div>
                 <p className="conversion-title">Facebook Page</p>
-                <p className="conversion-des">S body Studio</p>
+                <p className="conversion-des">{data?.namePage}</p>
               </div>
             </Box>
             <Box
@@ -183,11 +197,22 @@ You can receive both Messenger and Instagram messages to your Page's inbox, but 
                   borderRadius="48px"
                   overflow="hidden"
                 >
-                  <img src="" />
+                  <img
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
+                    src={
+                      data?.image
+                        ? import.meta.env.VITE_BASE_FOLDER + data?.image
+                        : ""
+                    }
+                  />
                 </Box>
                 <div>
                   <p className="conversion-title">Facebook Page</p>
-                  <p className="conversion-des">S body Studio</p>
+                  <p className="conversion-des">{data?.namePage}</p>
                 </div>
               </Box>
               <Box display="flex" alignItems="center" gap="8px">
@@ -350,7 +375,8 @@ You can receive both Messenger and Instagram messages to your Page's inbox, but 
           </Box>
           <Box padding="8px 0px">
             <p className="conversion-des">
-              You set a daily Advantage campaign budget of ₫150,000.
+              You set a daily Advantage campaign budget of ₫
+              {Number(data?.budget).toLocaleString()}.
             </p>
           </Box>
           <Box mt="16px" mb="16px">
@@ -624,7 +650,7 @@ You can receive both Messenger and Instagram messages to your Page's inbox, but 
                 <p className="des-little">
                   Included location:
                   <br />
-                  Vietnam: Phan Đình Phùng, Thái Nguyên (+5 km)
+                  {data?.locations}
                 </p>
               </div>
               <div className="conversion-edit-btn">
@@ -660,7 +686,7 @@ You can receive both Messenger and Instagram messages to your Page's inbox, but 
                     />
                   </TooltipCustom>
                 </Box>
-                <p className="conversion-des">18-40</p>
+                <p className="conversion-des">{data?.age}</p>
               </div>
               <div className="conversion-edit-btn">
                 <Box
@@ -695,7 +721,7 @@ You can receive both Messenger and Instagram messages to your Page's inbox, but 
                     />
                   </TooltipCustom>
                 </Box>
-                <p className="conversion-des">All genders</p>
+                <p className="conversion-des">{data?.gender}</p>
               </div>
               <div className="conversion-edit-btn">
                 <Box

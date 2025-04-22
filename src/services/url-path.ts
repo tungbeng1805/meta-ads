@@ -32,6 +32,7 @@ const URL_PATHS = {
   CREATE_CHART: "charts/create",
   UPDATE_CHART: "charts/update/:id",
   DELETE_CHART: "charts/delete/:id",
+  GET_MENU_CHART: "form_face/get-menu",
 };
 
 export default URL_PATHS;

@@ -5,7 +5,8 @@ import HighchartsReact from "highcharts-react-official";
 import { useState } from "react";
 import { optionChartTop, optionsTopChart } from "./optionChart";
 
-const TopChart = () => {
+const TopChart = ({ listMenu }: any) => {
+  console.log("🚀 ~ TopChart ~ data:", listMenu);
   const [time, setTime] = useState<any>(1);
   const handleChangeValue = (event: SelectChangeEvent) => {
     setTime(event.target.value);
@@ -69,6 +70,9 @@ const TopChart = () => {
           <Box padding="16px">
             <div className="chart-option">
               {optionChartTop.map((item, index) => {
+                const value = Number(
+                  listMenu?.[0]?.[item?.key] || 0
+                )?.toLocaleString();
                 return (
                   <div
                     key={String(index)}
@@ -94,7 +98,9 @@ const TopChart = () => {
                         />
                       </TooltipCustom>
                     </Box>
-                    <div className="info-count">{item.value}</div>
+                    <div className="info-count">{`${
+                      item?.key !== "resultsCost" ? "₫" : ""
+                    }${value}`}</div>
                   </div>
                 );
               })}

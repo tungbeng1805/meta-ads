@@ -1,21 +1,21 @@
 export const optionChartTop = [
   {
+    key: "resultsCost",
     title: "Messaging conversations started",
-    value: 30,
     isChoose: true,
     tooltipValue:
       "The number of times that a messaging conversation was started with your business after at least seven days of inactivity, attributed to your ads. This doesnt include messaging conversations started from ads delivered to or from Europe or Japan.",
   },
   {
+    key: "costPerResultCost",
     title: "Per messaging conversation started",
-    value: "đ 17,563",
     isChoose: false,
     tooltipValue:
       "The average cost for each messaging conversation started. This doesnt include messaging conversations started from ads delivered to or from Europe or Japan.",
   },
   {
+    key: "amountSpent",
     title: "Amount spent",
-    value: "đ 526,892",
     isChoose: false,
     tooltipValue:
       "The approximate total amount of money that youve spent on your campaign, ad st ad during its schedule.",

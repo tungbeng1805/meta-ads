@@ -78,7 +78,6 @@ const AdsTable = (props: AdsTableProps) => {
   const objParam = getParamsId();
   const navigate = useNavigate();
 
-  const hanldeSelectRow = (id: any) => {};
   const columns: GridColDef[] = [
     {
       field: "onoff",
@@ -171,7 +170,7 @@ const AdsTable = (props: AdsTableProps) => {
                     <div
                       style={{ display: "flex", alignItems: "center" }}
                       onClick={() =>
-                        handleClickOpenChart(params.row.id, "edit-ads")
+                        handleClickOpenChart(params.row.id, "view")
                       }
                     >
                       <EditIcon sx={{ fontSize: "12px" }} />
