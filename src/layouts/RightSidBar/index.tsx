@@ -3,14 +3,14 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 interface RightSideBarProps {
-  onCloseChart?: () => void;
+  onToggleChart?: (type: string | null) => void;
   // type is  "normal" | "view" | "edit-adset" | "edit-ads"
   type?: string | null;
 }
 
 const RightSideBar = (props: RightSideBarProps) => {
   const navigate = useNavigate();
-  const { onCloseChart, type = "normal" } = props;
+  const { onToggleChart, type = "normal" } = props;
 
   return (
     <div
@@ -22,7 +22,7 @@ const RightSideBar = (props: RightSideBarProps) => {
         {type !== "normal" && (
           <div
             className="menu-right-btn active-btn"
-            onClick={onCloseChart && onCloseChart}
+            onClick={() => onToggleChart && onToggleChart(null)}
           >
             <Box
               sx={{
@@ -37,7 +37,10 @@ const RightSideBar = (props: RightSideBarProps) => {
             />
           </div>
         )}
-        <div className={`menu-right-btn ${type === "view" && "active-btn"}`}>
+        <div
+          className={`menu-right-btn ${type === "view" && "active-btn"}`}
+          onClick={() => onToggleChart && onToggleChart("view")}
+        >
           {type === "view" ? (
             <Box
               sx={{
@@ -64,6 +67,7 @@ const RightSideBar = (props: RightSideBarProps) => {
           )}
         </div>
         <div
+          onClick={() => onToggleChart && onToggleChart("edit-adset")}
           className={`menu-right-btn ${
             type && ["edit-adset", "edit-ads"].includes(type) && "active-btn"
           }`}

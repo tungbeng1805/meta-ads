@@ -45,7 +45,7 @@ const ViewChart = (props: ViewChartProps) => {
   const [data, setData] = React.useState<any>({});
   const [isLoading, setIsLoading] = React.useState(false);
   const [listMenu, setListMenu] = React.useState<IMenuItem[]>([]);
-  const [dataBotChart, setDataBotChart] = React.useState<any>()
+  const [dataBotChart, setDataBotChart] = React.useState<any>();
 
   const idsLevel2 = getIdsAtLevel(listMenu, 2);
   const idsLevel3 = getIdsAtLevel(listMenu, 3);
@@ -206,23 +206,21 @@ const ViewChart = (props: ViewChartProps) => {
   const getDataBotChart = async () => {
     try {
       // const response = await axiosInstance.get(URL_PATHS.GET_CHART_BY_ID.replace(':id', idCampaign as string))
-      const response = await axiosInstance.get(URL_PATHS.GET_CHART)
-      if(response && response.data) {
-        setDataBotChart(response.data)
+      const response = await axiosInstance.get(URL_PATHS.GET_CHART);
+      if (response && response.data) {
+        setDataBotChart(response.data);
       }
-      console.log("🚀 ~ getDataBotChart ~ response:", response)
-    } catch (error) {
-      
-    }
-  }
+      console.log("🚀 ~ getDataBotChart ~ response:", response);
+    } catch (error) {}
+  };
 
   React.useEffect(() => {
     getData();
   }, []);
 
   React.useEffect(() => {
-    getDataBotChart()
-  }, [])
+    getDataBotChart();
+  }, []);
 
   return (
     <Drawer
@@ -238,10 +236,7 @@ const ViewChart = (props: ViewChartProps) => {
             : "edit-chart-container"
         }
       >
-        <RightSideBar
-          onCloseChart={() => onToggleChart(null)}
-          type={openChartType}
-        />
+        <RightSideBar onToggleChart={onToggleChart} type={openChartType} />
         <div className="view-chart-wrapper">
           <div className="view-chart-menu">
             <Box padding="6px 12px">
