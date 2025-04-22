@@ -22,30 +22,6 @@ export const optionChartTop = [
   },
 ];
 
-export const optionsTopChart = {
-  title: {
-    text: "Messaging conversations started",
-  },
-  xAxis: {
-    categories: ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5"],
-  },
-  yAxis: {
-    title: {
-      text: "",
-    },
-  },
-  series: [
-    {
-      name: "Messaging conversations started",
-      data: [150, 200, 170, 240, 300],
-    },
-    {
-      name: "Historical edits",
-      data: [180, 220, 160, 280, 260],
-    },
-  ],
-};
-
 export const optionBotChart = {
   chart: {
     type: "column",

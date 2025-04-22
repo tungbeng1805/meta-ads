@@ -2,13 +2,44 @@ import TooltipCustom from "@/components/TooltipCustom";
 import { Box, Grid, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import { useState } from "react";
-import { optionChartTop, optionsTopChart } from "./optionChart";
+import { useMemo, useState } from "react";
+import { optionChartTop } from "./optionChart";
+import moment from "moment";
 
 const TopChart = ({ listMenu }: any) => {
   const [time, setTime] = useState<any>(1);
   const handleChangeValue = (event: SelectChangeEvent) => {
     setTime(event.target.value);
+  };
+
+  const today = moment(new Date()).format("DD MMM");
+
+  const optionsTopChart = {
+    title: {
+      text: "Per post engagements",
+      align: "left",
+      x: 0,
+      style: {
+        fontWeight: "bold",
+        fontSize: "16px",
+        fontFamily: "Optimistic Display, system-ui, sans-serif",
+      },
+    },
+    xAxis: {
+      categories: [today],
+    },
+    yAxis: {
+      title: {
+        text: "",
+      },
+      tickInterval: 10,
+    },
+    series: [
+      {
+        name: "Post engagement",
+        data: [Number(listMenu[0]?.resultsCost || 0)],
+      },
+    ],
   };
 
   return (
