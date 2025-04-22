@@ -21,6 +21,7 @@ interface CampaignProps {}
 const Campaign = (props: CampaignProps) => {
   const [tabActive, setTabActive] = React.useState<string>("campaign");
   const [data, setData] = useState<Array<any>>([]);
+  const [idCampaign, setIdCampaign] = useState<string|number>('')
   const [openChartType, setOpenChartType] = useState<string | null>(null);
   const [selectedItems, setSelectedItems] = useState({
     campaign: [],
@@ -128,6 +129,7 @@ const Campaign = (props: CampaignProps) => {
   }, []);
 
   const handleClickOpenChart = (id: number, type: string) => {
+    setIdCampaign(id)
     setOpenChartType(type);
   };
 
@@ -228,6 +230,7 @@ const Campaign = (props: CampaignProps) => {
         <ViewChart
           openChartType={openChartType}
           onToggleChart={handleToggleChart}
+          idCampaign={idCampaign}
         />
       )}
     </Box>

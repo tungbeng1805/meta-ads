@@ -1,15 +1,71 @@
 import { Box, MenuItem, Select, SelectChangeEvent } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
 import { optionBotChart } from "./optionChart";
 
-const BotChart = () => {
+interface IBotChartProps {
+  data: any
+}
+
+const BotChart = (props: IBotChartProps) => {
+  const { data } = props
+  console.log("🚀 ~ BotChart ~ data:", data)
   const [person, setPerson] = useState("All");
   const [result, SetResult] = useState("Results");
+  const [optionBotChart, setOptionBotChart] = useState<any>([])
   const handleChangeValue = (event: SelectChangeEvent) => {
     setPerson(event.target.value);
   };
+
+  useEffect(() => {
+    if(!!data) {
+      const option = {
+        chart: {
+          type: "column",
+        },
+        title: {
+          text: "",
+        },
+        xAxis: {
+          categories: data.map((i: any) => i.name),
+          crosshair: true,
+        },
+        yAxis: {
+          min: 0,
+          title: {
+            text: "",
+          },
+        },
+        tooltip: {
+          headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+          pointFormat:
+            '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>{point.y:.1f}</b></td></tr>',
+          footerFormat: "</table>",
+          shared: true,
+          useHTML: true,
+        },
+        plotOptions: {
+          column: {
+            pointPadding: 0.2,
+            borderWidth: 0,
+          },
+        },
+        series: [
+          {
+            name: "Men",
+            data: data.map((i: any) => Number(i.men)),
+          },
+          {
+            name: "Women",
+            data: data.map((i: any) => Number(i.women)),
+          },
+        ],
+      };
+      setOptionBotChart(option)
+    }
+  }, [JSON.stringify(data)])
 
   return (
     <div>

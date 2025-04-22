@@ -11,6 +11,8 @@ import TopChart from "@/pages/Chart/TopChart";
 import TurnOn from "@/pages/Chart/TurnOn";
 import AdsEdit from "@/pages/EditForm/AdsEdit";
 import AdSetEdit from "@/pages/EditForm/AdSetEdit";
+import axiosInstance from "@/services/api-services";
+import URL_PATHS from "@/services/url-path";
 import {
   Box,
   Divider,
@@ -19,11 +21,12 @@ import {
   Switch,
   TextField,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 interface ViewChartProps {
   openChartType: string | null;
   onToggleChart: (type: string | null) => void;
+  idCampaign?: string | number
 }
 
 interface IMenuItem {
@@ -33,8 +36,10 @@ interface IMenuItem {
 }
 
 const ViewChart = (props: ViewChartProps) => {
-  const { openChartType, onToggleChart } = props;
+  const { openChartType, onToggleChart, idCampaign } = props;
+  console.log("🚀 ~ ViewChart ~ idCampaign:", idCampaign)
   const [activeMenu, setActiveMenu] = React.useState<number[]>([1]);
+  const [dataBotChart, setDataBotChart] = useState<any>()
 
   const listMenu = [
     {
@@ -206,6 +211,25 @@ const ViewChart = (props: ViewChartProps) => {
       </Box>
     );
   };
+
+  const getDataBotChart = async () => {
+    try {
+      // const response = await axiosInstance.get(URL_PATHS.GET_CHART_BY_ID.replace(':id', idCampaign as string))
+      const response = await axiosInstance.get(URL_PATHS.GET_CHART)
+      if(response && response.data) {
+        setDataBotChart(response.data)
+      }
+      console.log("🚀 ~ getDataBotChart ~ response:", response)
+    } catch (error) {
+      
+    }
+  }
+
+  useEffect(() => {
+    if(idCampaign) {
+      getDataBotChart()
+    }
+  }, [idCampaign])
 
   return (
     <Drawer
@@ -422,7 +446,7 @@ const ViewChart = (props: ViewChartProps) => {
                 <div className="chart-wrapper">
                   <TopChart />
                   <TurnOn />
-                  <BotChart />
+                  <BotChart data={dataBotChart} />
                 </div>
               )}
               {openChartType === "edit-ads" && <AdsEdit />}

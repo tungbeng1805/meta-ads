@@ -99,6 +99,7 @@ const TopChart = () => {
                 );
               })}
             </div>
+            <p className="chart-name" style={{marginBottom: '16px'}}>Messaging conversations started</p>
             <HighchartsReact
               highcharts={Highcharts}
               options={optionsTopChart}

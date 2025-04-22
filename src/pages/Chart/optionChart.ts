@@ -24,7 +24,7 @@ export const optionChartTop = [
 
 export const optionsTopChart = {
   title: {
-    text: "Messaging conversations started",
+    text: "",
   },
   xAxis: {
     categories: ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5"],
