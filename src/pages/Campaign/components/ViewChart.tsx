@@ -13,7 +13,6 @@ import AdsEdit from "@/pages/EditForm/AdsEdit";
 import AdSetEdit from "@/pages/EditForm/AdSetEdit";
 import axiosInstance from "@/services/api-services";
 import URL_PATHS from "@/services/url-path";
-import { getIdsAtLevel } from "@/util";
 import {
   Box,
   Divider,
@@ -22,33 +21,65 @@ import {
   Switch,
   TextField,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 interface ViewChartProps {
   openChartType: string | null;
   onToggleChart: (type: string | null) => void;
-  campaignId: number | null;
+  campaignId?: number | null
 }
 
-export interface IMenuItem {
+interface IMenuItem {
   id: number;
   name: string;
-  amountSpent?: string;
-  costPerResultCost?: string;
-  resultsCost?: string;
   groups?: IMenuItem[];
 }
 
 const ViewChart = (props: ViewChartProps) => {
   const { openChartType, onToggleChart, campaignId } = props;
-  const [activeMenu, setActiveMenu] = React.useState<number[]>([]);
-  const [data, setData] = React.useState<any>({});
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [listMenu, setListMenu] = React.useState<IMenuItem[]>([]);
+  const [activeMenu, setActiveMenu] = React.useState<number[]>([1]);
+  const [dataBotChart, setDataBotChart] = useState<any>()
 
-  const idsLevel2 = getIdsAtLevel(listMenu, 2);
-  const idsLevel3 = getIdsAtLevel(listMenu, 3);
-  const adSetName = listMenu[0]?.groups?.[0]?.name || "";
+  const listMenu = [
+    {
+      id: 1,
+      name: "Huy- 2250k Mess gym - Bản sao",
+      groups: [
+        {
+          parentId: 1,
+          id: 11,
+          name: "Nhóm quảng cáo Lượt tương tác mới - Bản sao",
+          groups: [
+            {
+              parentId: 11,
+              id: 111,
+              name: "Quảng cáo Lượt tương tác mới",
+            },
+          ],
+        },
+        {
+          id: 12,
+          name: "Nhóm quảng cáo Lượt tương tác mới - Bản sao",
+          groups: [
+            {
+              id: 121,
+              name: "Quảng cáo Lượt tương tác mới",
+            },
+          ],
+        },
+        {
+          id: 13,
+          name: "Nhóm quảng cáo Lượt tương tác mới - Bản sao",
+          groups: [
+            {
+              id: 131,
+              name: "Quảng cáo Lượt tương tác mới",
+            },
+          ],
+        },
+      ],
+    },
+  ];
 
   const renderIconByDeep = (deep: number, active: boolean) => {
     switch (deep) {
@@ -73,8 +104,10 @@ const ViewChart = (props: ViewChartProps) => {
     }
   };
 
-  const handleClickMenu = (ids: number[]) => {
-    setActiveMenu(ids);
+  const handleClickMenu = (menu: IMenuItem) => {
+    // if (menu && menu?.id) {
+    //   setActiveMenu([menu?.id]);
+    // }
   };
 
   const renderMenu = (menu: IMenuItem, index: number, depth: number = 1) => {
@@ -85,7 +118,7 @@ const ViewChart = (props: ViewChartProps) => {
         <div
           className={`menu-btn ${active && "active-menu"}`}
           onClick={() => {
-            // handleClickMenu(menu);
+            handleClickMenu(menu);
           }}
         >
           <div className={`menu-label`}>
@@ -100,18 +133,17 @@ const ViewChart = (props: ViewChartProps) => {
 
   const renderBreadCrumbs = () => {
     const activeCampaign = activeMenu?.includes(listMenu[0]?.id);
-    const activeAdset = idsLevel2.some((id: number) =>
-      activeMenu?.includes(id)
+    const activeAdset = activeMenu?.includes(listMenu[0]?.groups[0]?.id);
+    const activeAds = activeMenu?.includes(
+      listMenu[0]?.groups[0]?.groups[0]?.id
     );
-    const activeAds = idsLevel3.some((id: number) => activeMenu?.includes(id));
 
     return (
       <Box display="flex" alignItems="center" gap="4px">
         <div
           className={`bread-btn ${activeCampaign && "bread-btn-active"}`}
           onClick={() => {
-            handleClickMenu([listMenu[0]?.id]);
-            onToggleChart("edit-adset");
+            // handleClickMenu(menu);
           }}
         >
           <Box display="flex" alignItems="center" gap="4px">
@@ -119,7 +151,7 @@ const ViewChart = (props: ViewChartProps) => {
             <p className={`menu-name`}>{listMenu[0]?.name}</p>
           </Box>
         </div>
-        {idsLevel2?.length > 0 && (
+        {listMenu?.[0]?.groups?.length > 0 && (
           <>
             <Box
               sx={{
@@ -135,19 +167,19 @@ const ViewChart = (props: ViewChartProps) => {
             <div
               className={`bread-btn ${activeAdset && "bread-btn-active"}`}
               onClick={() => {
-                const ids = getIdsAtLevel(listMenu, 2);
-                handleClickMenu(ids);
-                onToggleChart("edit-adset");
+                // handleClickMenu(menu);
               }}
             >
               <Box display="flex" alignItems="center" gap="4px">
                 <img src={activeAdset ? MenuCategoryActive : MenuCategory} />
-                <p className={`menu-name`}>{idsLevel2?.length} Ad set</p>
+                <p className={`menu-name`}>
+                  {listMenu?.[0]?.groups?.length} Ad set
+                </p>
               </Box>
             </div>
           </>
         )}
-        {idsLevel3?.length > 0 && (
+        {listMenu[0]?.groups?.[0]?.groups?.length > 0 && (
           <>
             <Box
               sx={{
@@ -163,14 +195,14 @@ const ViewChart = (props: ViewChartProps) => {
             <div
               className={`bread-btn ${activeAds && "bread-btn-active"}`}
               onClick={() => {
-                const ids = getIdsAtLevel(listMenu, 3);
-                handleClickMenu(ids);
-                onToggleChart("edit-ads");
+                // handleClickMenu(menu);
               }}
             >
               <Box display="flex" alignItems="center" gap="4px">
                 <img src={activeAds ? MenuTabletActive : MenuTablet} />
-                <p className={`menu-name`}>{idsLevel3?.length} Ad</p>
+                <p className={`menu-name`}>
+                  {listMenu[0]?.groups?.[0]?.groups?.length} Ad
+                </p>
               </Box>
             </div>
           </>
@@ -179,32 +211,22 @@ const ViewChart = (props: ViewChartProps) => {
     );
   };
 
-  const getData = async () => {
+  const getDataBotChart = async () => {
     try {
-      setIsLoading(true);
-      if (campaignId) {
-        const chartMenu = await axiosInstance.get(
-          `${URL_PATHS.GET_MENU_CHART}?campaign_id=${campaignId}`
-        );
-        setListMenu(chartMenu?.data);
-        setActiveMenu(getIdsAtLevel(chartMenu?.data, 1));
-      }
-
-      const response = await axiosInstance.get(URL_PATHS.GET_DETAIL_FACE);
-
-      if (response && response.data) {
-        setData(response.data);
+      const response = await axiosInstance.get(URL_PATHS.GET_CHART)
+      if(response && response.data) {
+        setDataBotChart(response.data)
       }
     } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
+      console.log("🚀 ~ getDataBotChart ~ error:", error)
     }
-  };
+  }
 
-  React.useEffect(() => {
-    getData();
-  }, []);
+  useEffect(() => {
+    if(campaignId) {
+      getDataBotChart()
+    }
+  }, [campaignId])
 
   return (
     <Drawer
@@ -419,15 +441,13 @@ const ViewChart = (props: ViewChartProps) => {
             >
               {openChartType === "view" && (
                 <div className="chart-wrapper">
-                  <TopChart listMenu={listMenu} />
+                  <TopChart />
                   <TurnOn />
-                  <BotChart />
+                  <BotChart data={dataBotChart} />
                 </div>
               )}
-              {openChartType === "edit-ads" && <AdsEdit data={data} />}
-              {openChartType === "edit-adset" && (
-                <AdSetEdit data={data} adSetName={adSetName} />
-              )}
+              {openChartType === "edit-ads" && <AdsEdit />}
+              {openChartType === "edit-adset" && <AdSetEdit />}
             </div>
           </div>
         </div>
