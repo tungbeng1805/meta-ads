@@ -6,7 +6,6 @@ import { useState } from "react";
 import { optionChartTop, optionsTopChart } from "./optionChart";
 
 const TopChart = ({ listMenu }: any) => {
-  console.log("🚀 ~ TopChart ~ data:", listMenu);
   const [time, setTime] = useState<any>(1);
   const handleChangeValue = (event: SelectChangeEvent) => {
     setTime(event.target.value);
