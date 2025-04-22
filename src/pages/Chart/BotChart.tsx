@@ -1,8 +1,7 @@
 import { Box, MenuItem, Select, SelectChangeEvent } from "@mui/material";
-import { useEffect, useState } from "react";
-import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
-import { optionBotChart } from "./optionChart";
+import HighchartsReact from "highcharts-react-official";
+import { useEffect, useState } from "react";
 
 interface IBotChartProps {
   data: any

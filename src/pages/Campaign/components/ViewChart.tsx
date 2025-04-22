@@ -26,7 +26,7 @@ import React, { useEffect, useState } from "react";
 interface ViewChartProps {
   openChartType: string | null;
   onToggleChart: (type: string | null) => void;
-  idCampaign?: string | number
+  campaignId?: number | null
 }
 
 interface IMenuItem {
@@ -36,8 +36,7 @@ interface IMenuItem {
 }
 
 const ViewChart = (props: ViewChartProps) => {
-  const { openChartType, onToggleChart, idCampaign } = props;
-  console.log("🚀 ~ ViewChart ~ idCampaign:", idCampaign)
+  const { openChartType, onToggleChart, campaignId } = props;
   const [activeMenu, setActiveMenu] = React.useState<number[]>([1]);
   const [dataBotChart, setDataBotChart] = useState<any>()
 
@@ -214,22 +213,20 @@ const ViewChart = (props: ViewChartProps) => {
 
   const getDataBotChart = async () => {
     try {
-      // const response = await axiosInstance.get(URL_PATHS.GET_CHART_BY_ID.replace(':id', idCampaign as string))
       const response = await axiosInstance.get(URL_PATHS.GET_CHART)
       if(response && response.data) {
         setDataBotChart(response.data)
       }
-      console.log("🚀 ~ getDataBotChart ~ response:", response)
     } catch (error) {
-      
+      console.log("🚀 ~ getDataBotChart ~ error:", error)
     }
   }
 
   useEffect(() => {
-    if(idCampaign) {
+    if(campaignId) {
       getDataBotChart()
     }
-  }, [idCampaign])
+  }, [campaignId])
 
   return (
     <Drawer

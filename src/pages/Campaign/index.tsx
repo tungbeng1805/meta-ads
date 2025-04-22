@@ -21,8 +21,8 @@ interface CampaignProps {}
 const Campaign = (props: CampaignProps) => {
   const [tabActive, setTabActive] = React.useState<string>("campaign");
   const [data, setData] = useState<Array<any>>([]);
-  const [idCampaign, setIdCampaign] = useState<string|number>('')
   const [openChartType, setOpenChartType] = useState<string | null>(null);
+  const [campaignId, setCampaignId] = React.useState<number | null | undefined>(null);
   const [selectedItems, setSelectedItems] = useState({
     campaign: [],
     adSet: [],
@@ -94,6 +94,7 @@ const Campaign = (props: CampaignProps) => {
       }
     } catch (error) {}
   };
+
   useEffect(() => {
     getData();
   }, [JSON.stringify(paramObj)]);
@@ -128,9 +129,9 @@ const Campaign = (props: CampaignProps) => {
     });
   }, []);
 
-  const handleClickOpenChart = (id: number, type: string) => {
-    setIdCampaign(id)
+  const handleClickOpenChart = (campaignId: number, type: string) => {
     setOpenChartType(type);
+    setCampaignId(campaignId);
   };
 
   const handleToggleChart = (type: string | null) => {
@@ -230,7 +231,7 @@ const Campaign = (props: CampaignProps) => {
         <ViewChart
           openChartType={openChartType}
           onToggleChart={handleToggleChart}
-          idCampaign={idCampaign}
+          campaignId={campaignId}
         />
       )}
     </Box>

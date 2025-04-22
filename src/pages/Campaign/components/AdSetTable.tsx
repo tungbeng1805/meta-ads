@@ -159,9 +159,7 @@ const AdsetTable = (props: AdsetTableProps) => {
                   </div>
                   <div
                     style={{ display: "flex", alignItems: "center" }}
-                    onClick={() =>
-                      handleClickOpenChart(params.row.id, "edit-adset")
-                    }
+                    onClick={() => handleClickOpenChart(params.row.id, "view")}
                   >
                     <EditIcon sx={{ fontSize: "12px" }} />
                     <span>Edit</span>
