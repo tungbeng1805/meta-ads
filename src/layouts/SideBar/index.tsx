@@ -1,11 +1,14 @@
 import ROUTERS_PATHS from "@/constants/router-paths";
+import { Box } from "@mui/material";
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 interface SideBarProps {}
 
 const SideBar = (props: SideBarProps) => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const pathName = location?.pathname;
 
   return (
     <div className="side-bar">
@@ -28,11 +31,67 @@ const SideBar = (props: SideBarProps) => {
           <div className="menu-btn">
             <div className="overview" />
           </div>
-          <div className="menu-btn">
-            <div className="campaign" />
+          <div
+            className={`menu-btn ${
+              pathName === ROUTERS_PATHS.CAMPAIGN && "btn-active"
+            } `}
+          >
+            {pathName === ROUTERS_PATHS.CAMPAIGN ? (
+              <Box
+                sx={{
+                  width: "24px",
+                  height: "24px",
+                  maskImage:
+                    "url(https://static.xx.fbcdn.net/rsrc.php/v4/yX/r/g5YqKLnlk1k.png?_nc_eui2=AeEwdYSi3g4KRA4ui8bBmD07hTGvHeFfVfyFMa8d4V9V_P6AOHlufRpsSsd_y-uRX7KJP33NUCFXlHSS61xHi-uc)",
+                  maskPosition: "-150px -254px",
+                  maskSize: "441px 397px",
+
+                  background: "#0a78be",
+                }}
+              />
+            ) : (
+              <Box
+                sx={{
+                  width: "24px",
+                  height: "24px",
+                  maskImage:
+                    "url(https://static.xx.fbcdn.net/rsrc.php/v4/yZ/r/tbCWzjtOK65.png)",
+                  maskPosition: "-50px -279px",
+                  maskSize: "441px 397px",
+                  background: "#1c2b33",
+                }}
+              />
+            )}
           </div>
-          <div className="menu-btn btn-active">
-            <div className="ads" />
+          <div
+            className={`menu-btn ${
+              pathName === ROUTERS_PATHS.HOME && "btn-active"
+            } `}
+          >
+            {pathName === ROUTERS_PATHS.HOME ? (
+              <Box
+                sx={{
+                  width: "24px",
+                  height: "24px",
+                  maskImage:
+                    "url(https://static.xx.fbcdn.net/rsrc.php/v4/yZ/r/tbCWzjtOK65.png)",
+                  maskPosition: "-25px -279px",
+                  background: "#0a78be",
+                }}
+              />
+            ) : (
+              <Box
+                sx={{
+                  width: "24px",
+                  height: "24px",
+                  maskImage:
+                    "url(https://static.xx.fbcdn.net/rsrc.php/v4/yZ/r/tbCWzjtOK65.png)",
+                  maskPosition: "-50px -279px",
+                  maskSize: "441px 397px",
+                  background: "#1c2b33",
+                }}
+              />
+            )}
           </div>
           <div className="menu-btn">
             <div className="audiences" />
