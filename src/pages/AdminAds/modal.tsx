@@ -35,7 +35,7 @@ const ModalAdminAds = (props: any) => {
     defaultValues: props?.defaultValues
       ? {
           image: props?.defaultValues?.image || "",
-          status: props?.defaultValues?.status || "",
+          status: props?.defaultValues?.status || false,
           ad: props?.defaultValues?.ad || "",
           adSetName: props?.defaultValues?.adSetName || "",
           deliveryStatus: props?.defaultValues?.deliveryStatus || "",
@@ -50,7 +50,7 @@ const ModalAdminAds = (props: any) => {
         }
       : {
           image: "",
-          status: "",
+          status: false,
           ad: "",
           adSetName: "",
           deliveryStatus: "",
