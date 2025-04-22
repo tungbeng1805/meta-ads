@@ -10,6 +10,7 @@ const TurnOn = () => {
       display="flex"
       gap="16px"
       alignItems="flex-end"
+      fontFamily="Optimistic Display, system-ui, sans-serif"
     >
       <Box
         display="flex"

@@ -151,10 +151,12 @@
 /*VIEW CHART*/
 .view-chart-container {
   width: calc(100vw - 72px);
+  font-family: Optimistic Display, system-ui, sans-serif;
 }
 
 .edit-chart-container {
   width: calc(100vw - 56px);
+  font-family: Optimistic Display, system-ui, sans-serif;
 }
 
 .view-chart-wrapper {
@@ -263,6 +265,7 @@
   background: white;
   border-radius: 4px;
   overflow: hidden;
+  font-family: Optimistic Display, system-ui, sans-serif;
 }
 
 .right-chart-content .chart-header {
@@ -286,6 +289,8 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  margin-bottom: 16px;
+  font-family: Optimistic Display, system-ui, sans-serif;
 }
 
 .right-chart-content .right-chart-info {
