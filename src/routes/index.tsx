@@ -3,7 +3,7 @@ import ROUTERS_PATHS from "@/constants/router-paths";
 import MainLayout from "@/layouts";
 import MainAdminLayout from "@/layouts/MainAdminLayout";
 import React, { Suspense, lazy } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 export interface IRoutesState {
   path?: string;
@@ -79,6 +79,10 @@ const routes: IRoutesState[] = [
     layout: MainAdminLayout,
     path: ROUTERS_PATHS.ADMIN_CHART,
     component: lazy(() => import("@/pages/AdminChart")),
+  },
+  {
+    path: "*",
+    component: () => <Navigate to={ROUTERS_PATHS.HOME} replace />,
   },
 ];
 
