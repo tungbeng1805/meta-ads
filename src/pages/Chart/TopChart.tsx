@@ -33,6 +33,7 @@ const TopChart = ({ listMenu }: any) => {
         text: "",
       },
       tickInterval: 10,
+      tickAmount: 5
     },
     series: [
       {
