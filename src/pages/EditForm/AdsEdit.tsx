@@ -830,13 +830,13 @@ const AdsEdit = ({ data }: any) => {
             </Box>
           </div>
           <div>
-            <div className={styles.box} style={{ flexDirection: "column" }}>
+            <div className={styles.box} style={{ flexDirection: "column", borderLeftColor: 'purple' }}>
               <div
                 style={{
                   display: "flex",
                   justifyContent: "space-between",
                   width: "100%",
-                  borderLeftColor: 'purple'
+                  
                 }}
               >
                 <div
