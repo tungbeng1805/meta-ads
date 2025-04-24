@@ -142,7 +142,8 @@ const AdsEdit = ({ data }: any) => {
               >
                 <div style={{ display: "flex", gap: "8px" }}>
                   <img
-                    src={`http://103.159.50.75:3000/${data.image}`}
+                    // src={`http://103.159.50.75:3000/${data.image}`}
+                    src={`${import.meta.env.VITE_BASE_FOLDER + data.image}`}
                     style={{
                       width: "20px",
                       height: "20px",
@@ -339,7 +340,7 @@ const AdsEdit = ({ data }: any) => {
 
           <div style={{ display: "flex", margin: "15px 0px", gap: "10px" }}>
             <img
-              src={`http://103.159.50.75:3000/${data.image}`}
+              src={`${import.meta.env.VITE_BASE_FOLDER + data?.image}`}
               style={{ width: "95px", height: "60px" }}
             />
             <div>
@@ -506,7 +507,7 @@ const AdsEdit = ({ data }: any) => {
                   overflow="hidden"
                 >
                   <img
-                    src={`http://103.159.50.75:3000/${data.image}`}
+                    src={`${import.meta.env.VITE_BASE_FOLDER + data?.image}`}
                     style={{
                       width: "40px",
                       height: "40px",
@@ -859,12 +860,11 @@ const AdsEdit = ({ data }: any) => {
             </div>
             <MoreHorizIcon />
           </div>
-          <div style={{display: 'grid', gridTemplateColumns: '2 1fr'}}>
+          <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', marginTop: '20px'}}>
             {data?.image_urls.length > 0 && data?.image_urls.map((item: any, index: number) => {
               return (
-                <div key={index}>
-                  <img src={`${import.meta.env.VITE_BASE_FOLDER + item}`} />
-                  {/* <img src={`http://103.159.50.75:3000/${item}`} /> */}
+                <div key={index} style={{width: '100%'}}>
+                  <img src={`${import.meta.env.VITE_BASE_FOLDER + item}`} style={{ width: '100%'}} />
                 </div>
               )
             })}
