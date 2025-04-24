@@ -2,6 +2,7 @@ import ROUTERS_PATHS from "@/constants/router-paths";
 import { Box } from "@mui/material";
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import LogoCampaign from "@/assets/images/logo.jpg";
 
 interface SideBarProps {}
 
@@ -23,20 +24,18 @@ const SideBar = (props: SideBarProps) => {
             }}
           />
           <div className="menu-btn media-btn">
-            <img
-              className="media-img"
-              src="https://scontent.fhan3-5.fna.fbcdn.net/v/t39.30808-1/433773926_122095156838255660_844091820876077575_n.jpg?stp=cp0_dst-jpg_s32x32_tt6&_nc_cat=108&ccb=1-7&_nc_sid=473152&_nc_ohc=rXIqLFFtD3MQ7kNvwEIUCaA&_nc_oc=Adkd2xt9wGNPQqm2HuOr5n5yDN2FSkVkJ7voyhah1BvC8iH5g59cyRBFRa4cgFlE8T6_UNbLj18zlVKlKdtS_5PC&_nc_zt=24&_nc_ht=scontent.fhan3-5.fna&_nc_gid=xLHUoh92ktEl4K3MrCmGGg&oh=00_AfHJBv6a-v7cBRoJI-BKdWFIcZTfyxfUaVCKO5DwouINoA&oe=68002377"
-            />
+            <img className="media-img" src={LogoCampaign} />
           </div>
           <div className="menu-btn">
             <div className="overview" />
           </div>
           <div
             className={`menu-btn ${
-              pathName === ROUTERS_PATHS.CAMPAIGN && "btn-active"
+              pathName.includes("/adsmanager/manage/campaigns/business_view") &&
+              "btn-active"
             } `}
           >
-            {pathName === ROUTERS_PATHS.CAMPAIGN ? (
+            {pathName.includes("/adsmanager/manage/campaigns/business_view") ? (
               <Box
                 sx={{
                   width: "24px",
@@ -55,8 +54,8 @@ const SideBar = (props: SideBarProps) => {
                   width: "24px",
                   height: "24px",
                   maskImage:
-                    "url(https://static.xx.fbcdn.net/rsrc.php/v4/yZ/r/tbCWzjtOK65.png)",
-                  maskPosition: "-50px -279px",
+                    "url(https://static.xx.fbcdn.net/rsrc.php/v4/yX/r/g5YqKLnlk1k.png?_nc_eui2=AeEwdYSi3g4KRA4ui8bBmD07hTGvHeFfVfyFMa8d4V9V_P6AOHlufRpsSsd_y-uRX7KJP33NUCFXlHSS61xHi-uc)",
+                  maskPosition: "-175px -254px",
                   maskSize: "441px 397px",
                   background: "#1c2b33",
                 }}
@@ -65,10 +64,11 @@ const SideBar = (props: SideBarProps) => {
           </div>
           <div
             className={`menu-btn ${
-              pathName === ROUTERS_PATHS.HOME && "btn-active"
+              pathName.includes("/adsmanager/reporting/business_view") &&
+              "btn-active"
             } `}
           >
-            {pathName === ROUTERS_PATHS.HOME ? (
+            {pathName.includes("/adsmanager/reporting/business_view") ? (
               <Box
                 sx={{
                   width: "24px",

@@ -1,6 +1,7 @@
 import TooltipCustom from "@/components/TooltipCustom";
 import { Box } from "@mui/material";
 import React from "react";
+import LogoCampaign from "@/assets/images/logo.jpg";
 
 const CampaignHeader = () => {
   return (
@@ -25,10 +26,7 @@ const CampaignHeader = () => {
                 overflow: "hidden",
               }}
             >
-              <img
-                className="media-img"
-                src="https://scontent.fhan3-5.fna.fbcdn.net/v/t39.30808-1/433773926_122095156838255660_844091820876077575_n.jpg?stp=cp0_dst-jpg_s32x32_tt6&_nc_cat=108&ccb=1-7&_nc_sid=473152&_nc_ohc=rXIqLFFtD3MQ7kNvwEIUCaA&_nc_oc=Adkd2xt9wGNPQqm2HuOr5n5yDN2FSkVkJ7voyhah1BvC8iH5g59cyRBFRa4cgFlE8T6_UNbLj18zlVKlKdtS_5PC&_nc_zt=24&_nc_ht=scontent.fhan3-5.fna&_nc_gid=xLHUoh92ktEl4K3MrCmGGg&oh=00_AfHJBv6a-v7cBRoJI-BKdWFIcZTfyxfUaVCKO5DwouINoA&oe=68002377"
-              />
+              <img className="media-img" src={LogoCampaign} />
             </Box>
             <div className="divider-campaign" />
             <div className="tv-wrapper">
@@ -59,7 +57,7 @@ const CampaignHeader = () => {
         </div>
       </div>
       <div className="header-right">
-        <p className="update-ago">Updated 30 minutes ago</p>
+        <p className="update-ago">Updated just now</p>
         <TooltipCustom title="Refresh">
           <div className="header-button">
             <Box

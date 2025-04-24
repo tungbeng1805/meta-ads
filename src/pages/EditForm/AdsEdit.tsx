@@ -3,6 +3,9 @@ import TextFieldCustom from "@/components/TextFieldCustom";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import ReplyIcon from '@mui/icons-material/Reply';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import FacebookIcon from "@mui/icons-material/Facebook";
@@ -36,6 +39,7 @@ const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
 }));
 
 const AdsEdit = ({ data }: any) => {
+  console.log("🚀 ~ AdsEdit ~ data:", data)
   const [isOpen, setIsOpen] = useState<boolean>(true);
   const [person, setPerson] = useState<any>(2);
 
@@ -138,7 +142,8 @@ const AdsEdit = ({ data }: any) => {
               >
                 <div style={{ display: "flex", gap: "8px" }}>
                   <img
-                    src={`http://103.159.50.75:3000/${data.image}`}
+                    // src={`http://103.159.50.75:3000/${data.image}`}
+                    src={`${import.meta.env.VITE_BASE_FOLDER + data.image}`}
                     style={{
                       width: "20px",
                       height: "20px",
@@ -335,7 +340,7 @@ const AdsEdit = ({ data }: any) => {
 
           <div style={{ display: "flex", margin: "15px 0px", gap: "10px" }}>
             <img
-              src={`http://103.159.50.75:3000/${data.image}`}
+              src={`${import.meta.env.VITE_BASE_FOLDER + data?.image}`}
               style={{ width: "95px", height: "60px" }}
             />
             <div>
@@ -384,9 +389,12 @@ const AdsEdit = ({ data }: any) => {
               borderRadius: "5px",
               padding: "5px 10px",
               color: "#1c2b33a6",
+              whiteSpace: 'pre-line'
             }}
+                dangerouslySetInnerHTML={{ __html: data.Description }}
+
           >
-            {data.Description}
+            {/* {data.Description} */}
           </div>
           <Box display="flex" alignItems="center" gap="8px">
             <LightTooltip
@@ -499,7 +507,7 @@ const AdsEdit = ({ data }: any) => {
                   overflow="hidden"
                 >
                   <img
-                    src={`http://103.159.50.75:3000/${data.image}`}
+                    src={`${import.meta.env.VITE_BASE_FOLDER + data?.image}`}
                     style={{
                       width: "40px",
                       height: "40px",
@@ -792,16 +800,43 @@ const AdsEdit = ({ data }: any) => {
             p: "15px",
           }}
         >
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: 'center' }}>
+            <div>
+              <CustomSwitch />
+              <span>Ad preview</span>
+            </div>
+            <Box display="flex" alignItems="center" gap="8px" mt="10px">
+              <div className="table-action">Connect account</div>
+
+              <div
+                className="table-action"
+                style={{
+                  width: "80px",
+                  justifyContent: "space-between",
+                }}
+              >
+                <ReplyIcon style={{fontSize: '18px'}} />
+                <Box
+                  sx={{
+                    width: " 16px",
+                    height: "16px",
+                    maskImage:
+                      "url(https://static.xx.fbcdn.net/rsrc.php/v4/y-/r/pqHpzOoq1-k.png)",
+                    maskPosition: "-170px -1094px",
+                    background: "#1c2b33",
+                  }}
+                />
+              </div>
+            </Box>
+          </div>
           <div>
-            <div className={styles.box} style={{ flexDirection: "column" }}>
+            <div className={styles.box} style={{ flexDirection: "column", borderLeftColor: 'purple' }}>
               <div
                 style={{
                   display: "flex",
                   justifyContent: "space-between",
                   width: "100%",
-                }}
-                onClick={() => {
-                  setIsOpen((pre) => !pre);
+                  
                 }}
               >
                 <div
@@ -811,48 +846,28 @@ const AdsEdit = ({ data }: any) => {
                     columnGap: "5px",
                   }}
                 >
-                  <ErrorOutlineIcon sx={{ color: "red" }} />
-                  <p className={styles.titlePaper}>Verifying your changes</p>
+                  <StarBorderIcon sx={{ color: "purple" }} />
+                  <p className={styles.titlePaper}>You can now see more variotions of your ad in previews</p>
                 </div>
-                {isOpen ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
+                <ArrowDropDownIcon />
               </div>
-              {isOpen && (
-                <div>
-                  <div
-                    style={{
-                      padding: "5px 0px",
-                      borderTop: "1px solid #f1ecec",
-                      borderBottom: "1px solid #f1ecec",
-                      margin: "5px 0px",
-                    }}
-                  >
-                    <p className={styles.text}>
-                      To place ads on Instagram, please select an Instagram
-                      account to represent your business. If you don't have an
-                      Instagram account, you can select your Facebook Page.
-                      (#1772103){" "}
-                      <span className={styles.learnMore}>Learn more</span>
-                    </p>
-                    <div
-                      className="table-action"
-                      style={{
-                        width: "200px",
-                        justifyContent: "center",
-                        marginTop: "5px",
-                      }}
-                    >
-                      Select Instagram account
-                    </div>
-                  </div>
-                  <p className={styles.text}>
-                    Page like creative type deprecated: This creative type has
-                    been deprecated. For Page like ads, please create creatives
-                    using object story spec and specify the "Like Page" call to
-                    action. (#1885996){" "}
-                  </p>
-                </div>
-              )}
             </div>
+          </div>
+          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '50%', marginTop: '15px'}}>
+            <div style={{ display: "flex", alignItems: "center", }}>
+              <FacebookIcon />
+              <span>Facebook Feed</span>
+            </div>
+            <MoreHorizIcon />
+          </div>
+          <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', marginTop: '20px'}}>
+            {data?.image_urls.length > 0 && data?.image_urls.map((item: any, index: number) => {
+              return (
+                <div key={index} style={{width: '100%'}}>
+                  <img src={`${import.meta.env.VITE_BASE_FOLDER + item}`} style={{ width: '100%'}} />
+                </div>
+              )
+            })}
           </div>
         </Paper>
       </div>
