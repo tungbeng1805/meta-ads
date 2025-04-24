@@ -6,6 +6,9 @@ const CheckboxCustom = (props: CheckboxProps) => {
     <Checkbox
       sx={{
         padding: 0,
+        ".MuiBox-root": {
+          padding: "0px !important",
+        },
       }}
       icon={
         <Box

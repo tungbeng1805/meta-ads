@@ -7,7 +7,6 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import React, { useEffect } from "react";
 import HomeHeader from "./components/HomeHeader";
 import RightContent from "./components/RightContent";
-import { useNavigate } from "react-router-dom";
 import ROUTERS_PATHS from "@/constants/router-paths";
 import axiosInstance from "@/services/api-services";
 import URL_PATHS from "@/services/url-path";
@@ -20,8 +19,6 @@ const HomePage = (props: HomePageProps) => {
   );
   const [rows, setRows] = React.useState<Array<any>>([]);
   const [displayRows, setDisplayRows] = React.useState<Array<any>>([]);
-  console.log("🚀 ~ HomePage ~ displayRows:", displayRows);
-  const navigate = useNavigate();
 
   const columns: GridColDef[] = [
     {
