@@ -26,18 +26,22 @@ const AdminFormFace: React.FC = () => {
       datePost: "",
       Description: "",
       image: "",
+      image_urls: [],
     },
     mode: "onChange",
     reValidateMode: "onChange",
   });
 
   const [imageUrl, setImageUrl] = useState<string>("");
+  const [deleteImageUrls, setDeleteImageUrls] = useState<string[]>([]);
 
   const onSubmit = async (data: any) => {
     showLoading();
     let imageUrlDelete = "";
-    if (data.image !== imageUrl && !!imageUrl) {
-      imageUrlDelete = imageUrl?.replace(`${import.meta.env.VITE_BASE_FOLDER}uploads/`, "");
+    const imageUrls = data.image_urls.filter((item: any) => typeof item !== "string");
+    const imageUrlsString = data.image_urls.filter((item: any) => typeof item === "string");
+    if (typeof data.image === "string" && !imageUrl.includes(data.image) && !!imageUrl) {
+      imageUrlDelete = imageUrl?.replace(`${import.meta.env.VITE_BASE_FOLDER}uploads\\`, "");
     }
     if (imageUrl != data?.image && !!data?.image) {
       try {
@@ -51,15 +55,48 @@ const AdminFormFace: React.FC = () => {
         data.image = uploadResponse?.data?.path;
       } catch (error) {}
     }
+
+    if (Array.isArray(imageUrls)) {
+      const uploadPromises = imageUrls.map(async (image: any) => {
+        if (image instanceof File) {
+          try {
+            const formData = new FormData();
+            formData.append("image", image);
+            const uploadResponse = await axiosInstance.post(URL_PATHS.UPLOAD_IMAGE, formData, {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            });
+            return uploadResponse?.data?.path;
+          } catch (error) {
+            console.error("Error uploading image:", error);
+            return null;
+          }
+        }
+        return image;
+      });
+
+      const results = await Promise.all(uploadPromises);
+      data.image_urls = [...imageUrlsString, ...results.filter(Boolean)];
+    } else {
+      data.image_urls = [];
+    }
     try {
       delete data?.id;
       const response: any = await axiosInstance.put(URL_PATHS.UPDATE_FACE, {
         ...data,
         datePost: data?.datePost ? moment(data?.datePost).format("YYYY-MM-DD") : null,
       });
-      if (imageUrlDelete) {
+      const _deleteImageUrls = deleteImageUrls
+        .filter((item: any) => typeof item === "string")
+        .map((item: any) => item.replace(`uploads\\`, ""));
+      const deleteImage = [..._deleteImageUrls, imageUrlDelete].filter(Boolean);
+      if (deleteImage.length > 0) {
         try {
-          await axiosInstance.delete(URL_PATHS.DELETE_IMAGE.replace(":filename", imageUrlDelete));
+          const deletePromises = deleteImage.map((filename) =>
+            axiosInstance.delete(URL_PATHS.DELETE_IMAGE.replace(":filename", filename))
+          );
+          await Promise.all(deletePromises);
         } catch (error) {}
       }
 
@@ -76,6 +113,7 @@ const AdminFormFace: React.FC = () => {
           transition: Bounce,
         });
         await getDetailPost();
+        setDeleteImageUrls([])
       } else {
         toast.error(MESSAGE_API.errorApi, {
           position: "top-right",
@@ -138,7 +176,7 @@ const AdminFormFace: React.FC = () => {
                   />
                   <label htmlFor="image-upload">
                     <Button variant="contained" component="span">
-                      Upload Image
+                      Upload Avatar Page
                     </Button>
                   </label>
                   {value && (
@@ -175,6 +213,75 @@ const AdminFormFace: React.FC = () => {
             />
           </Grid>
         </Grid>
+        <Grid container spacing={2} style={{ marginBottom: 20 }}>
+          <Grid size={12}>
+            <Controller
+              control={control}
+              name="image_urls"
+              render={({ field: { onChange, value } }) => (
+                <div>
+                  <input
+                    accept="image/*"
+                    style={{ display: "none" }}
+                    id="multiple-images-upload"
+                    type="file"
+                    multiple
+                    onChange={(e) => {
+                      const files = e.target.files;
+                      if (files && files.length > 0) {
+                        onChange([...value, ...Array.from(files)]);
+                      }
+                    }}
+                  />
+                  <label htmlFor="multiple-images-upload">
+                    <Button variant="contained" component="span">
+                      Upload Multiple Images
+                    </Button>
+                  </label>
+                  {value && value.length > 0 && (
+                    <div style={{ marginTop: 15, display: "flex", flexWrap: "wrap", gap: 10 }}>
+                      {value.map((img: File | string, index: number) => (
+                        <div key={index} style={{ height: "100px", width: "100px", position: "relative" }}>
+                          <img
+                            src={
+                              typeof img === "string"
+                                ? import.meta.env.VITE_BASE_FOLDER + img
+                                : URL.createObjectURL(img)
+                            }
+                            alt={`Preview ${index + 1}`}
+                            style={{ height: "100px", width: "100px", objectFit: "cover" }}
+                          />
+                          <IconButton
+                            onClick={() => {
+                              const newImages = [...value];
+                              const data = newImages.splice(index, 1);
+                              setDeleteImageUrls((pre) => [...pre, data[0]]);
+                              onChange(newImages);
+                            }}
+                            sx={{
+                              position: "absolute",
+                              top: -8,
+                              right: -8,
+                              width: "10px",
+                              height: "10px",
+                              backgroundColor: "#fff",
+                              "&:hover": {
+                                backgroundColor: "#f5f5f5",
+                              },
+                            }}
+                          >
+                            <img src={IconClose} alt="remove" style={{ width: 16, height: 16 }} />
+                          </IconButton>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+            />
+          </Grid>
+        </Grid>
+
         <Grid container spacing={2}>
           <Grid size={12}>
             <Controller
