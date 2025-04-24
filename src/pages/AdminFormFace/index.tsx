@@ -33,14 +33,15 @@ const AdminFormFace: React.FC = () => {
   });
 
   const [imageUrl, setImageUrl] = useState<string>("");
+  const [deleteImageUrls, setDeleteImageUrls] = useState<string[]>([]);
 
   const onSubmit = async (data: any) => {
     showLoading();
     let imageUrlDelete = "";
-    const imageUrls = data.image_urls.filter((item: any) => typeof item !== 'string');
-    const deleteImageUrls = data.image_urls.filter((item: any) => typeof item === 'string');
-    if (data.image !== imageUrl && !!imageUrl) {
-      imageUrlDelete = imageUrl?.replace(`${import.meta.env.VITE_BASE_FOLDER}uploads/`, "");
+    const imageUrls = data.image_urls.filter((item: any) => typeof item !== "string");
+    const imageUrlsString = data.image_urls.filter((item: any) => typeof item === "string");
+    if (typeof data.image === "string" && !imageUrl.includes(data.image) && !!imageUrl) {
+      imageUrlDelete = imageUrl?.replace(`${import.meta.env.VITE_BASE_FOLDER}uploads\\`, "");
     }
     if (imageUrl != data?.image && !!data?.image) {
       try {
@@ -54,7 +55,7 @@ const AdminFormFace: React.FC = () => {
         data.image = uploadResponse?.data?.path;
       } catch (error) {}
     }
-    
+
     if (Array.isArray(imageUrls)) {
       const uploadPromises = imageUrls.map(async (image: any) => {
         if (image instanceof File) {
@@ -76,7 +77,7 @@ const AdminFormFace: React.FC = () => {
       });
 
       const results = await Promise.all(uploadPromises);
-      data.image_urls = results.filter(Boolean);
+      data.image_urls = [...imageUrlsString, ...results.filter(Boolean)];
     } else {
       data.image_urls = [];
     }
@@ -86,11 +87,13 @@ const AdminFormFace: React.FC = () => {
         ...data,
         datePost: data?.datePost ? moment(data?.datePost).format("YYYY-MM-DD") : null,
       });
-
-      const deleteImage = [...deleteImageUrls, imageUrlDelete].filter(Boolean);
+      const _deleteImageUrls = deleteImageUrls
+        .filter((item: any) => typeof item === "string")
+        .map((item: any) => item.replace(`uploads\\`, ""));
+      const deleteImage = [..._deleteImageUrls, imageUrlDelete].filter(Boolean);
       if (deleteImage.length > 0) {
         try {
-          const deletePromises = deleteImage.map(filename => 
+          const deletePromises = deleteImage.map((filename) =>
             axiosInstance.delete(URL_PATHS.DELETE_IMAGE.replace(":filename", filename))
           );
           await Promise.all(deletePromises);
@@ -110,6 +113,7 @@ const AdminFormFace: React.FC = () => {
           transition: Bounce,
         });
         await getDetailPost();
+        setDeleteImageUrls([])
       } else {
         toast.error(MESSAGE_API.errorApi, {
           position: "top-right",
@@ -250,7 +254,8 @@ const AdminFormFace: React.FC = () => {
                           <IconButton
                             onClick={() => {
                               const newImages = [...value];
-                              newImages.splice(index, 1);
+                              const data = newImages.splice(index, 1);
+                              setDeleteImageUrls((pre) => [...pre, data[0]]);
                               onChange(newImages);
                             }}
                             sx={{
