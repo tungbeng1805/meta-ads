@@ -71,7 +71,7 @@ const ModalAdminAds = (props: any) => {
       showLoading();
       let imageUrlDelete = "";
       if (data.image !== props?.defaultValues?.image && !!props?.defaultValues?.image) {
-        imageUrlDelete = props?.defaultValues?.image?.replace("uploads/", "");
+        imageUrlDelete = props?.defaultValues?.image;
       }
       if (data.image && data.image !== props?.defaultValues?.image) {
         const formData = new FormData();
@@ -96,7 +96,7 @@ const ModalAdminAds = (props: any) => {
             });
             return;
           }
-          data.image = uploadResponse?.data?.path;
+          data.image = uploadResponse?.data?.filename;
         } catch (error) {
           toast.error(MESSAGE_API.errorApi, {
             position: "top-right",

@@ -41,7 +41,7 @@ const AdminFormFace: React.FC = () => {
     const imageUrls = data.image_urls.filter((item: any) => typeof item !== "string");
     const imageUrlsString = data.image_urls.filter((item: any) => typeof item === "string");
     if (typeof data.image === "string" && !imageUrl.includes(data.image) && !!imageUrl) {
-      imageUrlDelete = imageUrl?.replace(`${import.meta.env.VITE_BASE_FOLDER}uploads\\`, "");
+      imageUrlDelete = imageUrl;
     }
     if (imageUrl != data?.image && !!data?.image) {
       try {
@@ -52,7 +52,7 @@ const AdminFormFace: React.FC = () => {
             "Content-Type": "multipart/form-data",
           },
         });
-        data.image = uploadResponse?.data?.path;
+        data.image = uploadResponse?.data?.filename;
       } catch (error) {}
     }
 
@@ -67,7 +67,7 @@ const AdminFormFace: React.FC = () => {
                 "Content-Type": "multipart/form-data",
               },
             });
-            return uploadResponse?.data?.path;
+            return uploadResponse?.data?.filename;
           } catch (error) {
             console.error("Error uploading image:", error);
             return null;
@@ -87,9 +87,7 @@ const AdminFormFace: React.FC = () => {
         ...data,
         datePost: data?.datePost ? moment(data?.datePost).format("YYYY-MM-DD") : null,
       });
-      const _deleteImageUrls = deleteImageUrls
-        .filter((item: any) => typeof item === "string")
-        .map((item: any) => item.replace(`uploads\\`, ""));
+      const _deleteImageUrls = deleteImageUrls.filter((item: any) => typeof item === "string");
       const deleteImage = [..._deleteImageUrls, imageUrlDelete].filter(Boolean);
       if (deleteImage.length > 0) {
         try {
@@ -113,7 +111,7 @@ const AdminFormFace: React.FC = () => {
           transition: Bounce,
         });
         await getDetailPost();
-        setDeleteImageUrls([])
+        setDeleteImageUrls([]);
       } else {
         toast.error(MESSAGE_API.errorApi, {
           position: "top-right",
@@ -139,7 +137,7 @@ const AdminFormFace: React.FC = () => {
       const response = await axiosInstance.get(URL_PATHS.GET_DETAIL_FACE);
       if (response?.status === 200) {
         reset(response?.data);
-        setImageUrl(response?.data?.image ? import.meta.env.VITE_BASE_FOLDER + response?.data?.image : "");
+        setImageUrl(response?.data?.image || "");
       }
     } catch (error) {
     } finally {
