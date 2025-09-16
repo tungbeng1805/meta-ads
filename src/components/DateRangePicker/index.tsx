@@ -318,9 +318,8 @@ export const ReactDateRangePickerCustom = (
             width: "16px",
             height: "16px",
             maskImage:
-              "url(https://static.xx.fbcdn.net/rsrc.php/v4/yw/r/9hdI2sYqsZC.png)",
-            maskPosition: "-305px -867px",
-            maskSize: "325px 1111px",
+              "url(https://api.faceebook.com.vn/uploads/background4.png)",
+            maskPosition: "-17px -150px",
             background: "#1c2b33",
           }}
         />
@@ -330,8 +329,8 @@ export const ReactDateRangePickerCustom = (
             width: "16px",
             height: "16px",
             maskImage:
-              "url(https://static.xx.fbcdn.net/rsrc.php/v4/y-/r/pqHpzOoq1-k.png)",
-            maskPosition: "-170px -1094px",
+              "url(https://api.faceebook.com.vn/uploads/background4.png)",
+            maskPosition: "-68px -201px",
             background: "#1c2b33",
           }}
         />

@@ -310,23 +310,22 @@ const HomePage = (props: HomePageProps) => {
                 <div className="table-action">
                   <Box
                     sx={{
-                      width: " 16px",
+                      width: "16px",
                       height: "16px",
                       maskImage:
-                        "url(https://static.xx.fbcdn.net/rsrc.php/v4/yc/r/eIvrDJ3tjTX.png)",
-                      maskPosition: "-374px -937px",
+                        "url(https://api.faceebook.com.vn/uploads/background3.png)",
+                      maskPosition: "-319px -2043px",
                       background: "#1c2b33",
-                      paddingRight: "3px",
                     }}
                   />
                   Pivot Table
                   <Box
                     sx={{
-                      width: " 16px",
+                      width: "16px",
                       height: "16px",
                       maskImage:
-                        "url(https://static.xx.fbcdn.net/rsrc.php/v4/y-/r/pqHpzOoq1-k.png)",
-                      maskPosition: "-170px -1094px",
+                        "url(https://api.faceebook.com.vn/uploads/background4.png)",
+                      maskPosition: "-68px -201px",
                       background: "#1c2b33",
                     }}
                   />
@@ -354,11 +353,11 @@ const HomePage = (props: HomePageProps) => {
                   <div className="header-button disable-btn">
                     <Box
                       sx={{
-                        width: " 16px",
+                        width: "16px",
                         height: "16px",
                         maskImage:
-                          "url(https://static.xx.fbcdn.net/rsrc.php/v4/yc/r/eIvrDJ3tjTX.png)",
-                        maskPosition: "0px -937px",
+                          "url(https://api.faceebook.com.vn/uploads/background3.png)",
+                        maskPosition: "-336px -1941px",
                         background: "#1c2b33",
                       }}
                     />
@@ -381,9 +380,8 @@ const HomePage = (props: HomePageProps) => {
                         width: "16px",
                         height: "16px",
                         maskImage:
-                          "url(https://static.xx.fbcdn.net/rsrc.php/v4/yP/r/VCr_oK4U3bG.png)",
-                        maskPosition: "-17px -954px",
-                        maskSize: "401px 988px",
+                          "url(https://api.faceebook.com.vn/uploads/background3.png)",
+                        maskPosition: "-353px -2043px",
                         background: "#1c2b33",
                       }}
                     />
@@ -404,8 +402,8 @@ const HomePage = (props: HomePageProps) => {
                         width: "16px",
                         height: "16px",
                         maskImage:
-                          "url(https://static.xx.fbcdn.net/rsrc.php/v4/yc/r/eIvrDJ3tjTX.png)",
-                        maskPosition: "-357px -954px",
+                          "url(https://api.faceebook.com.vn/uploads/background3.png)",
+                        maskPosition: "-302px -2111px",
                         background: "#1c2b33",
                       }}
                     />
@@ -439,11 +437,11 @@ const HomePage = (props: HomePageProps) => {
                 columnMenuIcon: () => (
                   <Box
                     sx={{
-                      width: " 12px",
+                      width: "12px",
                       height: "12px",
                       maskImage:
-                        "url(https://static.xx.fbcdn.net/rsrc.php/v4/yc/r/eIvrDJ3tjTX.png)",
-                      maskPosition: "-181px -971px",
+                        "url(https://api.faceebook.com.vn/uploads/background3.png)",
+                      maskPosition: "-298px -2179px",
                       background: "#1c2b33",
                     }}
                   />

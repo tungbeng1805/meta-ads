@@ -1,7 +1,6 @@
+import LogoCampaign from "@/assets/images/logo.jpg";
 import TooltipCustom from "@/components/TooltipCustom";
 import { Box } from "@mui/material";
-import React from "react";
-import LogoCampaign from "@/assets/images/logo.jpg";
 
 const HomeHeader = () => {
   return (
@@ -13,8 +12,8 @@ const HomeHeader = () => {
               width: " 16px",
               height: "16px",
               maskImage:
-                "url(https://static.xx.fbcdn.net/rsrc.php/v4/yG/r/jg3IY981y5G.png)",
-              maskPosition: "0px -135px",
+                "url(https://api.faceebook.com.vn/uploads/background3.png)",
+              maskPosition: "-319px -1873px",
               background: "#1c2b33",
             }}
           />
@@ -47,8 +46,8 @@ const HomeHeader = () => {
               width: " 16px",
               height: "16px",
               maskImage:
-                "url(https://static.xx.fbcdn.net/rsrc.php/v4/y-/r/pqHpzOoq1-k.png)",
-              maskPosition: "-170px -1094px",
+                "url(https://api.faceebook.com.vn/uploads/background4.png)",
+              maskPosition: "-68px -201px",
               background: "#1c2b33",
             }}
           />
@@ -56,11 +55,11 @@ const HomeHeader = () => {
         <div className="header-button">
           <Box
             sx={{
-              width: " 16px",
+              width: "16px",
               height: "16px",
               maskImage:
-                "url(https://static.xx.fbcdn.net/rsrc.php/v4/yP/r/uXbrsLQkS8_.png)",
-              maskPosition: "-206px -251px",
+                "url(https://api.faceebook.com.vn/uploads/background3.png)",
+              maskPosition: "-319px -1771px",
               background: "#1c2b33",
             }}
           />
@@ -85,8 +84,8 @@ const HomeHeader = () => {
                 width: " 16px",
                 height: "16px",
                 maskImage:
-                  "url(https://static.xx.fbcdn.net/rsrc.php/v4/y-/r/pqHpzOoq1-k.png)",
-                maskPosition: "-170px -1094px",
+                  "url(https://api.faceebook.com.vn/uploads/background4.png)",
+                maskPosition: "-68px -201px",
                 background: "white",
               }}
             />
@@ -99,8 +98,8 @@ const HomeHeader = () => {
                 width: " 16px",
                 height: "16px",
                 maskImage:
-                  "url(https://static.xx.fbcdn.net/rsrc.php/v4/yP/r/uXbrsLQkS8_.png)",
-                maskPosition: "-34px -272px",
+                  "url(https://api.faceebook.com.vn/uploads/background3.png)",
+                maskPosition: "-336px -1805px",
                 background: "#1c2b33",
               }}
             />
@@ -114,11 +113,11 @@ const HomeHeader = () => {
           <div className="header-button">
             <Box
               sx={{
-                width: " 16px",
+                width: "16px",
                 height: "16px",
                 maskImage:
-                  "url(https://static.xx.fbcdn.net/rsrc.php/v4/yc/r/eIvrDJ3tjTX.png)",
-                maskPosition: "-238px -954px",
+                  "url(https://api.faceebook.com.vn/uploads/background3.png)",
+                maskPosition: "-319px -2094px",
                 background: "#1c2b33",
               }}
             />
@@ -129,11 +128,11 @@ const HomeHeader = () => {
           <div className="header-button">
             <Box
               sx={{
-                width: " 16px",
+                width: "16px",
                 height: "16px",
                 maskImage:
-                  "url(https://static.xx.fbcdn.net/rsrc.php/v4/yP/r/uXbrsLQkS8_.png)",
-                maskPosition: "-102px -272px",
+                  "url(https://api.faceebook.com.vn/uploads/background3.png)",
+                maskPosition: "-285px -1924px",
                 background: "#1c2b33",
               }}
             />
@@ -146,7 +145,7 @@ const HomeHeader = () => {
               width: "16px",
               height: "16px",
               maskImage:
-                "url(https://static.xx.fbcdn.net/rsrc.php/v4/yh/r/-mpd5-YMO3O.png)",
+                "url(https://api.faceebook.com.vn/uploads/background5.png)",
               maskPosition: "0px -169px",
               background: "#1c2b33",
             }}

@@ -35,10 +35,9 @@ const CampaignHeader = () => {
                   width: "16px",
                   height: "16px",
                   maskImage:
-                    "url(https://static.xx.fbcdn.net/rsrc.php/v4/yl/r/_tluDGOtAlV.png?_nc_eui2=AeFWQe1bHi04-awbDGavvrLYjXcSO7ekFu2NdxI7t6QW7RbiaBOA0xM5n7Af6QrZZmVqRWlC35ipB2hgp3IC3Tyb)",
-                  maskPosition: "0 -365px",
+                    "url(https://api.faceebook.com.vn/uploads/background6.png)",
+                  maskPosition: "0px -353px",
                   background: "#1c2b33",
-                  maskSize: "25px 1271px",
                 }}
               />
             </div>
@@ -49,8 +48,8 @@ const CampaignHeader = () => {
               width: "16px",
               height: "16px",
               maskImage:
-                "url(https://static.xx.fbcdn.net/rsrc.php/v4/y-/r/pqHpzOoq1-k.png)",
-              maskPosition: "-170px -1094px",
+                "url(https://api.faceebook.com.vn/uploads/background4.png)",
+              maskPosition: "-68px -201px",
               background: "#1c2b33",
             }}
           />
@@ -62,11 +61,11 @@ const CampaignHeader = () => {
           <div className="header-button">
             <Box
               sx={{
-                width: " 16px",
+                width: "16px",
                 height: "16px",
                 maskImage:
-                  "url(https://static.xx.fbcdn.net/rsrc.php/v4/yP/r/uXbrsLQkS8_.png)",
-                maskPosition: "-34px -272px",
+                  "url(https://api.faceebook.com.vn/uploads/background3.png)",
+                maskPosition: "-336px -1805px",
                 background: "#1c2b33",
               }}
             />
@@ -77,10 +76,10 @@ const CampaignHeader = () => {
         <div className="header-button btn-icon">
           <Box
             sx={{
-              width: " 16px",
+              width: "16px",
               height: "16px",
               maskImage:
-                "url(https://static.xx.fbcdn.net/rsrc.php/v4/yh/r/-mpd5-YMO3O.png)",
+                "url(https://api.faceebook.com.vn/uploads/background5.png)",
               maskPosition: "0px -169px",
               background: "#1c2b33",
             }}

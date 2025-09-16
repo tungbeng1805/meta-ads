@@ -477,11 +477,11 @@ const AdsetTable = (props: AdsetTableProps) => {
         columnMenuIcon: () => (
           <Box
             sx={{
-              width: " 12px",
+              width: "12px",
               height: "12px",
               maskImage:
-                "url(https://static.xx.fbcdn.net/rsrc.php/v4/yc/r/eIvrDJ3tjTX.png)",
-              maskPosition: "-181px -971px",
+                "url(https://api.faceebook.com.vn/uploads/background3.png)",
+              maskPosition: "-298px -2179px",
               background: "#1c2b33",
             }}
           />

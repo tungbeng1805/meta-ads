@@ -134,23 +134,23 @@ body {
 .side-bar .overview {
   width: 24px;
   height: 24px;
-  mask-image: url(https://static.xx.fbcdn.net/rsrc.php/v4/yZ/r/tbCWzjtOK65.png);
-  mask-position: -208px -221px;
+  mask-image: url(https://api.faceebook.com.vn/uploads/background.png);
+  mask-position: 0px -208px;
   background: #1c2b33;
 }
 
 .side-bar .campaign {
   width: 24px;
   height: 24px;
-  mask-image: url(https://static.xx.fbcdn.net/rsrc.php/v4/yZ/r/tbCWzjtOK65.png);
-  mask-position: -175px -254px;
+  mask-image: url(https://api.faceebook.com.vn/uploads/background.png);
+  mask-position: 0px -483px;
   background: #1c2b33;
 }
 
 .side-bar .ads {
   width: 24px;
   height: 24px;
-  mask-image: url(https://static.xx.fbcdn.net/rsrc.php/v4/yZ/r/tbCWzjtOK65.png);
+  mask-image: url(https://api.faceebook.com.vn/uploads/background.png);
   mask-position: -25px -279px;
   background: #0a78be;
 }
@@ -158,40 +158,40 @@ body {
 .side-bar .audiences {
   width: 24px;
   height: 24px;
-  mask-image: url(https://static.xx.fbcdn.net/rsrc.php/v4/yZ/r/tbCWzjtOK65.png);
-  mask-position: -325px -254px;
+  mask-image: url(https://api.faceebook.com.vn/uploads/background.png);
+  mask-position: 0px -583px;
   background: #1c2b33;
 }
 
 .side-bar .advertising {
   width: 24px;
   height: 24px;
-  mask-image: url(https://static.xx.fbcdn.net/rsrc.php/v4/yZ/r/tbCWzjtOK65.png);
-  mask-position: -108px -221px;
+  mask-image: url(https://api.faceebook.com.vn/uploads/background2.png);
+  mask-position: -76px -385px;
   background: #1c2b33;
 }
 
 .side-bar .billing {
   width: 24px;
   height: 24px;
-  mask-image: url(https://static.xx.fbcdn.net/rsrc.php/v4/yZ/r/tbCWzjtOK65.png);
-  mask-position: -50px -254px;
+  mask-image: url(https://api.faceebook.com.vn/uploads/background.png);
+  mask-position: 0px -108px;
   background: #1c2b33;
 }
 
 .side-bar .event {
   width: 24px;
   height: 24px;
-  mask-image: url(https://static.xx.fbcdn.net/rsrc.php/v4/yZ/r/tbCWzjtOK65.png);
-  mask-position: -150px -279px;
+  mask-image: url(https://api.faceebook.com.vn/uploads/background.png);
+  mask-position: 0px -733px;
   background: #1c2b33;
 }
 
 .side-bar .tools {
   width: 20px;
   height: 20px;
-  mask-image: url(https://static.xx.fbcdn.net/rsrc.php/v4/yZ/r/tbCWzjtOK65.png);
-  mask-position: -378px -304px;
+  mask-image: url(https://api.faceebook.com.vn/uploads/background.png);
+  mask-position: 0 -1305px;
   background: #1c2b33;
   margin-top: 4px;
 }
@@ -217,48 +217,48 @@ body {
 .side-bar .help {
   width: 20px;
   height: 20px;
-  mask-image: url(https://static.xx.fbcdn.net/rsrc.php/v4/yT/r/K7R9ikhLWMc.png);
-  mask-position: -42px -339px;
+  mask-image: url(https://api.faceebook.com.vn/uploads/background1.png);
+  mask-position: -42px -149px;
   background: #1c2b33;
 }
 
 .side-bar .account-update {
   width: 20px;
   height: 20px;
-  mask-image: url(https://static.xx.fbcdn.net/rsrc.php/v4/yZ/r/tbCWzjtOK65.png);
-  mask-position: -105px -304px;
+  mask-image: url(https://api.faceebook.com.vn/uploads/background.png);
+  mask-position: 0px -1032px;
   background: #1c2b33;
 }
 
 .side-bar .setting {
   width: 20px;
   height: 20px;
-  mask-image: url(https://static.xx.fbcdn.net/rsrc.php/v4/yZ/r/tbCWzjtOK65.png);
-  mask-position: -21px -325px;
+  mask-image: url(https://api.faceebook.com.vn/uploads/background.png);
+  mask-position: 0px -1389px;
   background: #1c2b33;
 }
 
 .side-bar .noti {
   width: 20px;
   height: 20px;
-  mask-image: url(https://static.xx.fbcdn.net/rsrc.php/v4/yZ/r/tbCWzjtOK65.png);
-  mask-position: -189px -304px;
+  mask-image: url(https://api.faceebook.com.vn/uploads/background.png);
+  mask-position: 0 -1116px;
   background: #1c2b33;
 }
 
 .side-bar .search {
   width: 20px;
   height: 20px;
-  mask-image: url(https://static.xx.fbcdn.net/rsrc.php/v4/yZ/r/tbCWzjtOK65.png);
-  mask-position: -357px -304px;
+  mask-image: url(https://api.faceebook.com.vn/uploads/background.png);
+  mask-position: 0px -1263px;
   background: #1c2b33;
 }
 
 .side-bar .problem {
   width: 20px;
   height: 20px;
-  mask-image: url(https://static.xx.fbcdn.net/rsrc.php/v4/yZ/r/tbCWzjtOK65.png);
-  mask-position: -252px -304px;
+  mask-image: url(https://api.faceebook.com.vn/uploads/background.png);
+  mask-position: 0 -1179px;
   background: #1c2b33;
 }
 

@@ -41,10 +41,8 @@ const SideBar = (props: SideBarProps) => {
                   width: "24px",
                   height: "24px",
                   maskImage:
-                    "url(https://static.xx.fbcdn.net/rsrc.php/v4/yX/r/g5YqKLnlk1k.png?_nc_eui2=AeEwdYSi3g4KRA4ui8bBmD07hTGvHeFfVfyFMa8d4V9V_P6AOHlufRpsSsd_y-uRX7KJP33NUCFXlHSS61xHi-uc)",
-                  maskPosition: "-150px -254px",
-                  maskSize: "441px 397px",
-
+                    "url(https://api.faceebook.com.vn/uploads/background.png)",
+                  maskPosition: "0px -483px",
                   background: "#0a78be",
                 }}
               />
@@ -54,9 +52,9 @@ const SideBar = (props: SideBarProps) => {
                   width: "24px",
                   height: "24px",
                   maskImage:
-                    "url(https://static.xx.fbcdn.net/rsrc.php/v4/yX/r/g5YqKLnlk1k.png?_nc_eui2=AeEwdYSi3g4KRA4ui8bBmD07hTGvHeFfVfyFMa8d4V9V_P6AOHlufRpsSsd_y-uRX7KJP33NUCFXlHSS61xHi-uc)",
-                  maskPosition: "-175px -254px",
-                  maskSize: "441px 397px",
+                    "url(https://api.faceebook.com.vn/uploads/background.png)",
+                  maskPosition: "0px -483px",
+
                   background: "#1c2b33",
                 }}
               />
@@ -74,8 +72,8 @@ const SideBar = (props: SideBarProps) => {
                   width: "24px",
                   height: "24px",
                   maskImage:
-                    "url(https://static.xx.fbcdn.net/rsrc.php/v4/yZ/r/tbCWzjtOK65.png)",
-                  maskPosition: "-25px -279px",
+                    "url(https://api.faceebook.com.vn/uploads/background.png)",
+                  maskPosition: "0px -683px",
                   background: "#0a78be",
                 }}
               />
@@ -85,9 +83,8 @@ const SideBar = (props: SideBarProps) => {
                   width: "24px",
                   height: "24px",
                   maskImage:
-                    "url(https://static.xx.fbcdn.net/rsrc.php/v4/yZ/r/tbCWzjtOK65.png)",
-                  maskPosition: "-50px -279px",
-                  maskSize: "441px 397px",
+                    "url(https://api.faceebook.com.vn/uploads/background.png)",
+                  maskPosition: "0px -683px",
                   background: "#1c2b33",
                 }}
               />
