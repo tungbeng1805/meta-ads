@@ -1,8 +1,7 @@
+import LogoCampaign from "@/assets/images/logo.jpg";
 import ROUTERS_PATHS from "@/constants/router-paths";
 import { Box } from "@mui/material";
-import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import LogoCampaign from "@/assets/images/logo.jpg";
 
 interface SideBarProps {}
 
